@@ -15,10 +15,19 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('content');
-            $table->string('image');
+            $table->unsignedBigInteger('article_type_id')->nullable();
+            $table->string('key')->nullable()->unique();
+            $table->string('title')->nullable();
+            $table->longText('content')->nullable();
+            $table->longText('short_desc')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->date('date_start')->nullable();
+            $table->date('date_end')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('article_type_id')->references('id')->on('article_types');
         });
     }
 

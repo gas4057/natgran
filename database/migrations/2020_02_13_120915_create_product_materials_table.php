@@ -16,8 +16,9 @@ class CreateProductMaterialsTable extends Migration
         Schema::create('product_materials', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('info');
-            $table->string('image');
+            $table->longText('info');
+            $table->string('image')->nullable();
+            $table->string('is_for_monument')->default(false);
             $table->timestamps();
         });
     }

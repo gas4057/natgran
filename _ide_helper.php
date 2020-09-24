@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.36 on 2020-02-13 10:58:59.
+ * Generated for Laravel 5.8.36 on 2020-05-04 06:44:22.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15205,6 +15205,18 @@ namespace Barryvdh\Debugbar {
  
 }
 
+namespace Laravel\Nova { 
+
+    /**
+     * 
+     *
+     */ 
+    class Nova {
+         
+    }
+ 
+}
+
 namespace Lavary\Menu { 
 
     /**
@@ -18103,6 +18115,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
+
+    class Nova extends \Laravel\Nova\Nova {}
 
     class Menu extends \Lavary\Menu\Facade {}
  

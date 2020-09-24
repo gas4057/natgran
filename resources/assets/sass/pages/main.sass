@@ -1,0 +1,108 @@
+.main
+	& .main--header
+		margin: 30px 0px
+		&__logo
+			font-style: normal
+			font-weight: 600
+			font-size: 12px
+			color: $bg-color
+			font-family: $open-sans
+		&__phone
+			font-family: $open-sans
+			font-style: normal
+			font-weight: normal
+			font-size: 18px
+			line-height: 32px
+			text-transform: uppercases
+			color: #595F82
+			margin-right: 20px
+		&__viber
+			margin-right: 20px
+	& .main--nav-block
+		height: 60px
+		& .main--nav__list-item
+			margin-right: 35px
+			& a
+				font-family: $open-sans
+				font-style: normal
+				font-weight: bold
+				font-size: 12px
+				line-height: 21px
+				text-transform: uppercase
+				color: $lilac
+			&:last-of-type
+				margin-right: 0px
+		& .hamburger
+			padding: 0px
+			& .hamburger-box
+				height: 17px
+				width: 30px
+			& .hamburger-inner,
+			& .hamburger-inner:after,
+			& .hamburger-inner:before
+				width: 18px
+				height: 2px
+				background: $lilac
+			& .hamburger-inner:before
+				top: -5px
+			& .hamburger-inner:after
+				top: -10px
+			& .hamburger-label
+				font-family: $open-sans
+				font-style: normal
+				font-weight: bold
+				font-size: 12px
+				line-height: 21px
+				text-transform: uppercase
+				color: $lilac
+			&.is-active
+				& .hamburger-box
+					height: 20px
+				& .hamburger-inner:before
+					top: 0px !important
+	& .main-slider-container
+		height: 450px
+		background: $bg-color
+		margin-bottom: 20px
+		& .main-slider
+			max-width: 100%
+			display: flex!important
+			& .main-slider-elem
+				display: flex!important
+				&__text
+					max-width: 600px
+					width: 100%
+					& .main-slider-name
+						font-family: $roboto-slab
+						font-style: normal
+						font-weight: normal
+						font-size: 24px
+						line-height: 41px
+						color: #FFFFFF
+						margin-bottom: 30px
+					& .main-slider-desrc
+						font-family: $open-sans
+						font-style: normal
+						font-weight: normal
+						font-size: 14px
+						line-height: 25px
+						color: #FFFFFF
+						margin-bottom: 50px
+					& .btn
+						max-width: 195px
+				&__image
+					position: relative
+					max-width: calc(100% - 600px)
+					width: 100%
+					& .main-slider__back-img
+						position: absolute
+						bottom: 0
+					& .main-slider__main-img
+						position: relative
+						z-index: 10
+						top: 20px
+						float: right
+		& .slick-list,
+		& .slick-track,
+		& .slick-slide
+			height: 100%

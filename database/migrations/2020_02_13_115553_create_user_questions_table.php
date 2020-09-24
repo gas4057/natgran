@@ -15,12 +15,12 @@ class CreateUserQuestionsTable extends Migration
     {
         Schema::create('user_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nickname');
+            $table->string('nickname')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('contact_phone');
             $table->string('contact_email');
-            $table->string('contact_message');
+            $table->longText('contact_message');
             $table->timestamps();
         });
     }

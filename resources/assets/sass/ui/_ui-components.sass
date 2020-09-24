@@ -1,0 +1,241 @@
+body
+  margin: 0
+  font-weight: normal
+  font-size: 16px
+  color: #000000
+  font-family: $open-sans
+  background-color: #ffffff
+  position: relative
+  transition: .2s ease-in
+  & *
+    margin: 0
+    padding: 0
+    border: 0
+    outline: 0
+    background-color: transparent
+    box-sizing: border-box
+
+a
+  text-decoration: none
+  transition: .3s
+  color: inherit
+
+ul
+  list-style: none
+
+img
+  max-width: 100%
+
+button
+  cursor: pointer
+  font-family: $open-sans
+
+textarea,
+input
+  font-family: $open-sans
+
+label
+  cursor: pointer
+  &:focus,
+  &:hover,
+  &:active
+    outline: 0
+    outline-offset: 0
+    -webkit-tap-highlight-color: transparent
+    user-select: none
+
+section
+  flex-grow: 1
+
+select, input, textarea
+  appearance: none
+  border-radius: 0
+  background-color: transparent
+
+.content-wrapper
+  min-height: 100vh
+  display: flex
+  flex-direction: column
+  position: relative
+  transition: .3s
+  left: 0
+
+.page-wrapper
+  flex: 1 1
+
+.footer-wrapper
+  flex: 0 1
+
+.box
+  width: 100%
+  display: flex
+  max-width: 1230px
+  padding: 0 30px
+  margin: 0 auto
+  position: relative
+
+.box-min
+  width: 100%
+  display: flex
+  max-width: 900px
+  margin: 0 auto
+  position: relative
+  padding-top: 50px
+
+.col
+  flex-direction: column
+
+.text-center
+  text-align: center
+
+.col-100
+  flex: 0 0 100%
+  max-width: 100%
+
+.d-flex
+  display: flex
+
+.row
+  min-width: 100%
+  display: flex
+
+.col-50
+  flex: 0 0 50%
+  max-width: 50%
+  -webkit-box-flex: 0
+.col-40
+  flex: 0 0 40%
+  max-width: 40%
+  -webkit-box-flex: 0
+.col-60
+  flex: 0 0 60%
+  max-width: 60%
+  -webkit-box-flex: 0
+.space-between
+  justify-content: space-between
+
+.justify-center
+  justify-content: center
+
+.ai-center
+  align-items: center
+.ai-end
+  align-items: flex-end
+.flex-wrap
+  flex-wrap: wrap
+
+.h-100
+  height: 100%
+
+.btn
+  border-radius: 40px
+  padding: 17px 24px
+  font-family: $open-sans
+  font-size: 11px
+  line-height: 19px
+  letter-spacing: 0.1em
+  text-transform: uppercase
+  color: $bg-color
+  transition: $default-transition
+  font-weight: 700
+  &.orange
+    background: $orange
+  &.white
+    background: $white-text-color
+
+.section--title
+  margin-left: 40px
+  &__num
+    font-family: $roboto-slab
+    font-style: normal
+    font-weight: 300
+    font-size: 27px
+    line-height: 46px
+    text-transform: uppercase
+    color: $orange
+  &__name
+    font-family: $roboto-slab
+    font-style: normal
+    font-weight: bold
+    font-size: 27px
+    line-height: 46px
+    text-transform: uppercase
+    color: $orange
+    margin-left: 10px
+    position: relative
+
+    &:before
+      content: counter(item)
+      counter-increment: item;
+      width: calc(100% - 100px)
+      height: 1px
+      background: $orange
+      position: absolute
+      left: 0
+      top: 0
+      position: absolute
+      left: -110%
+      top: 0
+
+.breadcrumbs--container
+  width: 100%
+  height: 100px
+  background: $bg-color
+
+  & .breadcrumbs--container__elem
+    position: relative
+    margin-right: 10px
+    &:before
+      content: url('../img/bread-arrow.svg')
+      margin-right: 10px
+    &:first-of-type:before
+      display: none
+    & a
+      font-family: $open-sans
+      font-size: 12px
+      line-height: 21px
+      color: $lilac
+      transition: $default-transition
+      font-weight: 700
+      &:hover,
+      &:active
+        transition: $default-transition
+        color: #FFFFFF
+
+.pagination
+  &--elem
+    & a
+      width: 45px
+      height: 45px
+      background: #ffffff
+      border-radius: 50%
+      font-family: $open-sans
+      font-size: 12px
+      line-height: 21px
+      text-transform: uppercase
+      color: $lilac
+      font-weight: 700
+      transition: $default-transition
+      &:hover,
+      &:active
+        transition: $default-transition
+        background: #444964
+        color: #ffffff
+        & svg path
+          stroke: #ffffff
+
+.divider
+  width: 100%
+  height: 1px
+  background: #CCCEDC
+
+.input
+  height: 45px
+  background: #ffffff
+  padding: 13px 17px 18px 18px
+  font-family: $open-sans
+  font-style: normal
+  font-weight: normal
+  font-size: 14px
+  line-height: 25px
+  color: $open-sans

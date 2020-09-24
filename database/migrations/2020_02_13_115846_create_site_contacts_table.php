@@ -15,10 +15,10 @@ class CreateSiteContactsTable extends Migration
     {
         Schema::create('site_contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->string('address')->nullable();
-            $table->string('skype')->nullable();
+            $table->unsignedBigInteger('type_id');
+            $table->string('contact');
+
+            $table->foreign('type_id')->references('id')->on('site_contact_types');
         });
     }
 
