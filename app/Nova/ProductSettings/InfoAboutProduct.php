@@ -34,7 +34,7 @@ class InfoAboutProduct extends Resource
      */
 
     public static $search = [
-        'id', 'about', 'details', 'advantage' , 'characteristics'
+        'id', 'about', 'payment', 'delivery',
     ];
 
     public static function label()

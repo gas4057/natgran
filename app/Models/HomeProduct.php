@@ -33,6 +33,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class HomeProduct extends Model
 {
+
+    protected $fillable = [
+        'nest_id'
+    ];
     public function product1()
     {
         return $this->belongsTo(Product::class,'product_id_1');

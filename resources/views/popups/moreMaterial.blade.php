@@ -7,7 +7,7 @@
             <li class="more-material__list">
             @foreach($moreMaterial->block as $block)
                         <a class="more-material--accordion" href="#">
-                            <h4 class="more-material--subtitle">{{$block->title ?? 'Title'}}</h4>
+                            <h4 class="more-material--subtitle">{!! $block->title ?? 'Title' !!}</h4>
                         </a>
                 <div class="panel" style="">
                     @if($block->text_block)

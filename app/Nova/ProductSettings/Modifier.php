@@ -4,6 +4,7 @@ namespace App\Nova\ProductSettings;
 
 use App\Models\ModifierProduct;
 use App\Models\ModifierType;
+use App\Nova\Filters\ModifierFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -37,7 +38,7 @@ class Modifier extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'width'
+        'id', 'width', 'height', 'thickness','thickness_size'
     ];
 
     public static function label()
@@ -99,7 +100,9 @@ class Modifier extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+           new ModifierFilter,
+        ];
     }
 
     /**

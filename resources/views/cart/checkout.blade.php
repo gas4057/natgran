@@ -10,13 +10,10 @@
     <script src="{{URL::asset('assets/js/page.order_set_attributes.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/libs.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/jquery-ui.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/html.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/settings.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/tree.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/OrbitControls.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/OBJLoader.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/MTLLoader.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/scripts.js')}}"></script>
 
     {{--added today--}}
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

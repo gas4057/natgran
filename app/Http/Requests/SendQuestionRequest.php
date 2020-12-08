@@ -26,10 +26,10 @@ class SendQuestionRequest extends FormRequest
         return [
             '_token' => 'required',
 //            'nickname' => 'required',
-            'first_name' => 'required|string',
+            'first_name' => 'string',
             'last_name' => 'string',
             'contact_phone' => 'required|string',
-            'contact_email' => 'required|email',
+            'contact_email' => 'email',
             'contact_message' => 'required|string',
         ];
     }

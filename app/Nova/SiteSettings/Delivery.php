@@ -33,6 +33,8 @@ class Delivery extends Resource
      */
     public static $search = [
         'id',
+        'city',
+        'address',
     ];
 
     public static function label()

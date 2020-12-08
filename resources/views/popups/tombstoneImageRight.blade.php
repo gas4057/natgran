@@ -9,7 +9,7 @@
                     @foreach($tombstoneImages as $tombstoneImage)
                         <label class="product--row__label product--row__label--material product--row__50 product--row__label--h200 image__size-item tombstone_image__size-item d-flex ai-center justify-center px-5
                             tombstones_image-img-right-select-item tombstones_image-img-right-select-{{$key}}" for="">
-                            <div class="tombstone_image__size-link stele__size-link image__size-link stele__size-link--img stele__size-link--big-circle aviable"
+                            <div class="tombstone_image__size-link stele__size-link image__size-link stele__size-link--img-big stele__size-link--img stele__size-link--big-circle aviable"
                                  id="material-1" data-position="right" data-element="tombstone_image"
                                  data-description="Тестовое описание из модального окна - 1" data-price="1000">
                                 <input class="hide-input par--js" type="radio" name="right_tombstone_image_id"

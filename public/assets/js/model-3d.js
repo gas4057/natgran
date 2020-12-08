@@ -15,88 +15,85 @@ let tombstonesModelLeft;
 let theModel;
 let loader = new THREE.OBJLoader();
 const scene = new THREE.Scene();
-let activeOption = "stella";
-let floorTexture = {
-    shininess: 60,
-    color: "131417",
-};
 let geometry = new THREE.Geometry();
-const PLAY_SCENE = document.getElementById('playpause');
+const PLAY_SCENE = document.getElementById("playpause");
 
 let firstSize3DModel = {};
 
 const BACKGROUND_COLOR = 0xe1e1e1;
 
-    let _token = document.querySelector('[name="_token"]').value;
-    let product_id = document.location.pathname.split("/").slice(2, 3)[0];
-    // console.log(_token, product_id);
+let _token = document.querySelector('[name="_token"]').value;
+let product_id = document.location.pathname.split("/").slice(2, 3)[0];
 
-    const params = `_token=${_token}&product_id=${product_id}`;
+const params = `_token=${_token}&product_id=${product_id}`;
 
-    let promiseRequest = new Promise((resolve, reject) => {
+let promiseRequest = new Promise((resolve, reject) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/models_object", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(params);
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/models_object", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(params);
+    xhr.onload = () => {
+        if (xhr.status != 200) {
+            // ошибка
+            console.log(xhr.status + ": " + xhr.statusText);
+        } else {
+            // результат
+            let responseModelParse = JSON.parse(xhr.response);
+            resolve(responseModelParse);
+        }
+    };
+}).then(async function (data) {
+    // Загрузка первай текстуры
+    firstTexture = await loadTexture(data.texture);
+    firstTexture.shininess = 1000
+    INITIAL_MAP = [
+        { childID: "stella", mtl: firstTexture },
+        { childID: "tombstones", mtl: firstTexture },
+        { childID: "pedestals", mtl: firstTexture },
+        { childID: "parterres", mtl: firstTexture },
+        { childID: "parterresModelRight", mtl: firstTexture },
+        { childID: "parterresModelLeft", mtl: firstTexture },
+        { childID: "tombstonesModelRight", mtl: firstTexture },
+        { childID: "tombstonesModelLeft", mtl: firstTexture },
+    ];
+    // загрузка моделей для одиночного памятника и дефолтного состояния двойного памятника
+    stella = await loadModel(data.stellaModel, "stella");
+    tombstones = await loadModel(data.tombstonesModel, "tombstones");
+    pedestals = await loadModel(data.pedestalsModel, "pedestals");
+    parterres = await loadModel(data.parterresModel, "parterres");
+    // добавление на сцену дефолтных моделей
+    scene.add(stella);
+    scene.add(tombstones);
+    scene.add(pedestals);
+    scene.add(parterres);
 
-        xhr.onload = () => {
+    theModel = stella;
 
-            if (xhr.status != 200) {
-                // ошибка
-                console.log( xhr.status + ': ' + xhr.statusText );
-            } else {
-                // результат
-                let responseModelParse = JSON.parse(xhr.response);
-                // console.log("responseModelParse", responseModelParse);
+    if (data.parterresModel_left) {
+        parterresModelRight = await loadModel(
+            data.parterresModel_right,
+            "parterresModelRight"
+        );
+        parterresModelLeft = await loadModel(
+            data.parterresModel_left,
+            "parterresModelLeft"
+        );
+        tombstonesModelRight = await loadModel(
+            data.tombstonesModel_right,
+            "tombstonesModelRight"
+        );
+        tombstonesModelLeft = await loadModel(
+            data.tombstonesModel_left,
+            "tombstonesModelLeft"
+        );
 
-                resolve(responseModelParse)
-            }
-        };
-    })
-    .then(async function(data) {
-            // Загрузка первай текстуры
-            firstTexture = await loadTexture(data.texture);
-            INITIAL_MAP = [
-                { childID: "stella", mtl: firstTexture },
-                { childID: "tombstones", mtl: firstTexture },
-                { childID: "pedestals", mtl: firstTexture },
-                { childID: "parterres", mtl: firstTexture },
-                { childID: "parterresModelRight", mtl: firstTexture },
-                { childID: "parterresModelLeft", mtl: firstTexture },
-                { childID: "tombstonesModelRight", mtl: firstTexture },
-                { childID: "tombstonesModelLeft", mtl: firstTexture },
-            ];
-
-            // console.log(data);
-
-            // загрузка моделей для одиночного памятника и дефолтного состояния двойного памятника
-            stella = await loadModel(data.stellaModel, "stella");
-            tombstones = await loadModel(data.tombstonesModel, "tombstones");
-            pedestals = await loadModel(data.pedestalsModel, "pedestals");
-            parterres = await loadModel(data.parterresModel, "parterres");
-            // добавление на сцену дефолтных моделей
-            scene.add(stella);
-            scene.add(tombstones);
-            scene.add(pedestals);
-            scene.add(parterres);
-
-            theModel = stella;
-            
-            if (data.parterresModel_left) {
-                
-                parterresModelRight = await loadModel(data.parterresModel_right, "parterresModelRight");
-                parterresModelLeft = await loadModel(data.parterresModel_left, "parterresModelLeft");
-                tombstonesModelRight = await loadModel(data.tombstonesModel_right, "tombstonesModelRight");
-                tombstonesModelLeft = await loadModel(data.tombstonesModel_left, "tombstonesModelLeft");
-                
-                // scene.add(parterresModelRight);
-                // scene.add(parterresModelLeft);                
-                // scene.add(tombstonesModelRight);
-                // scene.add(tombstonesModelLeft);
-            } 
-            // console.log(scene);
-    });
+        // scene.add(parterresModelRight);
+        // scene.add(parterresModelLeft);
+        // scene.add(tombstonesModelRight);
+        // scene.add(tombstonesModelLeft);
+    }
+});
 
 // Инициируем сцену
 const canvas = document.querySelector("#canvas");
@@ -106,19 +103,29 @@ const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 
 renderer.shadowMap.enabled = true;
 
+renderer.shadowMapSoft = false;
+
 renderer.setPixelRatio(window.devicePixelRatio);
 
 // Устанавливаем цвет фона и с помощью тумана сглаживаем уровень пола
 scene.background = new THREE.Color(BACKGROUND_COLOR);
 
 // Добавляем камеру
-let camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 150, cameraFar);
+let camera = new THREE.PerspectiveCamera(
+    50,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+camera.position.set(0, 50, cameraFar);
+// Хелпер для камеры чтоб смотреть куда она смотрит
+// const helper = new THREE.CameraHelper( camera );
+// scene.add( helper );
 
 // Исходный материалл
 // const INITIAL_MTL = firstTexture;
 
-function loadTexture (texture) {
+function loadTexture(texture) {
     return new Promise((resolve, reject) => {
         let txt = new THREE.TextureLoader().load(texture);
 
@@ -127,16 +134,15 @@ function loadTexture (texture) {
 
         set_mtl = new THREE.MeshPhongMaterial({
             map: txt,
-            shininess: 10,
+            shininess: 100,
             // wireframe: true,
         });
 
         resolve(set_mtl);
-    })
+    });
 }
 
 function loadModel(path, nameModel) {
-
     let objModel;
 
     return new Promise((resolve, reject) => {
@@ -146,7 +152,7 @@ function loadModel(path, nameModel) {
                 objModel = obj;
 
                 objModel.name = nameModel;
-                objModel.position.y =  yOffset;
+                objModel.position.y = yOffset;
 
                 // Добавление теней
                 objModel.traverse((o) => {
@@ -157,12 +163,14 @@ function loadModel(path, nameModel) {
                 });
 
                 for (let object of INITIAL_MAP) {
-                    // console.log(object.mtl);
                     initColor(objModel, object.childID, object.mtl);
                 }
 
                 // scene.add(objModel);
-                firstSize3DModel[nameModel] = getBoundaryGeometry(objModel, nameModel);
+                firstSize3DModel[nameModel] = getBoundaryGeometry(
+                    objModel,
+                    nameModel
+                );
                 resolve(objModel);
             },
             undefined,
@@ -172,8 +180,6 @@ function loadModel(path, nameModel) {
         );
     });
 }
-    console.log("firstSize3DModel", firstSize3DModel);
-
 
 function getBoundaryGeometry(obj, name) {
     let modelBoundingBox;
@@ -186,14 +192,11 @@ function getBoundaryGeometry(obj, name) {
     modelBoundingBox.size.y = modelBoundingBox.max.y - modelBoundingBox.min.y;
     modelBoundingBox.size.z = modelBoundingBox.max.z - modelBoundingBox.min.z;
 
-    // console.log(name, modelBoundingBox);
-
     return modelBoundingBox;
-};
+}
 
 // Функция - добавление текстур к моделям.
 function initColor(parent, type, mtl) {
-
     parent.traverse((o) => {
         if (o.isMesh) {
             if (o.name.includes(type)) {
@@ -205,12 +208,54 @@ function initColor(parent, type, mtl) {
 }
 
 // Добавляем свет
-let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.7);
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+directionalLight.castShadow = true
+directionalLight.name = "directionalLight"
+directionalLight.position.set(-100, 150, 50)
+directionalLight.target.position.set(25, 10, 0);
+
+directionalLight.shadow.camera.scale.x = 25;
+directionalLight.shadow.camera.scale.y = 25;
+directionalLight.shadow.camera.scale.z = 25;
+
+
+// const shadowCameraHelper = new THREE.CameraHelper( directionalLight.shadow.camera )
+// directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5); 
+// scene.add( shadowCameraHelper); 
+scene.add( directionalLight );
+
+directionalLight.shadow.mapSize.width = 1024; // default
+directionalLight.shadow.mapSize.height = 1024; // default
+directionalLight.shadow.camera.near = 0.5; // default
+directionalLight.shadow.camera.far = 500; // default
+
+// const helper = new THREE.CameraHelper( directionalLight.shadow.camera );
+// scene.add( helper );
+// Свет полушария
+let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
 hemiLight.position.set(0, 500, 0);
 hemiLight.name = "hemiLight";
 // Добовляем свет полушария к сцене
 scene.add(hemiLight);
 
+// Свет прожектора
+const degSpotLight = 25
+const spotLight = new THREE.SpotLight(0xFFFFFF, 2);
+spotLight.position.set( -40, 10, 100 );
+spotLight.target.position.set(0, 20 ,0);
+spotLight.castShadow = false;
+spotLight.angle = degSpotLight * 3.14 / 180;
+spotLight.distance = 120;
+
+scene.add(spotLight.target);
+scene.add(spotLight);
+spotLight.target.updateMatrixWorld();
+ 
+// const SpotLightHelper = new THREE.SpotLightHelper(spotLight);
+// scene.add(SpotLightHelper);
+
+
+/*
 // // Добовляем направленный свет к сцене
 // let light = new THREE.DirectionalLight(0xff0000, 1);
 // light.position.set(90, 90, 90);
@@ -218,19 +263,19 @@ scene.add(hemiLight);
 // light.shadow.mapSize = new THREE.Vector2(1024, 1024);
 // scene.add(light);
 
-let lightPoint = new THREE.PointLight( 0xcccccc, 1.5 );
-lightPoint.position.set( -40, 170, 40 );
+let lightPoint = new THREE.PointLight(0xcccccc, 1.5);
+lightPoint.position.set(-40, 170, 40);
 lightPoint.castShadow = true;
 lightPoint.radius = 50;
 lightPoint.name = "lightPoint";
-scene.add( lightPoint );
+scene.add(lightPoint);
 
-let lightPoint2 = new THREE.PointLight( 0xcccccc, .9 );
-lightPoint2.position.set( 40, 70, -40 );
+let lightPoint2 = new THREE.PointLight(0xcccccc, 0.9);
+lightPoint2.position.set(40, 70, -40);
 lightPoint2.castShadow = false;
 lightPoint2.radius = 50;
 lightPoint2.name = "lightPoint2";
-scene.add( lightPoint2 );
+scene.add(lightPoint2);
 
 // var helper = new THREE.PointLightHelper( lightPoint, 1.5 );
 // scene.add( helper );
@@ -244,16 +289,17 @@ dirLight.name = "dirLight";
 scene.add(dirLight);
 // var helper = new THREE.DirectionalLightHelper( dirLight, 5 );
 // scene.add( helper );
+*/
 
 // Добовляем пол
 let floorGeometry = new THREE.PlaneGeometry(512, 512, 1, 1);
 let floorMaterial = new THREE.MeshPhongMaterial({
-    color: 0x4f4f4f,
+    color: 0x7a7a7a,
     shininess: 0,
-    opacity: 0.25, 
-    transparent: true, 
-    side: THREE.DoubleSide, 
-    depthWrite: false
+    opacity: 0.25,
+    transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
 });
 
 let floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -272,10 +318,9 @@ controls.enablePan = false; // изменение камеры на правую
 controls.dampingFactor = 0.1;
 controls.autoRotate = false; // Включите, если хотите, чтоб объект автоматически поворачивался
 controls.autoRotateSpeed = 0.5; // (дефолт 1)
-controls.rotateSpeed = 0.5; // скорость вращения модели мышью (дефолт 1)
+controls.rotateSpeed = 0.2; // скорость вращения модели мышью (дефолт 1)
 controls.minDistance = 30;
 controls.maxDistance = 400;
-
 
 function animate() {
     controls.update();
@@ -304,7 +349,8 @@ function resizeRendererToDisplaySize(renderer) {
     let canvasPixelWidth = canvas.width / window.devicePixelRatio;
     let canvasPixelHeight = canvas.height / window.devicePixelRatio;
 
-    const needResize = canvasPixelWidth !== width || canvasPixelHeight !== height;
+    const needResize =
+        canvasPixelWidth !== width || canvasPixelHeight !== height;
     if (needResize) {
         renderer.setSize(width, height, false);
     }
@@ -313,9 +359,7 @@ function resizeRendererToDisplaySize(renderer) {
 
 // Выбор опции для изменения цвета
 function selectOption(monumentElement) {
-
     for (let child of scene.children) {
-
         if (child.children[0] == undefined) {
             continue;
         } else if (monumentElement == child.children[0].nameID) {
@@ -324,15 +368,10 @@ function selectOption(monumentElement) {
     }
 }
 
-
 function setMaterial(parent, type, mtl) {
-    // console.log(parent, type, mtl);
-
     parent.traverse((o) => {
         if (o.isMesh && o.nameID != null) {
-
             if (o.nameID == type) {
-                // console.log(mtl);
                 o.material = mtl;
             }
         }
@@ -343,22 +382,21 @@ function setMaterial(parent, type, mtl) {
 let initRotate = 0;
 
 function initialRotation() {
-  initRotate++;
-if (initRotate <= 130) {
-    scene.rotation.y += Math.PI / 60;
-  }
+    initRotate++;
+    if (initRotate <= 130) {
+        scene.rotation.y += Math.PI / 60;
+    }
 }
 
 // старт / стоп поворот сцены
 if (PLAY_SCENE) {
-    PLAY_SCENE.addEventListener("change", e => {
+    PLAY_SCENE.addEventListener("change", (e) => {
         e.preventDefault();
 
-        if(!controls.autoRotate) {
+        if (!controls.autoRotate) {
             controls.autoRotate = true;
         } else {
             controls.autoRotate = false;
         }
-    })
+    });
 }
-

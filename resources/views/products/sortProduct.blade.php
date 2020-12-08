@@ -2,7 +2,7 @@
     @foreach($products as $product)
         <div class="product--item d-flex col ai-center">
             <div class="product--item__img-wrap">
-                <img class="product--item__img" src="{{$product->image ? $product->image : 'http://natgran/assets/img/stella.jpg'}}" alt="...">
+                <img class="product--item__img" src="{{$product->image ? Storage::url($product->image) : URL::asset('/images/demo/vase.jpg')}}" alt="...">
             </div>
 
             <div class="product--item__description">

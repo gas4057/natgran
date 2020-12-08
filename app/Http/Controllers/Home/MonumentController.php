@@ -93,7 +93,7 @@ class MonumentController extends Controller
             Log::info($e);
             return response('FastOrder not created!', 404);
         }
-        return route('payment.success');
+        return response($data,200);
     }
 
     public function getModels(Request $request)

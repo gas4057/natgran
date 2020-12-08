@@ -3,6 +3,19 @@
 // ! TODO: Перезаписывать значения размеров в шапке элемента
 // ? TODO: Подсчет площади памятника
 
+Date.prototype.ddmmyyyy = function() {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+    var dd  = this.getDate().toString();
+    return (dd[1]?dd:"0"+dd[0]) + "." + (mm[1]?mm:"0"+mm[0]) + "." + yyyy; // padding
+};
+Date.prototype.hhmmss = function() {
+    var hh = this.getHours().toString();
+    var mm = this.getMinutes().toString();
+    var ss  = this.getSeconds().toString();
+    return (hh[1]?hh:"0"+hh[0]) + ":" + (mm[1]?mm:"0"+mm[0]) + ":" + (mm[1]?mm:"0"+mm[0]);
+};
+
 "use strict";
 $(function () {
 
@@ -102,7 +115,7 @@ $(function () {
         let actualParam = $(this).data("type");
         let link = $(this);
         let divLi = link.parent(".stele__size-item");
-        let allLiRow = divLi.parent(".stele__size");
+        let allLiRow = divLi.closest(".stele__size");
         let input = link.find("input");
         let inputVal = $(input).val();
         let data_ajax = {};
@@ -113,9 +126,6 @@ $(function () {
             token: $("#order-constructor-form").find('[name="_token"]').val(),
             idProductInThisPage,
         };
-
-        // console.log("OBJ", obj);
-
         clearLink(allLiRow); /** очистка */
         setActiveLink(input, link); /** назначение */
 
@@ -148,7 +158,7 @@ $(function () {
                 $('[name="tombstones_is_remove"]').val(true);
                 clearActiveValue("tombstones");
                 setParamsForObjInHead(obj);
-                $('.tombstones__params .preview--material').attr('src', "http://natgran/assets/img/transparent-img.png");
+                $('.tombstones__params .preview--material').hide();
                 setPrice(obj, 0);
                 sumTotalPriceEquipment();
                 return;
@@ -157,6 +167,7 @@ $(function () {
                 toggleTombstones = true;
                 $('.tombstones-remove-input').val(false);
                 $('[name="tombstones_is_remove"]').val(false);
+                $('.tombstones__params .preview--material').show();
 
                 setDefaultActiveValue(obj);
             }
@@ -179,7 +190,7 @@ $(function () {
                 $('[name="parterres_is_remove"]').val(true);
                 clearActiveValue("parterres");
                 setParamsForObjInHead(obj);
-                $('.parterres__params .preview--material').attr('src', "http://natgran/assets/img/transparent-img.png");
+                $('.parterres__params .preview--material').hide();
                 setPrice(obj, 0);
                 sumTotalPriceEquipment();
                 return;
@@ -191,6 +202,7 @@ $(function () {
                 toggleParterres = true;
                 $('.parterres-remove-input').val(false);
                 $('[name="parterres_is_remove"]').val(false);
+                $('.parterres__params .preview--material').show();
 
                 setDefaultActiveValue(obj);
             }
@@ -228,21 +240,12 @@ $(function () {
         paramsBody = $("." + obj + "__params"),
         activeParam = paramsBody.find(".active .par--js");
 
-        // console.log("paramsBody, activeParam", paramsBody, activeParam);
         activeParam.each(function (index, item) {
             let activeParamVal = activeParam.eq(index).val(),
                 activeParamKey = activeParam.eq(index).attr("name");
 
             paramsObj[activeParamKey] = activeParamVal;
         });
-
-            // console.log("ajax-data",{
-            //     product_id: idProductInThisPage,
-            //     [obj]: paramsObj,
-            //     obj,
-            //     _token: data_ajax.token,
-            //     actualParam,
-            // });
 
         $.ajax({
             url: "/set_attributes",
@@ -258,8 +261,6 @@ $(function () {
                 let responseParse = $.parseJSON(response),
                     getFirstKey = Object.keys(responseParse.modifier_size)[0],
                     getFirstParams = responseParse.modifier_size[getFirstKey];
-
-                    // console.log("responseParse", responseParse, getFirstParams);
 
                 // Проверка стелла это или другие элементы
                 if (obj == "stella") {
@@ -325,8 +326,6 @@ $(function () {
         let link = $(this);
         let input = link.find("input");
 
-        // console.log("OBJ", obj);
-
         clearActiveValue(obj);/** очистка */
         setActiveLink(input, link); /** назначение */
 
@@ -376,7 +375,6 @@ $(function () {
             data_ajax_medallion = {};
 
         let inputParagraphValue = $(this).find("p").text();
-        console.log(inputParagraphValue);
 
         $(`.engraving__result`).text(inputParagraphValue);
 
@@ -386,7 +384,6 @@ $(function () {
             token: $("#order-constructor-form").find('[name="_token"]').val(),
             idProductInThisPage,
         };
-        // console.log("OBJ", obj);
 
         if (link.hasClass('active')) {
 
@@ -416,22 +413,12 @@ $(function () {
         paramsBody = $("." + obj + "__params"),
         activeParam = paramsBody.find(".active .par--js");
 
-        // console.log("paramsBody, activeParam", paramsBody, activeParam);
         activeParam.each(function (index, item) {
             let activeParamVal = activeParam.eq(index).val(),
                 activeParamKey = activeParam.eq(index).attr("name");
 
             paramsObj[activeParamKey] = activeParamVal;
         });
-
-            // console.log("ajax-data",{
-            //     product_id: idProductInThisPage,
-            //     [obj]: paramsObj,
-            //     obj,
-            //     _token: data_ajax_medallion.token,
-            //     actualParam,
-            //     ...paramsObj,
-            // });
 
         $.ajax({
             url: "/get_price_medallion",
@@ -446,9 +433,6 @@ $(function () {
             },
             success: function (response) {
                 // let responseParse = $.parseJSON(response);
-
-                // console.log("response", response);
-                // console.log("responseParse", responseParse);
 
                 // Установка значений для окна параметра
                 setParamsForMedalEngr(obj, response);
@@ -489,8 +473,6 @@ $(function () {
             token: $("#order-constructor-form").find('[name="_token"]').val(),
             idProductInThisPage,
         };
-        // console.log(data_ajax_engraving, obj);
-        // console.log("OBJ", obj);
 
         if (link.hasClass('active')) {
 
@@ -520,23 +502,12 @@ $(function () {
         paramsBody = $("." + obj + "__params"),
         activeParam = paramsBody.find(".active .par--js");
 
-        // console.log("paramsBody, activeParam", paramsBody, activeParam);
         activeParam.each(function (index, item) {
             let activeParamVal = activeParam.eq(index).val(),
                 activeParamKey = activeParam.eq(index).attr("name");
 
             paramsObj[activeParamKey] = activeParamVal;
         });
-
-
-            // console.log("ajax-data",{
-            //     product_id: idProductInThisPage,
-            //     [obj]: paramsObj,
-            //     obj,
-            //     _token: data_ajax_engraving.token,
-            //     actualParam,
-            //     ...paramsObj,
-            // });
 
         $.ajax({
             url: "/get_price_engraving",
@@ -550,11 +521,6 @@ $(function () {
                 ...paramsObj,
             },
             success: function (response) {
-                // let responseParse = $.parseJSON(response);
-
-                // console.log("response_engraving", response);
-                // console.log("responseParse", responseParse);
-
                 // Установка значений для окна параметра
                 setParamsForMedalEngr(obj, response);
 
@@ -598,9 +564,9 @@ $(function () {
             right_tombstone_color_id: 0,
             dates_color_id: 0,
             beautification_id: 0,
-            stella_id: $('[name="stella_id"]').val() ? +$('[name="stella_id"]').val() : 0,
-            medallion_id: $('[name="medallion_id"]').val() ? +$('[name="medallion_id"]').val() : 0,
-            engraving_id: $('[name="engraving_id"]').val() ? +$('[name="engraving_id"]').val() : 0,
+            stella_id: $('.stella_id').val() ? +$('.stella_id').val() : 0,
+            medallion_id: $('.medallion_id').val() ? +$('.medallion_id').val() : 0,
+            engraving_id: $('.engraving_id').val() ? +$('.engraving_id').val() : 0,
             on_pedestal_epitaph: "empty",
             left_epitaph: "empty",
             _token: $('[name="_token"]').val(),
@@ -614,10 +580,10 @@ $(function () {
         let tombstones = {height: 0, width: 0, thickness: 0, material: 0, id: 0};
         let parterres = {height: 0, width: 0, thickness: 0, material: 0, id: 0};
 
-        stella.id = +$('[name="stella_id"]').val();
-        pedestals.id = +$('[name="pedestals_id"]').val();
-        tombstones.id = +$('[name="tombstones_id"]').val();
-        parterres.id = +$('[name="parterres_id"]').val();
+        stella.id = +$('.stella_id').val();
+        pedestals.id = +$('.pedestals_id').val();
+        tombstones.id = +$('.tombstones_id').val();
+        parterres.id = +$('.parterres_id').val();
 
         let name_left = "empty";
         let name_right = "empty";
@@ -629,7 +595,6 @@ $(function () {
         reqaredInputs.each((index, item) => {
 
             if ($(item).val() == "") {
-                // console.log("input is empty");
                 toastr.error(messageForEmptyInput,'Следующий шаг не доступен!');
             }
         })
@@ -716,14 +681,11 @@ $(function () {
                 _token: $('meta[name="csrf-token"]').attr('content')
             }
 
-            // console.log(removeProductData);
-
             $.ajax({
                 url: "/cart/removeItem",
                 type: "POST",
                 data: removeProductData,
                 success: function (response) {
-                    // console.log(response);
                     $(itemCard).remove();
                 },
                 error: function (response) {
@@ -757,14 +719,12 @@ $(function () {
                 products_count,
                 _token: $('meta[name="csrf-token"]').attr('content')
             }
-            // console.log(addProductData);
 
             $.ajax({
                 url: "/cart/changeCountItem",
                 type: "POST",
                 data: addProductData,
                 success: function (response) {
-                    // console.log("success");
                 },
                 error: function (response) {
                     console.log("error", response);
@@ -803,22 +763,49 @@ $(function () {
                 return false;
             }
 
-            console.log(formData);
+            $.ajax({
+                url: "/fast_order",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    let date = new Date;
 
-            // $.ajax({
-            //     url: "/fast_order",
-            //     type: "POST",
-            //     data: formData,
-            //     success: function (response) {
-            //         // console.log(response);
-            //         window.location = response;
+                    $.fancybox.open(`
+                    <div class="modal-message" id="decorSuccess" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal-content d-flex col ai-center justify-center">
+                            <h5 class="modal-title">Успешно!</h5>
+                            <p>Ваш заказ № 65536 от ${date.ddmmyyyy()} ${date.hhmmss()} успешно создан.</p>
+                            <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
+                        </div>
+                    </div>
+                    `);
 
-            //     },
-            //     error: function (response) {
-            //         console.log("error", response);
-            //         window.location = response;
-            //     },
-            // });
+                    setTimeout(function () {
+                        $.fancybox.close();
+                        location.reload();
+                    }, 5000);
+
+                },
+                error: function (response) {
+                    console.log("error", response);
+                    $.fancybox.close();
+
+                    $.fancybox.open({
+                        src  : '#decorError',
+                        type : 'inline',
+                        opts : {
+                            afterShow : function( instance, current ) {
+                                console.info( 'done!' );
+                            }
+                        }
+                    });
+    
+                    setTimeout(function () {
+                        $.fancybox.close();
+                        location.reload();
+                    }, 10000);
+                },
+            });
         })
 
     });
@@ -827,8 +814,6 @@ $(function () {
     tagSection.on("click", "#submit_order", function (event) {
 
         event.preventDefault();
-
-        console.log(7987);
 
         let paramsObj = {
             is_fast_order : false,
@@ -845,9 +830,9 @@ $(function () {
             right_tombstone_color_id: 0,
             dates_color_id: 0,
             beautification_id: 0,
-            stella_id: $('[name="stella_id"]').val() ? +$('[name="stella_id"]').val() : 0,
-            medallion_id: $('[name="medallion_id"]').val() ? +$('[name="medallion_id"]').val() : 0,
-            engraving_id: $('[name="engraving_id"]').val() ? +$('[name="engraving_id"]').val() : 0,
+            stella_id: $('.stella_id').val() ? +$('.stella_id').val() : 0,
+            medallion_id: $('.medallion_id').val() ? +$('.medallion_id').val() : 0,
+            engraving_id: $('.engraving_id').val() ? +$('.engraving_id').val() : 0,
             on_pedestal_epitaph: "empty",
             left_epitaph: "empty",
             _token: $('[name="_token"]').val(),
@@ -861,10 +846,10 @@ $(function () {
         let tombstones = {height: 0, width: 0, thickness: 0, material: 0, id: 0};
         let parterres = {height: 0, width: 0, thickness: 0, material: 0, id: 0};
 
-        stella.id = +$('[name="stella_id"]').val();
-        pedestals.id = +$('[name="pedestals_id"]').val();
-        tombstones.id = +$('[name="tombstones_id"]').val();
-        parterres.id = +$('[name="parterres_id"]').val();
+        stella.id = +$('.stella_id').val();
+        pedestals.id = +$('.pedestals_id').val();
+        tombstones.id = +$('.tombstones_id').val();
+        parterres.id = +$('.parterres_id').val();
 
         let name_left = "empty";
         let name_right = "empty";
@@ -876,7 +861,6 @@ $(function () {
         reqaredInputs.each((index, item) => {
 
             if ($(item).val() == "") {
-                // console.log("input is empty");
                 toastr.error(messageForEmptyInput,'Следующий шаг не доступен!');
             }
         })
@@ -905,7 +889,6 @@ $(function () {
                 name_right = `${$('#surname_right').val()} ${$('#name_right').val()} ${$('#patronymic_right').val()}`;
             }
         }
-
 
         // проверка выбора цвета для ФИО усопшего
         if (name_left !== "empty" && paramsObj.name_color_id === 0) {
@@ -947,18 +930,46 @@ $(function () {
             name_right,
         };
 
-        // console.log("formData", formData);
-
         $.ajax({
             url: "/save_product",
             type: "POST",
             data: formData,
             success: function (response) {
-                // console.log(response);
-                window.location = response;
+                $.fancybox.close();
+                
+                $.fancybox.open({
+                    src  : '#decorSuccess',
+                    type : 'inline',
+                    opts : {
+                        afterShow : function( instance, current ) {
+                            console.info( 'done!' );
+                        }
+                    }
+                });
+
+                setTimeout(function () {
+                    $.fancybox.close();
+                    location.reload();
+                }, 3000);
             },
             error: function (response) {
                 console.log("error", response);
+                $.fancybox.close();
+
+                $.fancybox.open({
+                    src  : '#decorError',
+                    type : 'inline',
+                    opts : {
+                        afterShow : function( instance, current ) {
+                            console.info( 'done!' );
+                        }
+                    }
+                });
+
+                setTimeout(function () {
+                    $.fancybox.close();
+                    location.reload();
+                }, 10000);
             },
         });
     });
@@ -990,8 +1001,6 @@ $(function () {
         let allLiRow = divLi.parent(".color__size");
         let input = link.find("input");
 
-        // console.log("OBJ", obj);
-
         if ($(link).hasClass('active')) {
             clearLink(allLiRow, "color"); /** очистка */
             colorPrice = 0;
@@ -1000,8 +1009,6 @@ $(function () {
             clearLink(allLiRow, "color"); /** очистка */
             setActiveLink(input, link); /** назначение */
         }
-
-        // console.log(colorPrice, obj, positionObj);
 
         if (!positionObj) {
             setPriceTextInput(obj, colorPrice);
@@ -1087,7 +1094,7 @@ function setDefaultActiveValue (selector, obj = "stele") {
 }
 
 function clearLink(ul, obj = "stele") {
-    ul.children("." + obj + "__size-item").each(function () {
+    ul.find("." + obj + "__size-item").each(function () {
         let link = $(this).children("." + obj + "__size-link");
         if (link.hasClass("active")) {
             link.removeClass("active");
@@ -1248,12 +1255,12 @@ async function setParamsForObjInBody(obj, getFirstParams) {
 
         new_mtl = new THREE.MeshPhongMaterial({
             map: txt,
-            shininess: 10,
+            shininess: 100,
         });
     } else {
         new_mtl = new THREE.MeshPhongMaterial({
-            color: "0xfa688a",
-            shininess: 10,
+            color: "0xdf002c",
+            shininess: 100,
         });
     }
 
@@ -1265,7 +1272,6 @@ async function setParamsForObjInBody(obj, getFirstParams) {
 }
 function setParamsForMedalEngr(obj, data = {type_id: 0, size_id:0, form_id: 0, material_id:0}) {
 
-    // console.log(obj, data);
     $(`#${obj}_form-${data.type_id}`).addClass("active");
     $(`#${obj}_form-${data.type_id}`).find("input").attr("checked", true);
     $(`#${obj}_size-${data.size_id}`).addClass("active");
@@ -1308,7 +1314,6 @@ function setParamsForObjInHead(obj, params = {height: 0, width: 0, thickness:0, 
 }
 
 function setSizesForAllObjects(response) {
-    // console.log("function-stella", response);
 
     const namesPartsAnObject = ["stella", "pedestals", "parterres", "tombstones",];
 
@@ -1320,14 +1325,8 @@ function setSizesForAllObjects(response) {
 
     $(namesPartsAnObject).each((index, elem) => {
 
-        // console.log(elem);
-
         // Очистка всех активных значений
         clearActiveValue(elem);
-
-        // console.log(eval(`${elem}Resp`));
-        // console.log(eval(`response.modifier_size.${elem}`));
-        // console.log(eval(`response.modifier_size`));
 
         // Установка цен
         setPrice(elem, eval(`${elem}Resp`).price);
@@ -1351,8 +1350,6 @@ function setModelSize(model, objSize) {
     let height = objSize.height / eval(`${model}FirstParmsHeight`);
     let width = objSize.width / eval(`${model}FirstParmsWidth`);
     let thickness = objSize.thickness / eval(`${model}FirstParmsThickness`);
-
-    // console.log(model, height, width, thickness, objSize.height, objSize.width, objSize.thickness, eval(`${model}FirstParmsHeight`), eval(`${model}FirstParmsWidth`), eval(`${model}FirstParmsThickness`));
 
     if (model == 'pedestals') {
         // для стелы
@@ -1411,7 +1408,6 @@ function addValueToFastOrderForm(selector, obj) {
             activeParamVal = "empty";
         }
 
-        // console.log(activeParamKey, activeParamVal);
         if (isNaN(activeParamVal)) {
             obj[activeParamKey] = activeParamVal;
 
@@ -1425,12 +1421,10 @@ function addValueToFastOrderForm(selector, obj) {
 }
 
 function setPriceTextInput(nameSection, price) {
-    // console.log(nameSection, price);
 
     let firstPriceCahr = price === "" ?
         $(`.${nameSection}__params [name="characters_price"]`).val() :
         price;
-    // console.log(nameSection, firstPriceCahr);
 
     let countChar = 0;
     let totalPriceInitials;
@@ -1448,7 +1442,6 @@ function setValueFormTextInput(nameSection) {
     $(`.${nameSection}-input`).each((index, item) => {
 
         let searchId = $(item).attr("id");
-        // console.log(searchId, $(`.${searchId}`));
 
         $(`.${searchId}`).each((suIindex, subItem) => {
             $(subItem).text($(item).val());
@@ -1470,10 +1463,7 @@ function setValueFormImageInput(nameSection, searchDescription = "") {
 
 function setPriceImageInput(nameSection, position, imgPrice = 0, colorPrice = 0) {
 
-    // console.log(imgPrice, colorPrice);
-
     let totalPriceInPosition = imgPrice * colorPrice;
-    // console.log(totalPriceInPosition , imgPrice, colorPrice);
 
     $('[name="' + nameSection + "-" + position + '_price"]').val(totalPriceInPosition);
     $("#" + nameSection + "__name ." + position + "-price").text(colorPrice);
@@ -1483,8 +1473,6 @@ function setPriceImageInput(nameSection, position, imgPrice = 0, colorPrice = 0)
 
     let sectionPrice = leftSectionPrice + rightSectionPrice;
 
-    // console.log(sectionPrice,leftSectionPrice , rightSectionPrice);
-
     $(`[name="${nameSection}_price"]`).val(sectionPrice);
     $("#" + nameSection + "__name ." + "elem-price").text(sectionPrice);
 
@@ -1493,7 +1481,6 @@ function setPriceImageInput(nameSection, position, imgPrice = 0, colorPrice = 0)
 
 
 function setFirstSizesForAllObjects(response) {
-    // console.log("function-stella", response);
 
     const namesPartsAnObject = ["stella", "pedestals", "parterres", "tombstones",];
 

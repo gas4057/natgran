@@ -26,7 +26,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \View::composer(
-            'layouts.home_layouts', 'App\Http\ViewComposer\HomeComposer');
+            [
+                'layouts.home_layouts',
+                'home.home',
+                'home.question',
+            ], 'App\Http\ViewComposer\HomeComposer');
         Schema::defaultStringLength(191);
         Date::setlocale(config('app.locale'));
     }

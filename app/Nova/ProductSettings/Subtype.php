@@ -33,6 +33,8 @@ class Subtype extends Resource
         'id','subtype_name'
     ];
 
+    public static $displayInNavigation = false;
+
     public static function label()
     {
         return __('Типы продукта - подтипы');

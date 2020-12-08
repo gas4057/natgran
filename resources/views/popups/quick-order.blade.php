@@ -1,5 +1,5 @@
 <!-- модальное окно для быстрого заказа -->
-<div id="popup-qiuck-order" class="popup-qiuck-order mCustomScrollbar" data-mcs-theme="3d-dark">
+<div id="popup-qiuck-order" class="popup-qiuck-order">
     <div class="popup-qiuck-order__outer">
         <div class="popup-qiuck-order__title">БЫСТРЫЙ ЗАКАЗ</div>
         <form id="popup-qiuck-order-form" action="">
@@ -7,13 +7,13 @@
                 <input type="text" name="name" value="" id="popup-qiuck-order-name" placeholder="Ваша имя" required>
             </div>
             <div class="order--form__field d-flex ai-center">
-                <input type="text" name="email" value="" id="popup-qiuck-order-email" placeholder="E-mail" required>
+                <input type="text" name="email" value="" id="popup-qiuck-order-email" placeholder="E-mail">
             </div>
             <div class="order--form__field d-flex ai-center last">
                 <input type="text" name="phone" value="" id="popup-qiuck-order-phone" placeholder="Телефон для связи" required>
             </div>
         </form>
-        <div class="cart--products d-flex col">
+        <div class="cart--products d-flex col mCustomScrollbar" data-mcs-theme="3d-dark">
             @if(isset($cartItems))
                 @foreach($cartItems['items'] as $key=>$item)
                 <div class="cart--products__container d-flex col product-from-basket">

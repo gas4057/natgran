@@ -14,12 +14,12 @@
     @if(!$images->isEmpty())
         @foreach($images as $val)
             <div class="gallery--item d-flex col">
-                <a data-fancybox data-src="#gallery-content" href="javascript:;" data-fancybox-trigger="gallery">
+                <a href="{{ Storage::url($val->image)}}" data-fancybox="images">
                     <img src="{{ Storage::url($val->image)}}">
                     <div class="gallery--item__info d-flex col">
-                        <span class="gallery--item__name">{{$val->title}}</span>
-                        <p class="gallery--item__text">{{$val->desc}}</p>
-                        <p class="gallery--fullText">{{$val->desc}}</p>
+                        <span class="gallery--item__name">{!! $val->title !!}</span>
+                        <p class="gallery--item__text">{!! $val->desc !!}</p>
+                        <p class="gallery--fullText">{!! $val->desc !!}</p>
                     </div>
                 </a>
             <div>

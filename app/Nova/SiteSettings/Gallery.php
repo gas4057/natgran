@@ -33,7 +33,9 @@ class Gallery extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'desc'
+        'id',
+        'title',
+        'desc',
     ];
 
     public static function label()

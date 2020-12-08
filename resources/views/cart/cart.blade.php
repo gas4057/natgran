@@ -194,7 +194,7 @@
                                             <option disabled data-price="0">Выберите город доставки</option>
                                             @foreach($cities as $city)
                                                 <option @if($loop->first) selected @endif value={{$city->id}}
-                                                    data-price="{{$city->price}}">{{$city->city}} price:{{$city->price}}
+                                                    data-price="{{$city->price + 0}}">{!! $city->city !!} - {{($city->price + 0)}}р.
                                                 </option>
                                             @endforeach
                                         </select>

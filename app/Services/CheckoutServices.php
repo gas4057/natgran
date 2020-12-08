@@ -42,7 +42,6 @@ class CheckoutServices
 //        } else {
             foreach ($oldCart['items'] as $item) {
                 $dataOrder = null;
-                $dataOrder['client_id'] = $newClient['id'];
                 $dataOrder['product_id'] = $item['item']['id'];
                 $dataOrder['count_product'] = $item['qty'];
                 $dataOrder['price'] = $item['actualPrice'];
@@ -77,6 +76,9 @@ class CheckoutServices
             $request->session()->forget('orderInfo');
         }
         $request->session()->put('orderInfo',$orderInfo);
+        if ($cashless_payment == 'fastOrder') {
+            return $newClient->id;
+        }
         return $this->payment($cashless_payment);
     }
 
@@ -116,8 +118,7 @@ class CheckoutServices
         if (isset($productAttributes['engraving_id'])) {
             $dataOrder['engraving_id'] = $productAttributes['engraving_id'];
         }
-        $client->order()->create($dataOrder);
-        $order = $client->order->last();
+        $order = $client->order()->create($dataOrder);
         if (isset($productAttributes['name_left']) || isset($productAttributes['name_right'])) {
             $order->names_on_tombstone()->create($productAttributes);
         }

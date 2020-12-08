@@ -36,7 +36,7 @@ class HomeArticles extends Resource
      * @var array
      */
     public static $search = [
-        'title', 'key', 'content', 'alias'
+        'title', 'key',
     ];
 
     public static function label()

@@ -13,10 +13,8 @@
             <h2 class="title--orange">Контакты</h2>
             <div class="contacts--section col-50 d-flex col">
                 @if($contact_us)
-                    @foreach($contact_us as $val)
-                        <span class="contacts--section__title">{{$val->title}}</span>
-                        <span class="contacts--section__inform">{{$val->content}}</span>
-                    @endforeach
+                        <span class="contacts--section__title">{!! $contact_us->title !!}</span>
+                        <span class="contacts--section__inform">{!! $contact_us->content !!}</span>
                 @else
                     <span class="contacts--section__title">Контактная информация</span>
                     <span class="contacts--section__inform">Возникли вопросы по приобретению аксессуаров из кожи в нашем
@@ -27,17 +25,21 @@
                     <div class="contacts--section__details d-flex flex-wrap ai-center">
                     @foreach($site_contacts['phone'] as $site_contact)
                         <div class="col-50 d-flex ai-center">
-                            <a class="contacts--details_phone d-flex ai-center" href="tel:{{$site_contact->contact}}">{{$site_contact->contact}}</a>
-                            <a class="contacts--details_viber d-flex ai-center" href="tel:{{$site_contact->contact}}">
+                            <a class="contacts--details_phone d-flex ai-center" href="tel:+{{$site_contact->contact}}">
+                            + {{$site_contact->contact}}
+                            </a>
+                            <a class="contacts--details_viber d-flex ai-center" href="viber://chat?number=%2B{{$site_contact->contact}}">
                                 <img src="{{URL::asset('assets/img/viber.svg')}}" alt="...">
                             </a>
                         </div>
                     @endforeach
                         @else
                             @for($i = 0; $i <4;$i++)
-                            <a class="contacts--details_phone col-50 d-flex ai-center" href="tel:+375113985688">
+                            <a class="contacts--details_phone d-flex ai-center" href="tel:+375113985688">
                                 +375113985688
-                                <img src="{{URL::asset('assets/img/viber.svg')}}" alt="">
+                            </a>
+                            <a class="contacts--details_viber d-flex ai-center" href="viber://chat?number=%2B375113985688">
+                                <img src="{{URL::asset('assets/img/viber.svg')}}" alt="...">
                             </a>
                         @endfor
                     </div>
@@ -48,15 +50,20 @@
                         {{$val->contact}}
                     </a>
             @endforeach
-            @if($work_hours)
-                @foreach($work_hours as $val)
-                    <span class="contacts--details_worktime col-100 d-flex ai-center">{{$val->content}}</span>
-                @endforeach
-                        @else
-                            <span class="contacts--details_worktime col-100 d-flex ai-center">
+            @foreach($site_contacts['instagram'] as $val)
+                    <a class="contacts--details_email col-50 d-flex ai-center" href="{{$val->url}}" target="_blanck">
+                        <img src="{{URL::asset('assets/img/instagram-orange.svg')}}" alt="">
+                        {{$val->contact}}
+                    </a>
+            @endforeach
+                    @if($work_hours)
+                        <span
+                            class="contacts--details_worktime col-100 d-flex ai-center">{{$work_hours->content}}</span>
+                    @else
+                        <span class="contacts--details_worktime col-100 d-flex ai-center">
                                 Время работы: пн-пт 10:00-20:00
                             </span>
-            @endif
+                    @endif
             </div>
             <span class="contacts--section__title">Наши адреса</span>
             <ul class="contacts--section__adress d-flex col">
@@ -64,13 +71,13 @@
                 @foreach($site_contacts['address'] as $val)
                         <li class="adress--item d-flex ai-center">
                             <img src="{{URL::asset('assets/img/location.svg')}}" alt="">
-                            <span> {{$val->contact}}</span>
+                            <span data-fancybox="" data-src="#map"> {{$val->contact}}</span>
                         </li>
                 @endforeach
                 @else
                     <li class="adress--item d-flex ai-center">
                         <img src="{{URL::asset('assets/img/location.svg')}}" alt="">
-                        <span>220000, г. Минск ул. Уручская 23А</span>
+                        <span data-fancybox="" data-src="#map">220000, г. Минск ул. Уручская 23А</span>
                     </li>
                 @endif
             </ul>
@@ -86,7 +93,7 @@
                 <input class="form--input col-100" type="text" placeholder="Ваше имя" required name="first_name">
             </div>
             <div class="form--fied">
-                <input class="form--input col-100" type="email" placeholder="E-mail" required name="contact_email">
+                <input class="form--input col-100" type="email" placeholder="E-mail" name="contact_email">
             </div>
             <div class="form--fied">
                 <input id="contactsForm-tel" class="form--input col-100" type="text" placeholder="Телефон для связи" required name="contact_phone">

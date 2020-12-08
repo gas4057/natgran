@@ -13,7 +13,6 @@ use Illuminate\View\View;
 
 class HomeComposer
 {
-    protected $footer;
     protected $requisites;
     protected $cart;
     protected $catalogProducts;

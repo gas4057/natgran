@@ -33,7 +33,7 @@ class ProductsControllerServices
             ->only('name');
         $prodSubtypeName = $subtypeId != null ? ProductSubtype::findOrFail($subtypeId)->only('subtype_name')['subtype_name'] : '';
         $activeTab = Str::slug($prodTypeName['name'] . '-' . $prodSubtypeName);
-        $data_paginate = ['4', '8', '10', '12'];
+        $data_paginate = ['6', '9', '12', '15'];
         $data_orderBy = [
             'is_promotional' => 'акционные',
             'popularity_asc' => 'по популярности по возрастанию',
@@ -47,6 +47,9 @@ class ProductsControllerServices
 
         $types = ProductType::with('subtype')
             ->get();
+        if (empty($subtypeId) and $types->find($typeId)->subtype()->first()){
+            $subtypeId = $types->find($typeId)->subtype()->first()->id;
+        }
         $products = Product::whereTypeId($typeId)
             ->where('subtype_id', $subtypeId)
             ->where('is_active', true)
@@ -55,7 +58,7 @@ class ProductsControllerServices
         if (empty($products->items())) {
             $products = $this->getAllItemsType($typeId, $paginate);
         }
-        $sortBy = Cookie::has('sortBy') ? Cookie::get('sortBy') : 'name';
+        $sortBy = \Session::has('sortBy') ? \Session::get('sortBy') : 'is_promotional';
         $about = InfoAboutProduct::whereTypeId($typeId)
             ->get();
         $banner = Banner::where('key', 'monument')->first();
@@ -77,10 +80,8 @@ class ProductsControllerServices
         }
         $sortBy = $request->get('sortBy');
         $paginate = $request->get('paginate');
-        if (\Session::has('paginate')) {
-            \Session::forget('paginate');
-        }
         \Session::put('paginate', $paginate);
+        \Session::put('sortBy', $sortBy);
         switch ($sortBy) {
             //по популярности по убыванию
             case ($sortBy == 'popularity_desc'):

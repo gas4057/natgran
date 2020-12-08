@@ -22,7 +22,6 @@ $(document).ready(function () {
                 _token: data_ajax['token'],
             },
             success: function (response) {
-                // $('#questionModal').modal("show");
                 $.fancybox.open({
                     src  : '#questionModal',
                     type : 'inline',
@@ -34,7 +33,6 @@ $(document).ready(function () {
                 });
                 $form[0].reset();
                 setTimeout(function () {
-                    // $('#questionModal').modal("hide");
                     $.fancybox.close();
                 }, 500000);
             },

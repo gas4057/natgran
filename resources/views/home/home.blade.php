@@ -45,7 +45,7 @@
         </button>
     </div>
     <div class="main--prod__box ">
-        <div class="main--header box">
+        <div class="box flex-row">
             <div class="section--title d-flex ai-center">
                 <span class="section--title__num">1</span>
                 <span
@@ -90,39 +90,50 @@
                              id="{{$loop->iteration}}">
                              <div class="content w-100 d-flex ">
                                 @foreach($values->getrelations() as $value)
-                                    <div  class="product--item d-flex col {{$loop->first ? 'active' : ''}}" >
-                                        <div class="product--item__discount d-flex col ai-center justify-center">
-                                            <p class="item__discount d-flex"><img
-                                                    src="{{URL::asset('assets/img/discount.svg')}}"
-                                                    alt=""><span>Экономия</span>
-                                            </p><span class="item--discount__val">{{$value->saving}}</span>
+                                    <a href="{{route('products.id',$value->id)}}" class="product--item d-flex col ai-center">
+                                        <div class="product--item__img-wrap  wow animate__fadeInUp">
+                                            <img class="product--item__img"
+                                                src="{{$value->image ? Storage::url($value->image) : url('/images/demo/pamyatnik_dvoinoy.jpg')}}"
+                                                alt="...">
                                         </div>
-                                        <div class="product--item__img d-flex ai-center justify-center wow animate__fadeInUp">
-                                            <img
-                                                src="{{$value->image ? Storage::url($value->image) : url('/images/demo/pamyatnik_dvoinoy.jpg')}}" alt="">
-                                            </div>
 
-
-                                         <div class="prod-param wow animate__fadeInUp d-flex w-100">
-                                            <div class="product--item__params param-left col-60 d-flex col">
-                                                <div class="product--item__name">{{$value->subtype->subtype_name ?? ''}}</div>
-                                                   <div class="product--item__art d-flex">
-                                                        <span>арт.:</span>
-                                                        <span class="art-value">{{$value->product_code}}</span>
-                                                    </div>
+                                        <div class="product--item__description wow animate__fadeInUp">
+                                            <div class="product--item__info">
+                                                <div class="product--item__type">
+                                                    <span class="fw-600">{{$value->subtype->subtype_name ?? $value->type->name}}</span>
                                                 </div>
-                                                <div class="product--item__params param-left col-40 d-flex col">
-                                                    <div class="product--item__price d-flex">
-                                                        <span class="item-price old">{{$value->old_price}} руб.</span>
-                                                    </div>
-                                                    <div class="product--item__price d-flex">
-                                                        <span class="item-price current">{{$value->actual_price}} руб.</span>
-                                                    </div>
+
+                                                <div class="item-price old">
+                                                    <span>{{$value->old_price}}</span>
+                                                    <span> руб.</span>
                                                 </div>
                                             </div>
-                                                <a class="btn orange d-flex ai-center justify-center m0-auto"
-                                                href="{{route('products.id',$value->id)}}">Подробнее</a>
+
+                                            <div class="product--item__price">
+                                                <div class="product--item__art">
+                                                    <span class="fw-400">арт.:</span>
+                                                    <span class="fw-600">{{$value->product_code}}</span>
+                                                </div>
+
+                                                <div class="item-price--actual">
+                                                    <span>{{$value->actual_price}}</span>
+                                                    <span> руб.</span>
+                                                </div>
                                             </div>
+                                        </div>
+
+                                        <div class="product--item__link-wrap">
+                                            <div class="product--item__link btn orange d-flex ai-center justify-center mb-0" tabindex="0">
+                                                Подробнее
+                                            </div>
+                                        </div>
+
+                                        <div class="product--item__sell">
+                                            <div class="product--item__economy">Экономия</div>
+                                            <div class=""><span class="fw-700">{{$value->saving}}</span> руб.</div>
+                                        </div>
+
+                                    </a>
                                 @endforeach
                             </div>
                             <a class="more--products-slider" href="{{route('products.type',[$value->type_id,$value->subtype_id])}}">
@@ -160,17 +171,17 @@
         <div class="box d-flex">
             <div class="why_choose__quote">
                 <p class="choose-quote__text">{!! $articles[1]->title !!}</p>
-                <img  class="quote--img wow animate__fadeIn" data-wow-delay="1.5s" data-wow-duration="2s"
+                <img  class="quote--img wow animate__fadeIn" data-wow-delay="1s" data-wow-duration="2s"
                          src="{{$articles[1]->image ? Storage::url($articles[1]->image) : URL::asset('assets/img/quote-image.png')}}" alt="">
             </div>
             <div class="why_choose__reasons d-flex flex-wrap">
                     @foreach($articles[1]->getRelations() as $article)
                         @foreach($article as $item)
                             <div class="why_choose__reason {{$loop->first ? 'active' : ''}}">
-                            <div class="reason--icon d-flex ai-center justify-center wow animate__fadeInUp" ><img
+                            <div class="reason--icon d-flex ai-center justify-center wow animate__fadeInUp" data-wow-duration=".66s"><img
                                     src="{{$item->image ? Storage::url($item->image) : URL::asset('assets/img/money.svg')}}" alt=""></div>
-                            <div class="reason--name wow animate__fadeInUp" data-wow-delay=".5s">{!!$item->title!!}</div>
-                            <div class="reason--text wow animate__fadeInUp" data-wow-delay="1s">{!!$item->text_block!!}</div>
+                            <div class="reason--name wow animate__fadeInUp" data-wow-delay=".31s" data-wow-duration=".66s">{!!$item->title!!}</div>
+                            <div class="reason--text wow animate__fadeInUp" data-wow-delay=".66s" data-wow-duration=".66s">{!!$item->text_block!!}</div>
                         </div>
                         @endforeach
                 </div>
@@ -206,59 +217,59 @@
                 @foreach($articles[2]->getRelations() as $article)
                 <div class="sheme-top__central">
                     <div class="sheme--row d-flex ai-center active">
-                        <div class="sheme--elem bottom-dotted wow animate__fadeInUp">
+                        <div class="sheme--elem bottom-dotted wow animate__fadeInUp" data-wow-duration=".66s">
                             <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[0]->title}}</div>
                             <div class="sheme--elem__text">{!! $article[0]->text_block !!}</div>
                         </div>
                         <div class="sheme--link d-flex ai-center justify-center"></div>
                     </div>
                     <div class="sheme--row d-flex ai-center">
-                        <div class="sheme--elem bottom-dotted wow animate__fadeInUp" data-wow-delay=".5s">
+                        <div class="sheme--elem bottom-dotted wow animate__fadeInUp" data-wow-duration=".66s">
                             <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[1]->title}}</div>
                             <div class="sheme--elem__text">{!! $article[1]->text_block !!}</div>
                         </div>
                         <div class="sheme--link d-flex ai-center justify-center"></div>
                     </div>
-                    <div class="sheme--elem bottom-dotted wow animate__fadeInUp" data-wow-delay="1s">
+                    <div class="sheme--elem bottom-dotted wow animate__fadeInUp" data-wow-duration=".66s">
                         <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[2]->title}}</div>
                         <div class="sheme--elem__text">{!! $article[2]->text_block !!}</div>
                     </div>
                 </div>
             </div>
             <div class="sheme-bottom d-flex flex-wrap">
-                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-delay="1.3s">
+                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[3]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[3]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem right--dotted bottom-dotted wow animate__fadeInUp" data-wow-delay="1.6s">
+                <div class="sheme--elem right--dotted bottom-dotted wow animate__fadeInUp" data-wow-duration=".66s"">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[4]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[4]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem wow animate__fadeInUp" data-wow-delay="1.9s">
+                <div class="sheme--elem wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[5]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[5]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-delay="2.1s">
+                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[6]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[6]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem right--dotted bottom-dotted wow animate__fadeInUp" data-wow-delay="2.4s">
+                <div class="sheme--elem right--dotted bottom-dotted wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[7]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[7]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem wow animate__fadeInUp" data-wow-delay="2.7s">
+                <div class="sheme--elem wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[8]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[8]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-delay="3s">
+                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[9]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[9]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-delay="3.3s">
+                <div class="sheme--elem right--dotted wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[10]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[10]->text_block !!}</div>
                 </div>
-                <div class="sheme--elem  wow animate__fadeInUp" data-wow-delay="3.6s">
+                <div class="sheme--elem  wow animate__fadeInUp" data-wow-duration=".66s">
                     <div class="sheme--elem__number d-flex ai-center justify-center">{{$article[11]->title}}</div>
                     <div class="sheme--elem__text">{!! $article[11]->text_block !!}</div>
                 </div>
@@ -338,7 +349,7 @@
                 @endforeach
             </div>
         </div>
-        
+
     </div>
     <div class="main--quality">
         <div class="box">
@@ -499,8 +510,7 @@
                     <path d="M0.621094 1.51562L5.09913 5.75492L0.621094 10.104" stroke="#F09939" stroke-width="1.5"/>
                 </svg>
             </a>
-            <a
-                class="our-instagram d-flex ai-center justify-center" href="/">
+            <a class="our-instagram d-flex ai-center justify-center" href="{{$site_contacts['instagram']->first()->url}}">
                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M19.3085 0H7.16657C3.21486 0 0 3.21486 0 7.16657V19.3087C0 23.2602 3.21486 26.4751 7.16657 26.4751H19.3087C23.2602 26.4751 26.4751 23.2602 26.4751 19.3087V7.16657C26.4751 3.21486 23.2602 0 19.3085 0V0ZM13.2375 20.4766C9.24584 20.4766 5.99847 17.2293 5.99847 13.2375C5.99847 9.24584 9.24584 5.99847 13.2375 5.99847C17.2293 5.99847 20.4766 9.24584 20.4766 13.2375C20.4766 17.2293 17.2293 20.4766 13.2375 20.4766ZM20.6497 7.70568C19.4701 7.70568 18.5107 6.74623 18.5107 5.56661C18.5107 4.387 19.4701 3.42735 20.6497 3.42735C21.8294 3.42735 22.789 4.387 22.789 5.56661C22.789 6.74623 21.8294 7.70568 20.6497 7.70568Z"
@@ -512,9 +522,7 @@
                         d="M20.6502 4.97975C20.3266 4.97975 20.0632 5.24315 20.0632 5.56673C20.0632 5.89032 20.3266 6.15371 20.6502 6.15371C20.974 6.15371 21.2374 5.89052 21.2374 5.56673C21.2374 5.24294 20.974 4.97975 20.6502 4.97975Z"
                         fill="#3C5B3F"></path>
                 </svg>
-                @foreach($contacts as $contact)
-                Наш Instagram: <span>{{$contact->contact}}</span></a>
-                @endforeach
+                Наш Instagram: <span>{{$site_contacts['instagram']->first()->contact ?? 'greenstoneby'}}</span></a>
         </div>
     </div>
     <div class="main--reviews">
@@ -599,8 +607,8 @@
                     @foreach($news as $item)
                     <div class="main--faq__item d-flex w-100 col {{$loop->first ? 'active' : ''}} wow animate__fadeInUp">
                         <a class="faq--item__name" href="{{route('news.id',$item->id)}}">{{$item->title}}</a>
-                        <span class="faq--item__text">
-                            {{$item->short_desc}}</span>
+                        <a href="{{route('news.id',$item->id)}}" class="faq--item__text">
+                            {{$item->short_desc}}</a>
                     </div>
                     @endforeach
                 </div>

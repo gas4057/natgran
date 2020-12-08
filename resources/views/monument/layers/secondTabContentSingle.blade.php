@@ -3,7 +3,7 @@
     <!-- Гравировка портрета / Медальон -->
     <div id="accordion-portrait" class="accordion accordion--no-img">
         <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-            <img class="accordion__title-img " src="http://natgran/assets/img/medallion.svg" alt="...">
+            <img class="accordion__title-img " src="{{URL::asset('assets/img/medallion.svg')}}" alt="...">
         </div>
 
         <div class="accordion__title">
@@ -161,7 +161,7 @@
     <div class="initials__params ajax__params mt-10">
         <div id="accordion-initials" class="accordion accordion--no-img">
             <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-                <img class="accordion__title-img" src="http://natgran/assets/img/surname.svg" alt="...">
+                <img class="accordion__title-img" src="{{URL::asset('/assets/img/surname.svg')}}" alt="...">
             </div>
 
             <div id="initials__name" class="accordion__title">
@@ -229,7 +229,7 @@
     <div class="date__params ajax__params mt-10">
         <div id="accordion-memorable-dates" class="accordion accordion--no-img">
             <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-                <img class="accordion__title-img" src="http://natgran/assets/img/date.svg" alt="...">
+                <img class="accordion__title-img" src="{{URL::asset('assets/img/date.svg')}}" alt="...">
             </div>
 
             <div id="date__name" class="accordion__title">
@@ -317,7 +317,7 @@
     <div class="epitaph__params ajax__params mt-10">
         <div id="accordion-epitaph" class="accordion accordion--no-img">
             <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-                <img class="accordion__title-img" src="http://natgran/assets/img/epitaph.svg" alt="...">
+                <img class="accordion__title-img" src="{{URL::asset('assets/img/epitaph.svg')}}" alt="...">
             </div>
 
             <div id="epitaph__name" class="accordion__title">
@@ -391,7 +391,7 @@
     <div class="stella_image__params ajax__params mt-10">
         <div id="accordion-stella-drawing" class="accordion accordion--no-img">
             <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-                <img class="accordion__title-img" src="http://natgran/assets/img/epitaph.svg" alt="...">
+                <img class="accordion__title-img" src="{{URL::asset('assets/img/epitaph.svg')}}" alt="...">
             </div>
 
             <div id="stella_image__name" class="accordion__title">
@@ -445,15 +445,15 @@
                         <label class="product--row__label product--row__50 product--row__label--material
                         product--row__label--h200 image__size-item stella_image__size-item d-flex ai-center justify-center
                         stella_image-img-left-select-item stella_image-img-left-select-{{$key}} px-5" for="">
-                            <div class="stella_image__size-link stele__size-link image__size-link stele__size-link--img
+                            <div class="stella_image__size-link stele__size-link image__size-link stele__size-link--img stele__size-link--img-big
                              stele__size-link--big-circle aviable" id="material-2"
                                  data-position="left" data-element="stella_image"
                                  data-description="Тестовое описание - 2" data-price="20">
                                 <input class="hide-input par--js" type="radio" name="left_stella_image_id"
                                        value="{{$stellaImage->id}}">
                                 <img class="stele__size-img stele__size-img--contain"
-                                     src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}"
-                                     alt="...">
+                                src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}"
+                                alt="...">
                             </div>
                         </label>
                         @endif
@@ -492,7 +492,7 @@
         <div id="accordion-tombstone-drawing" class="accordion accordion--no-img">
 
             <div class="accordion__title-img-wrap accordion__title-img-wrap--registration">
-                <img class="accordion__title-img" src="http://natgran/assets/img/epitaph.svg" alt="...">
+                <img class="accordion__title-img" src="{{URL::asset('assets/img/epitaph.svg')}}" alt="...">
             </div>
 
             <div id="tombstone_image__name" class="accordion__title">
@@ -547,7 +547,7 @@
                              product--row__50 product--row__label--h200 image__size-item
                              tombstone_image__size-item d-flex ai-center justify-center px-5 tombstones_image-img-left-select-item
                              tombstones_image-img-left-select-{{$key}}" for="">
-                        <div class="tombstone_image__size-link stele__size-link image__size-link
+                        <div class="tombstone_image__size-link stele__size-link image__size-link stele__size-link--img-big
                          stele__size-link--img stele__size-link--big-circle aviable"
                              id="material-1" data-position="left" data-element="tombstone_image"
                              data-description="Тестовое описание - 1" data-price="10">

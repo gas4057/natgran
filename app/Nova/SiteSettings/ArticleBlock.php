@@ -36,6 +36,11 @@ class ArticleBlock extends Resource
      */
     public static $search = [
         'id',
+        'text_block',
+        'caption_1',
+        'caption_2',
+        'title',
+        'caption_text',
     ];
 
     public static function label()
@@ -65,8 +70,30 @@ class ArticleBlock extends Resource
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Блоки','text_block')
+            Tiptap::make('Блок','text_block')
                 ->rules('required')
+                ->onlyOnForms()
+                ->buttons([
+                    'heading',
+                    'italic',
+                    'bold',
+                    'code',
+                    'link',
+                    'strike',
+                    'underline',
+                    'bullet_list',
+                    'ordered_list',
+                    'code_block',
+                    'blockquote',
+                ])
+                ->headingLevels([2, 3, 4, 5, 6]),
+            Text::make('Описание к блоку','title')
+                ->sortable()
+                ->showOnDetail()
+                ->hideWhenUpdating()
+                ->hideWhenCreating(),
+            Tiptap::make('Описание к блоку','title')
+//                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
                     'heading',
@@ -132,12 +159,12 @@ class ArticleBlock extends Resource
             Image::make('Изображение_2','image_2')
                 ->disk('public')
                 ->path('ArticleBlocks'),
-            Text::make('title')
+            Text::make('Заголовок_3','caption_3')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('title')
+            Tiptap::make('Заголовок_3','caption_3')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -154,12 +181,15 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Text::make('Текст к заголовку','caption_text')
+            Image::make('Изображение_3','image_3')
+                ->disk('public')
+                ->path('ArticleBlocks'),
+            Text::make('Текст в конце блока','caption_text')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Текст к заголовку','caption_text')
+            Tiptap::make('Текст в конце блока','caption_text')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -176,6 +206,15 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
+            Image::make('Блок Изображений_1','block_image_1')
+                ->disk('public')
+                ->path('ArticleBlocks'),
+            Image::make('Блок Изображений_2','block_image_2')
+                ->disk('public')
+                ->path('ArticleBlocks'),
+            Image::make('Блок Изображений_3','block_image_3')
+                ->disk('public')
+                ->path('ArticleBlocks'),
 
         ];
     }

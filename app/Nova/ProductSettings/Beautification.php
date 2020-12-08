@@ -36,7 +36,7 @@ class Beautification extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','description',
     ];
 
     public static function label()

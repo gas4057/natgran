@@ -31,7 +31,7 @@ class MedallionMaterial extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'value',
     ];
 
     public static function label()

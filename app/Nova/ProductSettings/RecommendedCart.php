@@ -35,6 +35,8 @@ class RecommendedCart extends Resource
      */
     public static $search = [
         'id',
+        'title',
+        'content',
     ];
 
     public static function label()

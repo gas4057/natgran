@@ -32,7 +32,8 @@ class Review extends Resource
      * @var array
      */
     public static $search = [
-        'id','desc'
+        'id',
+        'desc',
     ];
 
     public static function label()

@@ -36,6 +36,7 @@ class ModifierType extends Resource
      */
     public static $search = [
         'id',
+        'type',
     ];
 
     public static function label()

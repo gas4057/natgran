@@ -20,6 +20,16 @@ class TombstonesTableSeeder extends Seeder
             'type_id' => 2,
             'height' => '80',
             'width' => '40',
+            'thickness' => '3',
+        ]);
+        \Illuminate\Support\Facades\DB::table('modifier_product_type')->insert([
+            'modifier_id' => $tombstones->id,
+            'product_type_id' => 1,
+        ]);
+        $tombstones = Modifier::create([
+            'type_id' => 2,
+            'height' => '80',
+            'width' => '40',
             'thickness' => '5',
         ]);
         \Illuminate\Support\Facades\DB::table('modifier_product_type')->insert([
@@ -31,16 +41,6 @@ class TombstonesTableSeeder extends Seeder
             'height' => '80',
             'width' => '40',
             'thickness' => '8',
-        ]);
-        \Illuminate\Support\Facades\DB::table('modifier_product_type')->insert([
-            'modifier_id' => $tombstones->id,
-            'product_type_id' => 1,
-        ]);
-        $tombstones = Modifier::create([
-            'type_id' => 2,
-            'height' => '80',
-            'width' => '40',
-            'thickness' => '3',
         ]);
         \Illuminate\Support\Facades\DB::table('modifier_product_type')->insert([
             'modifier_id' => $tombstones->id,

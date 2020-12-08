@@ -14,7 +14,8 @@ class SiteServicesController extends Controller
         $type = 'Услуги';
         $service = ArticleType::where('type','Услуги')
             ->first()
-            ->articles;
+            ->articles
+            ->where('is_active', true);
         $breadcrumbs = 'service';
         $banner = Banner::first();
         return view('service.index', compact('service','breadcrumbs','type','banner'));
@@ -33,9 +34,10 @@ class SiteServicesController extends Controller
     public function formalization()
     {
         $type = 'Оформление';
-        $service = ArticleType::where('type','Оформление')
+        $service = ArticleType::where('type', 'Оформление')
             ->first()
-            ->articles;
+            ->articles
+            ->where('is_active', true);
         $breadcrumbs = 'formalization';
         $banner = Banner::first();
         return view('service.index', compact('service','breadcrumbs','type','banner'));
@@ -46,7 +48,8 @@ class SiteServicesController extends Controller
         $type = 'Оплата';
         $service = ArticleType::where('type','Оплата')
             ->first()
-            ->articles;
+            ->articles
+            ->where('is_active', true);
         $breadcrumbs = 'remuneration';
         $banner = Banner::first();
         return view('service.index', compact('service','breadcrumbs','type','banner'));

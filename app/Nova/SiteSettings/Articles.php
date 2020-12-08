@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Manogi\Tiptap\Tiptap;
 
@@ -37,17 +38,26 @@ class Articles extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'key', 'title', 'content'
+        'id',
+        'key',
+        'title',
+        'content',
+        'short_desc',
     ];
 
     public static function label()
     {
-        return __('Статьи/Акции');
+        return __('Статьи');
     }
 
     public static function singularLabel()
     {
-        return __('Статью/Акцию');
+        return __('Статью');
+    }
+
+    protected static function applyFilters(NovaRequest $request, $query, array $filters)
+    {
+        return $query->where('article_type_id',2);
     }
 
     /**
@@ -169,9 +179,7 @@ class Articles extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new ArticleFilter()
-        ];
+        return [];
     }
 
     /**

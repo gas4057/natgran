@@ -51,7 +51,7 @@ $(document).ready(function () {
 
     for (let item of inputRequared) {
 
-      if ($(item).val().length == 0) {
+      if ($(item).val().length == 0 || $(item).hasClass('error')) {
 
         $(disabledTab).each((index, item) => {
           $(item).addClass('tab-disabled');
@@ -217,7 +217,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
   if ($("#popup-qiuck-order-phone").length) {
-      $("#popup-qiuck-order-phone").mask("+3 (000) 000-00-00");
+      $("#popup-qiuck-order-phone").mask("+375 (00) 000-00-00");
   }
 });
 
@@ -359,9 +359,18 @@ $(document).ready(function () {
 
 // 3д демострация товара
 $(document).ready(function () {
+
   if ($("#demonstration-3d").length) {
     $("#demonstration-3d").brazzersCarousel();
+    $("#update-part-3d-reel-new").on("mousedown", () => {
+      $(parent).addClass('hide-overlay');
+    })
+    $(window).on("mouseup", () => {
+      $(parent).removeClass('hide-overlay');
+    })
 
+
+    let parent = $(".sarcophagus-view");
     let divWrapImg = $('.tmb-wrap-table div');
     let wrapImg = $('.image-wrap img');
     let toggle = $('#playpause');
@@ -369,39 +378,35 @@ $(document).ready(function () {
     let rotate = false;
 
     
-  //   toggle.on("change", function(e) {
-  //     e.preventDefault();
-  //     console.log($(this));
+    toggle.on("change", function(e) {
+      e.preventDefault();
+
+      rotate = !rotate;
       
-  //     if(!rotate) {
-  //       rotate = true;
-  //     } else {
-  //       rotate = false;
-  //     }
-      
-  //     var x = 0;
+      var x = 0;
 
-  //     function go() {
+      function go() {
 
-  //       for (let i = 0; i < count; i++) {
-  //         $(divWrapImg[i]).removeClass('active')
-  //         $(wrapImg[i]).css('display', 'none')
-  //       }
+        for (let i = 0; i < count; i++) {
+          $(divWrapImg[i]).removeClass('active')
+          $(wrapImg[i]).css('display', 'none')
+          if (!rotate) {
+            return;
+          }
+        }
 
-  //         $(divWrapImg[x]).addClass('active')
-  //         $(wrapImg[x]).css('display', 'block')
+        $(divWrapImg[x]).addClass('active')
+        $(wrapImg[x]).css('display', 'block')
 
 
-  //         if (x++ < count) {
-  //             setTimeout(go, 75);
-  //         } else if (x = count) {
-  //           x=0
-  //           go();
-  //         }
-  //     }
-  //     go();
-  // })
-
-
+        if (x++ < count) {
+            setTimeout(go, 50);
+        } else if (x = count) {
+          x=0
+          go();
+        }
+      }
+      go();
+  })
   }
 });

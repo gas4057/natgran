@@ -2,6 +2,7 @@
 
 namespace App\Nova\Filters;
 
+use App\Nova\SiteSettings\Articles;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
@@ -24,7 +25,7 @@ class ArticleFilter extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('key', $value);
+        return $query->where('article_type_id', $value);
     }
 
     /**
@@ -36,13 +37,9 @@ class ArticleFilter extends Filter
     public function options(Request $request)
     {
         return [
-            'Новости' => 'news',
-            'О компании' => 'about_company',
-            'Договор оферта' => 'offer_agreement',
-            'Политика' => 'privacy_policy',
-            'Реквизиты' => 'site_requisites',
-            'Часы работы' => 'work_hours',
-            'Свзяь с нами' => 'Contact_us',
+            'Новости' => 2,
+            'Акции' => 3,
+            'Настройки' => 1,
         ];
     }
 }

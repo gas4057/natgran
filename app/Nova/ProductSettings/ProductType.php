@@ -32,7 +32,10 @@ class ProductType extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'info'
+        'id',
+        'name',
+        'info',
+        'more_product',
     ];
 
     public static function label()
@@ -43,6 +46,11 @@ class ProductType extends Resource
     public static function singularLabel()
     {
         return __('Тип продукта');
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
     }
 
     /**
@@ -63,7 +71,7 @@ class ProductType extends Resource
                 ->disk('public')
                 ->deletable(false)
                 ->creationRules('required')
-                ->rules('image', 'max:100')
+                ->rules('image')
                 ->path('ProductType'),
             Text::make('Больше продуктов','more_product')
                 ->rules('required'),

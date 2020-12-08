@@ -33,7 +33,7 @@ class SiteContact extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'address',
+        'id', 'contact', 'url',
     ];
 
     public static function label()
@@ -57,8 +57,9 @@ class SiteContact extends Resource
         return [
             ID::make()->sortable(),
             BelongsTo::make('Тип', 'type', 'App\Nova\SiteSettings\SiteContactType'),
-            Text::make('Контакт','contact')
+            Text::make('Контакт', 'contact')
                 ->rules('required'),
+            Text::make('Url', 'url'),
         ];
     }
 

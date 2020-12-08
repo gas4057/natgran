@@ -14,6 +14,7 @@ class NewsController extends Controller
         $news = ArticleType::where('type','Новости')
             ->first()
             ->articles()
+            ->orderBy('created_at', 'desc')
             ->paginate(8);
         $breadcrumbs = 'news';
         return view('home.news', compact('news','breadcrumbs'));

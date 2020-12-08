@@ -34,7 +34,7 @@ class HomeProduct extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','tab_title','text_more'
     ];
 
     public static function label()
@@ -63,6 +63,9 @@ class HomeProduct extends Resource
             Text::make('text_more')
                 ->sortable()
                 ->rules('required'),
+            Text::make('nest_id')
+                ->help('Приоритет для вывода на гл.стр.')
+                ->sortable(),
             BelongsTo::make('продукт_1', 'product1', 'App\Nova\ProductSettings\Product'),
             BelongsTo::make('продукт_2', 'product2', 'App\Nova\ProductSettings\Product'),
             BelongsTo::make('продукт_3', 'product3', 'App\Nova\ProductSettings\Product'),

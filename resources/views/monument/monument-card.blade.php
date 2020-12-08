@@ -7,8 +7,6 @@
     <script src="{{URL::asset('assets/js/page.order_set_attributes.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/libs.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/jquery-ui.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/html.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/settings.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/tree.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/OrbitControls.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/OBJLoader.js')}}"></script>
@@ -20,7 +18,6 @@
     <script src="{{URL::asset('assets/js/front/autosize.min.js')}}"></script>
     <script src="{{asset('assets/js/front/jQuery.Brazzers-Carousel.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/front/additional.js')}}"></script>
-    <script src="{{URL::asset('assets/js/front/scripts.js')}}"></script>
 @endsection
 
 @section('content')
@@ -33,22 +30,18 @@
                 data-ready-id="870">
 
                 <!-- Банер с рекламой -->
-                <div class="product-card-baner">
-                    <div class="box col mt-40 mb-127">
-                        @include('layouts.banner')
-                    </div>
-                </div>
+                <div class="box catalog-baner">@include('layouts.banner')</div>
 
 
                 <!-- 3d картинка -->
-                @if($product->subtype_id == 3 || $product->subtype_id == 7)
-                    @include('monument.layers.3dModels.Sarcophagus')
-                @else
+                @if($product->subtype_id == 1 || $product->subtype_id == 4)
                     @push('scripts')
                         <script src="{{URL::asset('assets/js/model-3d.js')}}"></script>
                     @endpush
-                @include('monument.layers.3dModels.Single&Double')
-            @endif
+                    @include('monument.layers.3dModels.Single&Double')
+                @else
+                    @include('monument.layers.3dModels.Sarcophagus')
+                @endif
 
                 <!-- Главные табы -->
                 <div class="tabs">
@@ -73,7 +66,8 @@
                         </li>
                     </ul>
 
-                    <form class="set_attributes product--details__constructor d-flex col order-step-form" action="{{route('product.save')}}" method="POST" id="order-constructor-form">
+                    <form class="set_attributes product--details__constructor d-flex col order-step-form"
+                          action="{{route('product.save')}}" method="POST" id="order-constructor-form">
                         <input name="id" type="hidden" value="870">
                         <input type="hidden" name="final--price--equipment" value="">
                         <input type="hidden" name="final--price--registration" value="">
@@ -148,10 +142,10 @@
                                     </ul>
                                 </div>
 
-                                @if($product->subtype_id == 3 || $product->subtype_id == 7)
-                                    @include('monument.layers.firstTabSarcophagus')
-                                @else
+                                @if($product->subtype_id == 1 || $product->subtype_id == 4)
                                     @include('monument.layers.firstTabSingle&Double')
+                                @else
+                                    @include('monument.layers.firstTabSarcophagus')
                                 @endif
 
                                 <div class="tabs__next-step">
@@ -283,12 +277,14 @@
                                         </li>
                                     </ul>
                                 </div>
-                                @if($product->subtype_id == 3 || $product->subtype_id == 7)
-                                    @include('monument.layers.thirdTabSarcophagus')
-                                @elseif($product->type_id == 1)
+                                @if($product->subtype_id == 1)
                                     @include('monument.layers.thirdTabContentSingle')
-                                @else
+                                @elseif($product->subtype_id == 4)
                                     @include('monument.layers.thirdTabContentDouble')
+                                @elseif($product->subtype_id == 2 || $product->subtype_id == 3)
+                                    @include('monument.layers.thirdTabSingleSarcophagus')
+                                @elseif($product->subtype_id == 5 || $product->subtype_id == 6)
+                                    @include('monument.layers.thirdTabDoubleSarcophagus')
                                 @endif
 
                             </div>

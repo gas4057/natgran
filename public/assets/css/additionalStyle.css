@@ -168,7 +168,7 @@
     width: 20px;
     height: 20px;
     top: 10px;
-    left: 68%;
+    right: 15px;
     color: #fff !important;
 }
 
@@ -429,12 +429,6 @@ button {
     align-items: flex-end;
 }
 
-/*.main--why_choose .why_choose__reason .reason--name {*/
-/*    font-weight: 400;*/
-/*}*/
-/*.main--why_choose .why_choose__reason .reason--text {*/
-/*    font-weight: 300;*/
-/*}*/
 .main--why_choose .why_choose__quote {
     padding: 80px 25px 30px 25px;
 }

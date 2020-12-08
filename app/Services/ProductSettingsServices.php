@@ -36,12 +36,11 @@ class ProductSettingsServices
         $modifierTypes = ModifierType::get();
         $service = new RecommendedCartServices();
         $modifiersOldPrice = null;
-        $sarcophagusImages = null;
+        $arImgModel = [];
         $recommendedCarts = $service->getCarts($product->type_id);
-        $breadcrumbs = 'product';
-        if ($product->subtype_id == 3 || $product->subtype_id == 6) {
-            $breadcrumbs = 'sarcophagus';
-            $sarcophagusImages = $this->getImgForSarcophagus($product);
+        $breadcrumbs = 'productcard-'.$product->type_id.'-'. $product->subtype_id;
+        if ($product->subtype_id != 1 and $product->subtype_id != 4) {
+            $arImgModel = $this->getImgForModel($product);
         } else {
 
             /** получить упорядоченную размерную сетку по модификаторам */
@@ -125,7 +124,7 @@ class ProductSettingsServices
                 'moreMedallion' => $moreMedallion,
                 'moreText' => $moreText,
                 'modifiersOldPrice' => $modifiersOldPrice,
-                'sarcophagusImages' => $sarcophagusImages,
+                'arImgModel' => $arImgModel,
             ]));
     }
 
@@ -455,9 +454,8 @@ class ProductSettingsServices
                 $modifiers[$key] = $item;
             }
         }
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $addProduct = new CartController();
-        $addProduct->addMonumentToCart([
+        $cartService = new CartController();
+        $cartService->addMonumentToCart([
             'product' => $product,
             'attributes' => $productAttribute,
             'modifiers' => ['modifier' => $modifiers],
@@ -515,7 +513,7 @@ class ProductSettingsServices
     {
         $request->request->add([
             'delivery_id' => 1,
-            'cashless_payment' => 1,
+            'cashless_payment' => 'fastOrder',
         ]);
         $this->saveProduct($request);
         $service = new CheckoutServices();
@@ -576,14 +574,13 @@ class ProductSettingsServices
         return $oldPrice;
     }
 
-    public function getImgForSarcophagus($product)
+    public function getImgForModel($product)
     {
         if ($product->sarcophagusImages()->exists()) {
-            $images = $product->sarcophagusImages->first()->images;
-        } else {
-            $images = null;
+            return $images = $product->sarcophagusImages
+                ->first()
+                ->getMedia('images');
         }
-        return $images;
     }
 
     public function getModifiersSizeChart(Product $product, $modifierTypes)

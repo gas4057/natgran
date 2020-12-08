@@ -32,7 +32,7 @@ class Medallion extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+       'id'
     ];
 
     public static function label()

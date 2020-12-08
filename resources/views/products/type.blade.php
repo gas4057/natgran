@@ -13,13 +13,12 @@
 
     @include('layouts.breadcrumb_layouts')
 
-    <div class="box catalog-baner">
-        @include('layouts.banner')
-    </div>
+    <div class="box catalog-baner">@include('layouts.banner')</div>
 
     <div class="box catalog-section">
         <!------------------------------ sidebar start ------------------------------>
         <div class="catalog--sidebar d-flex col">
+            <h2 class="title--orange">Каталог</h2>
 
         <div class="catalog--side-bar-toggle-wrap">
             <div class="catalog--side-bar-toggle"></div>
@@ -33,7 +32,7 @@
                 <label>
                     <select class="select_sort pagination" name="paginate">
                         @foreach($data_paginate as $val)
-                                <option {{$paginate == $val ? 'checked' : ''}} value={{$val}}>{{$val}}</option>
+                            <option {{$paginate == $val ? 'selected' : ''}} value={{$val}}>{{$val}}</option>
                         @endforeach
                     </select>
                 </label>
@@ -43,11 +42,7 @@
                 <label>
                     <select class="select_sort sorting" name="sortBy">
                         @foreach($data_orderBy as $key=>$val)
-                            @if($sortBy == $val)
-                                <option checked value={{$key}}>{{$val}}</option>
-                            @else
-                                <option value={{$key}}>{{$val}}</option>
-                            @endif
+                            <option {{$sortBy == $key ? 'selected' : ''}} value={{$key}}>{{$val}}</option>
                         @endforeach
                     </select>
                 </label>
@@ -177,7 +172,7 @@
                             <label>
                                 <select class="select_sort pagination" name="paginate">
                                     @foreach($data_paginate as $val)
-                                            <option {{$paginate == $val ? 'checked' : ''}} value={{$val}}>{{$val}}</option>
+                                            <option {{$paginate == $val ? 'selected' : ''}} value={{$val}}>{{$val}}</option>
                                     @endforeach
                                 </select>
                             </label>
@@ -187,11 +182,7 @@
                             <label>
                                 <select class="select_sort sorting" name="sortBy">
                                     @foreach($data_orderBy as $key=>$val)
-                                        @if($sortBy == $val)
-                                            <option checked value={{$key}}>{{$val}}</option>
-                                        @else
-                                            <option value={{$key}}>{{$val}}</option>
-                                        @endif
+                                        <option {{$sortBy == $key ? 'selected' : ''}} value={{$key}}>{{$val}}</option>
                                     @endforeach
                                 </select>
                             </label>
@@ -203,7 +194,7 @@
                 <div id="catalog-items-render">
                     <div class="catalog--elems d-flex flex-wrap">
                         @foreach($products as $product)
-                        <div class="product--item d-flex col ai-center">
+                        <a href="{{route('products.id',$product->id)}}" class="product--item d-flex col ai-center">
                             <div class="product--item__img-wrap">
                                 <img class="product--item__img"
                                      src="{{$product->image ? Storage::url($product->image) : Url::asset('assets/img/stella.jpg')}}"
@@ -230,9 +221,9 @@
                             </div>
 
                             <div class="product--item__link-wrap">
-                                <a href="{{route('products.id',$product->id)}}" class="product--item__link btn orange d-flex ai-center justify-center mb-0" tabindex="0">
+                                <div class="product--item__link btn orange d-flex ai-center justify-center mb-0" tabindex="0">
                                     Подробнее
-                                </a>
+                            </div>
                             </div>
                             @if($product->is_promotional == 1)
                                 <div class="product--item__sell">
@@ -240,7 +231,7 @@
                                     <div class=""><span class="fw-700">{{$product->saving}}</span> руб.</div>
                                 </div>
                             @endif
-                        </div>
+                        </a>
                         @endforeach
 
                     </div>

@@ -81,14 +81,14 @@ Breadcrumbs::for('products', function ($breadcrumbs) {
 
 });
 
-//Продукт
+//Типы продуктов
 Breadcrumbs::for('product', function ($breadcrumbs) {
 
     $breadcrumbs->parent('home');
 
     $breadcrumbs->push('Продукция',route('products'));
 
-    $breadcrumbs->push('Продукт');
+    $breadcrumbs->push('Каталог');
 
 });
 
@@ -147,17 +147,6 @@ Breadcrumbs::for('decorById', function ($breadcrumbs) {
 
 });
 
-//Саркофаг
-Breadcrumbs::for('sarcophagus', function ($breadcrumbs) {
-
-    $breadcrumbs->parent('home');
-
-    $breadcrumbs->push('Продукция',route('products'));
-
-    $breadcrumbs->push('Саркофаг');
-
-});
-
 //услуги
 Breadcrumbs::for('service', function ($breadcrumbs) {
 
@@ -189,5 +178,73 @@ Breadcrumbs::for('remuneration', function ($breadcrumbs) {
     $breadcrumbs->parent('home');
 
     $breadcrumbs->push('Оплата');
+
+});
+
+//Карточка памятника
+Breadcrumbs::for('productcard-1-1', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Одиночные-простые',route('products.type',[1,1]));
+
+    $breadcrumbs->push('Продукт');
+
+});
+Breadcrumbs::for('productcard-1-2', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Одиночные-комплексы',route('products.type',[$id = 1,2]));
+
+    $breadcrumbs->push('Продукт');
+
+});
+Breadcrumbs::for('productcard-1-3', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Одиночные-саркофаги',route('products.type',[$id = 1,3]));
+
+    $breadcrumbs->push('Продукт');
+
+});
+Breadcrumbs::for('productcard-2-4', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Двойные-простые',route('products.type',[$id = 2,4]));
+
+    $breadcrumbs->push('Продукт');
+
+});
+Breadcrumbs::for('productcard-2-5', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Двойные-комплексы',route('products.type',[$id = 2,5]));
+
+    $breadcrumbs->push('Продукт');
+
+});
+Breadcrumbs::for('productcard-2-6', function ($breadcrumbs) {
+
+    $breadcrumbs->parent('home');
+
+    $breadcrumbs->push('Продукция',route('products'));
+
+    $breadcrumbs->push('Двойные-саркофаги',route('products.type',[$id = 2,6]));
+
+    $breadcrumbs->push('Продукт');
 
 });

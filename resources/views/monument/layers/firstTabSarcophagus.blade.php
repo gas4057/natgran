@@ -42,7 +42,7 @@
         <div class="beautification__params">
             <div id="accordion-tombstone" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="http://natgran/assets/img/accordion-title-img.png" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
@@ -80,7 +80,7 @@
                     <div class="product--row__params product--row__params-100 modal--material d-flex ai-center stele__size">
                         @foreach($beautification as $item)
                             <label class="product--row__label product--row__label--material product--row__50 product--row__label--h200 modal__size-item d-flex ai-center justify-center px-5 beautification-select-item beautification-select-foundation" for="">
-                                <div class="stele__size-link stele__size-link--img stele__size-link--big-circle aviable" id="beautification-{{$item['id']}}" data-type="beautification" data-element="beautification">
+                                <div class="stele__size-link stele__size-link--img-big stele__size-link--img stele__size-link--big-circle aviable" id="beautification-{{$item['id']}}" data-type="beautification" data-element="beautification">
                                     <input class="hide-input par--js" type="radio" name="beautification_id" value="{{$item['id']}}" data-price="{{$item['price']}}" data-description="{{$item['description']}}">
                                     <img class="stele__size-img stele__size-img--contain accordion__title-img" src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
                                 </div>

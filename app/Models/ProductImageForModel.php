@@ -3,15 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ProductImageForModel extends Model
+
+class ProductImageForModel extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
+    protected $table = 'product_image_for_models';
+
     public $timestamps = false;
+
     protected $fillable = [
         'product_id',
-    ];
-    protected $casts = [
-        'images' => 'array'
     ];
 
     public function product()

@@ -27,6 +27,10 @@
     <link type="text/css" href="{{URL::asset('assets/css/additionalStyle.css')}}" rel="stylesheet">
     <title>NATGRAN</title>
     @yield('head')
+    <!-- <script src="//code.jivosite.com/widget/cYuDEoetxh" async></script> -->
+    <script src="{{asset('assets/js/front/libs.min.js')}}"></script>
+    <script src="{{asset('assets/js/front/common.js')}}"></script>
+
 </head>
 
 <body>
@@ -90,10 +94,13 @@
                                 @if(!$site_contacts['phone']->isEmpty())
                                 @foreach($site_contacts['phone'] as $site_contact)
                                 <div class="main--header__phone d-flex ai-center">
-                                    <a class="main--header__phonenum" href="tel: {{$site_contact->contact}}">
-                                        {{$site_contact->contact}}
-                                    </a><a class="main--header__viber" href="/">
-                                        <img src="{{URL::asset('assets/img/viber.svg')}}" alt="Viber"></a></div>
+                                    <a class="main--header__phonenum" href="tel:+{{$site_contact->contact}}">
+                                        + {{$site_contact->contact}}
+                                    </a>
+                                    <a class="main--header__viber" href="viber://chat?number=%2B{{$site_contact->contact}}">
+                                        <img src="{{URL::asset('assets/img/viber.svg')}}" alt="Viber">
+                                    </a>
+                                    </div>
                                 @endforeach
                                 @else
                                 @for($i = 0;$i <4; $i++ ) <div class="main--header__phone d-flex ai-center">
@@ -299,8 +306,8 @@
                                 <img class="footer__menu--img" src="{{URL::asset('assets/img/location.svg')}}" alt="">
                                 <p class="footer--field__text d-flex ai-center"><span class="footer--field-title">Адрес:
                                     </span>
-                                    <span
-                                        class="footer__text">{{$site_contacts['address']->first()->contact ?? '220000, г. Минск ул. Уручская 23А'}}</span>
+                                    <a href="#" data-fancybox data-src="#map"
+                                        class="footer__text">{{$site_contacts['address']->first()->contact ?? '220000, г. Минск ул. Уручская 23А'}}</a>
                                 </p>
                             </div>
                             <div class="footer__menu--field d-flex ai-center"><img
@@ -313,17 +320,14 @@
                                 </p>
                             </div>
                             <div class="footer__menu--field d-flex ai-center"><img
-                                    src="{{URL::asset('assets/img/skype.svg')}}" alt="">
-                                <p class="footer--field__text d-flex ai-center"><span
-                                        class="footer--field-title">Skype:</span><span
-                                        class="footer__text">{{$site_contacts['skype']->first()->contact ?? 'greenstoneby'}}</span>
-                                </p>
-                            </div>
-                            <div class="footer__menu--field d-flex ai-center"><img
                                     src="{{URL::asset('assets/img/instagram-orange.svg')}}" alt="">
                                 <p class="footer--field__text d-flex ai-center"><span
-                                        class="footer--field-title">Instagram:</span><span
-                                        class="footer__text">{{$site_contacts['instagram']->first()->contact ?? 'greenstoneby'}}</span>
+                                        class="footer--field-title">Instagram:</span>
+                                    <a target="_blank" href="{{$site_contacts['instagram']->first()->url}}">
+                                    <span class="footer__text">
+                                        {{$site_contacts['instagram']->first()->contact ?? 'greenstoneby'}}
+                                    </span>
+                                    </a>
                                 </p>
                             </div>
                             <div class="footer__menu--field d-flex ai-center w-100"><img class="footer__menu--img"
@@ -332,9 +336,13 @@
                                         class="footer--field-title">Телефон:</span>
                                     @if(!$site_contacts['phone']->isEmpty())
                                     @foreach($site_contacts['phone'] as $site_contact)
-                                    <a class="footer__text phone--number d-flex ai-center"
-                                        href="tel:{{$site_contact->contact}}">{{$site_contact->contact}}<img
-                                            src="{{URL::asset('assets/img/phone-rounded.svg')}}" alt="..."></a>
+                                    <a class="footer__text phone--number d-flex ai-center" href="tel:+{{$site_contact->contact}}">
+                                        + {{$site_contact->contact}}
+                                    </a>
+                                    <a class="footer__text phone--viber d-flex ai-center" href="viber://chat?number=%2B{{$site_contact->contact}}">
+                                        <img
+                                            src="{{URL::asset('assets/img/phone-rounded.svg')}}" alt="...">
+                                    </a>
                                     @endforeach
                                     @else
                                     @for($i = 0;$i <4; $i++ ) <a class="footer__text phone--number d-flex ai-center"
@@ -351,7 +359,6 @@
             <div class="footer__info w-100 wow animate__fadeInUp">
                 <div class="footer__white-line">
                     <span class="footer__info-link">© 2020 Все права защищены, natgran.by</span>
-                    <a class="footer__info-link" href="">Карта сайта</a>
                     <a class="footer__info-link" href="{{route('offer.agreement')}}">ДОГОВОР ОФЕРТА</a>
                     <a class="footer__info-link" href="{{route('about.company')}}">О компании</a>
                     <a class="footer__info-link" href="{{route('privacy.policy')}}">Политика конфенденциальности</a>
@@ -373,15 +380,8 @@
         <div class="callback--content d-flex col">
             <h3 class="callback--content__title">Задать вопрос</h3>
             <form class="d-flex col" id="callback--form" method="POST" action="{{route('home.send.question')}}">
-
                 <div class="callback--field">
-                    <input type="text" name="name" placeholder="Ваша имя" required />
-                </div>
-                <div class="callback--field">
-                    <input type="email" name="email" placeholder="E-mail" required />
-                </div>
-                <div class="callback--field">
-                    <input type="text" name="phone" placeholder="Телефон для связи" id="phone" required />
+                    <input class="requared" type="text" name="phone" placeholder="Телефон для связи" id="phone" required />
                 </div>
                 <div class="callback--field">
                     <textarea placeholder="Сообщение" name="message" required></textarea>
@@ -421,19 +421,18 @@
             <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
         </div>
     </div>
-
+    
     @include('popups/thanks')
     @include('popups/map')
     @include('popups/success')
-    <script src="{{asset('assets/js/front/libs.min.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/front/libs.min.js')}}"></script> -->
     <script src="{{asset('assets/js/front/jquery-ui.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
     <script src="{{asset('assets/js/front/hamburger.js')}}"></script>
     <script src="{{asset('assets/js/front/jquery.fancybox.min.js')}}"></script>
     <script src="{{asset('assets/js/front/wow.min.js')}}"></script>
-    <script src="{{asset('assets/js/front/common.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/front/common.js')}}"></script> -->
     <script src="{{asset('assets/js/front/fixedHeader.js')}}"></script>
-    <script src="{{asset('assets/js/front/titleCoords.js')}}"></script>
     <script src="{{asset('assets/js/front/jquery.validate.min.js')}}"></script>
     <script src="{{asset('assets/js/front/jquery.mask.min.js')}}"></script>
     <script src="{{asset('assets/js/front/jquery.menu-aim.js')}}"></script>

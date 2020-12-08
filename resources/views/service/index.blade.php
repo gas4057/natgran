@@ -19,7 +19,7 @@
                 @foreach($service as $val)
                     <li class="decor--item tab-header {{$loop->iteration == 1 ? 'active' : ''}}" data-tab="decor-{{$val->id}}">
                         <a class="decor--item__title" href="#">
-                            {{$val->title}}
+                            {!! $val->title !!}
                         </a>
                     </li>
                     <div data-id="decor-{{$val->id}}-mobile" class="decor--tab decor--tab-mobile">
@@ -87,7 +87,7 @@
                     @foreach($val->block as $block)
                 <li class="more-material__list">
                     <a class="decor--accordion  more-material{{$loop->iteration == 1 ? '--active' : ''}}" href="#">
-                        <h4 class="more-material--subtitle">{{$block->title ?? 'Title'}}</h4>
+                        <h4 class="more-material--subtitle">{!! $block->title ?? 'Title' !!}</h4>
                     </a>
                     <div class="panel {{$loop->iteration == 1 ? 'open' : ''}}" style="">
                         @if($block->text_block)

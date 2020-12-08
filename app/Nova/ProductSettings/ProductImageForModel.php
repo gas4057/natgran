@@ -3,12 +3,10 @@
 namespace App\Nova\ProductSettings;
 
 use App\Nova\Resource;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Files;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use DigitalCreative\Filepond\Filepond;
 
 class ProductImageForModel extends Resource
 {
@@ -23,7 +21,7 @@ class ProductImageForModel extends Resource
 
     public static function label()
     {
-        return __('Изображения для модели саркофага');
+        return __('Изображения для рендера модели');
     }
 
     public static function singularLabel()
@@ -58,11 +56,8 @@ class ProductImageForModel extends Resource
         return [
             ID::make()->sortable(),
             BelongsTo::make('Продукт', 'product', 'App\Nova\ProductSettings\Product'),
-            Filepond::make('Изображение', 'images')
-                ->multiple()
-                ->limit(110)
-                ->rules('required')
-                ->disk('public', 'Product_sarcophagus_3d_models')
+            Files::make('Multiple files', 'images')
+                ->help('Максимальное кол-во файлов для разовой загрузки - 20 изображений'),
         ];
     }
 

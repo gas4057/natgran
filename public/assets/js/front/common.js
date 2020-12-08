@@ -1,5 +1,13 @@
 $(document).ready(function () {
-    preloader();
+    
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     setTimeout(() => {
+    //         $('.loader-outer').fadeOut()
+    //     }, 2500);
+    //     $('.loader-outer').delay(4000).fadeOut();
+    // });
+    $('.loader-outer').delay(4000).fadeOut();
+
     wow = new WOW({
         mobile: false
     })
@@ -382,10 +390,12 @@ $(document).ready(function () {
         // });
 
         // Footer toogle
-        $('.footer__title').on('click', function () {
-            $(this).toggleClass('active');
-            $(this).siblings('.footer__menu--propose').slideToggle();
-        });
+        if ($( window ).width() < 768) {
+            $('.footer__title').on('click', function () {
+                $(this).toggleClass('active');
+                $(this).siblings('.footer__menu--propose').slideToggle();
+            });
+        }
 
         // Quality blocks toogle
         $('.quality--btn').on('click', function () {
@@ -512,8 +522,6 @@ $(document).ready(function () {
                 'transition': 'opacity .2s linear'
             });
         }
-        // console.log(length);
-        // console.log(obj);
     }
 
     function prevSlide(parent) {
@@ -563,19 +571,9 @@ $(document).ready(function () {
                 'transition': 'opacity .2s linear'
             });
         }
-        // console.log(length);
-        // console.log(obj);
     }
 
-function preloader() {
-    $(window).on('load', function () {
-        $('.loader-outer').fadeOut();
 
-    });
-    setTimeout(() => {
-        $('.loader-outer').fadeOut()
-    }, 2500);
-}
 
 function initModal(button, modal){
     $(button).on('click', function(e){
@@ -663,16 +661,16 @@ $('body').on('click touch', '.fancybox-button.fancybox-close-small', function(ev
 $(document).ready(function () {
 
     if ($("#contactsForm-tel").length) {
-        $("#contactsForm-tel").mask("+3 (000) 000-00-00");
+        $("#contactsForm-tel").mask("+375 (00) 000-00-00");
     }
 });
 $(document).ready(function () {
 
     if ($("#phone").length) {
-        $("#phone").mask("+3 (000) 000-00-00");
+        $("#phone").mask("+375 (00) 000-00-00");
     }
     if ($("#phone-basket").length) {
-        $("#phone-basket").mask("+3 (000) 000-00-00");
+        $("#phone-basket").mask("+375 (00) 000-00-00");
     }
 });
 
@@ -820,7 +818,6 @@ $(document).ready(function () {
                     changePriceInPage();
                     setTotalPrice();
 
-                    console.log($(".hidden-product_id").length);
                     if ($(".hidden-product_id").length == 0) {
                         location.reload();
                     }
@@ -1066,4 +1063,82 @@ $(document).ready(function() {
             $(document).off("mouseleave", showPopup);
         }
     }
+});
+// Попап для детального просмотра картинок в карточке товара
+$(document).ready(function() {
+    
+    $(".stele__size-img").on("click", function (event) {
+        event.stopPropagation()
+        let src = $(event.target).attr('src')
+
+        $.fancybox.open({
+            src  : src,
+            type : 'image',
+            opts : {
+                afterShow : function( instance, current ) {
+                    console.info( 'done!' );
+                }
+            }
+        });
+    })
+});
+
+// Загрузка всех картинок для 3д саркофага
+// $(window).on("load", function() {
+//     console.log( 'All images loaded!' );
+//     $(".sarcophagus-view").removeClass('load-overlay')
+// });
+
+$(document).ready(function () {
+    var preloader    = $('#preloader'), // селектор прелоадера
+        imagesCount  = $('.demonstration-3d__img').length, // количество изображений
+        dBody        = $('body'), //обращаемся к body
+        percent      = 100 / imagesCount, // количество % на одну картинку
+        progress     = 0, // точка отсчета
+        imgSum       = imagesCount, // количество картинок
+        loadedImg    = 0; // счетчик загрузки картинок
+        console.log(imagesCount, percent);
+
+    if (imagesCount >= imgSum && imagesCount > 0) {
+        preloader.css('background', '#000');
+        dBody.css('overflow', 'hidden');
+        console.log(percent);
+
+        $(".dws-progress-bar").circularProgress({
+            color: "#000000",
+            line_width: 10,
+            height: "150px",
+            width: "150px",
+            percent: 0,
+            // counter_clockwise: true,
+            starting_position: 25
+        }).circularProgress('animate', percent, 1000);
+
+        for (var i = 0; i < imagesCount; i++) { // создаем клоны изображений
+            var img_copy        = new Image();
+            img_copy.src        = document.images[i].src;
+            img_copy.onload     = img_load;
+            img_copy.onerror    = img_load;
+        }
+
+        function img_load () {
+            console.log("images loaded " + progress + " percent");
+            progress += percent;
+            loadedImg++;
+            if (progress >= 100 || loadedImg == imagesCount) {
+                preloader.delay(400).fadeOut('slow');
+                dBody.css('overflow', '');
+                console.log("complite");
+                $(".sarcophagus-view__load-overlay").delay(400).fadeOut('slow');
+                $(".sarcophagus-view").removeClass('load-overlay')
+            }
+            $(".dws-progress-bar").circularProgress('animate', progress, 500);
+        }
+    } else {
+        preloader.remove();
+        console.log("complite");
+        $(".sarcophagus-view").removeClass('load-overlay')
+    }
+
+
 });

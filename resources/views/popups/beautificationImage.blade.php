@@ -11,7 +11,7 @@
                     <label
                         class="product--row__label product--row__label--material product--row__50 product--row__label--h200 modal__size-item d-flex ai-center justify-center px-5"
                         for="">
-                        <div class="stele__size-link stele__size-link--img stele__size-link--big-circle aviable"
+                        <div class="stele__size-link stele__size-link--img-big stele__size-link--img stele__size-link--big-circle aviable"
                              id="beautification-10" data-type="beautification" data-element="beautification">
                             <input class="hide-input par--js" type="radio" name="beautification_id" value="{{$item->id}}"
                                    data-price="{{$item->price}}" data-description="{{$item['description']}}">

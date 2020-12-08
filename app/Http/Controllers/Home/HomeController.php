@@ -18,7 +18,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = HomeProduct::with('product1', 'product2', 'product3')->get();
+        $products = HomeProduct::with('product1', 'product2', 'product3')
+            ->orderByRaw('nest_id')
+            ->get();
         $articles = HomeArticle::where('alias', 'home_page')->with('block')->get();
         $galleries = Gallery::take(6)->get();
         $reviews = Review::take(8)->get();
@@ -26,10 +28,7 @@ class HomeController extends Controller
             ->first()
             ->articles
             ->take(5);
-        $contacts = SiteContact::with('type')
-            ->where('type_id',1)
-            ->get();
-        return view('home.home', compact('products', 'news','articles','galleries','reviews','contacts'));
+        return view('home.home', compact('products', 'news','articles','galleries','reviews'));
     }
 
     public function sendQuestion(SendQuestionRequest $request)

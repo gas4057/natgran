@@ -12,7 +12,7 @@
                     <a class="action--item d-flex col" href="{{route('special.offers.id',$val->id)}}">
                         <img src="{{$val->image? Storage::url($val->image) : URL::asset('assets/img/gallery-img.jpg')}}" />
                         <div class="action--item__info d-flex col">
-                            <div class="action--item__link" href="{{route('special.offers.id',$val->id)}}">{{$val->title}}</div>
+                            <div class="action--item__link" href="{{route('special.offers.id',$val->id)}}">{!! $val->title!!}</div>
                             @if($val->is_actual == 'true')
                                 <span class="action--active d-flex ai-center justify-center">
                                     {{ Date::parse($val->date_start)->format('j F ') }} - {{ Date::parse($val->date_end)->format('j F ') }}

@@ -24,7 +24,7 @@ class SpecialOffersController extends Controller
             }
         }
         $breadcrumbs = 'offers';
-        return view('home.offers', compact('offers', 'products','breadcrumbs'));
+        return view('home.offers', compact('offers','breadcrumbs'));
     }
 
     public function showById($id)

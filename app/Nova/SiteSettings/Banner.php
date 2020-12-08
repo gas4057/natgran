@@ -34,7 +34,7 @@ class Banner extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'key', 'title', 'content'
+        'id',
     ];
 
     public static function label()
