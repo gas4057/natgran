@@ -5,27 +5,29 @@
         <div class="stella__params ajax__params">
             <div id="accordion-stella" class="accordion product--tab__header active-acc">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-stella.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
                     <p class="header--info__name" id="stella__name">
                         Стелла:
-                        <span class="elem-price">{{$total_price['Stella'] }}</span>
+                        <span class="elem-price">{{$total_price['Stella'] ?? 'EMPTY' }}</span>
                         <span class="elem-currency">руб.</span>
                     </p>
 
-                    <p class="header--info__params">
-                        высота
-                        <span class="stella--height">{{$stella['first']['height']}}, </span>
-                        ширина
-                        <span class="stella--width">{{$stella['first']['width']}}, </span>
-                        толщина
-                        <span class="stella--thickness">{{$stella['first']['thickness']}}</span>
-                    </p>
-                    <input type="hidden" name="stella_price" value="{{$total_price['Stella'] }}">
+                    @if(!empty($stella['first']))
+                        <p class="header--info__params">
+                            высота
+                            <span class="stella--height">{{$stella['first']['height']}}, </span>
+                            ширина
+                            <span class="stella--width">{{$stella['first']['width']}}, </span>
+                            толщина
+                            <span class="stella--thickness">{{$stella['first']['thickness']}}</span>
+                        </p>
+                    @endif
+                    <input type="hidden" name="stella_price" value="{{$total_price['Stella'] ?? 'EMPTY'}}">
 
-                    <input type="hidden" class="stella_id" value="{{$stella['first']['id']}}">
+                    <input type="hidden" class="stella_id" value="{{$stella['first']['id'] ?? 'EMPTY'}}">
                 </div>
 
                 <p class="header--info__material">
@@ -83,8 +85,8 @@
                     </div>
                     <div class="product--row__params d-flex ai-center stele__size">
                         @foreach($modifierMaterials as $item)
-                            <div class="product--row__label--material material-popover">
-                                <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch"  data-model="stella" for="">
+                            <div class="product--row__label--material">
+                                <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch material-popover"  data-model="stella" for="">
                                     <div class="stele__size-link stele__size-link--img aviable" id="material-{{$item['id']}}" data-type="material" data-element="stella">
                                         <input class="hide-input par--js" type="radio" name="material" value="{{$item['id']}}">
                                         <img class="stele__size-img"  src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
@@ -106,7 +108,7 @@
         <div class="pedestals__params ajax__params">
             <div id="accordion-pedestal" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-pedestal.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
@@ -116,16 +118,18 @@
                         <span class="elem-currency">руб.</span>
                     </p>
 
+                    @if(!empty($pedestal['first']))
                     <p class="header--info__params">
-                        высота
+                        ширина 
                         <span class="pedestals--height">{{$pedestal['first']['height']}}, </span>
-                        ширина
+                        высота
                         <span class="pedestals--width">{{$pedestal['first']['width']}}, </span>
                         толщина
                         <span class="pedestals--thickness">{{$pedestal['first']['thickness']}}</span>
                     </p>
+                    @endif
                     <input type="hidden" name="pedestals_price" value="{{$total_price['Pedestals'] ?? ''}}">
-                    <input type="hidden" class="pedestals_id" value="{{$pedestal['first']['id']}}">
+                    <input type="hidden" class="pedestals_id" value="{{$pedestal['first']['id'] ?? 'EMPTY'}}">
                 </div>
 
                 <p class="header--info__material">
@@ -134,7 +138,7 @@
             </div>
             <div class="panel">
                 <div class="product--body__row d-flex ai-center">
-                    <div class="product--row__name">Высота:</div>
+                    <div class="product--row__name">Ширина:</div>
 
                     <div class="product--row__params stele__size d-flex ai-center">
                         @foreach($pedestal['height'] as $item)
@@ -149,7 +153,7 @@
                 </div>
 
                 <div class="product--body__row d-flex ai-center">
-                    <div class="product--row__name">Ширина:</div>
+                    <div class="product--row__name">Высота:</div>
                     <div class="product--row__params d-flex ai-center stele__size">
                         @foreach($pedestal['width'] as $item)
                             <label class="product--row__label stele__size-item d-flex ai-center justify-center" for="">
@@ -184,8 +188,8 @@
                     <div class="product--row__params d-flex ai-center stele__size">
 
                         @foreach($modifierMaterials as $item)
-                        <div class="product--row__label--material material-popover">
-                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch"  data-model="pedestals" for=""><!--pedestal т.к. в моем скрипте он так называется-->
+                        <div class="product--row__label--material">
+                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch material-popover"  data-model="pedestals" for=""><!--pedestal т.к. в моем скрипте он так называется-->
                                 <div class="stele__size-link stele__size-link--img aviable" id="material-{{$item['id']}}" data-type="material" data-element="pedestals">
                                     <input class="hide-input par--js" type="radio" name="material" value="{{$item['id']}}">
                                     <img class="stele__size-img"  src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
@@ -209,7 +213,7 @@
         <div class="parterres__params ajax__params">
             <div id="accordion-parterre" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-parterres.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
@@ -218,7 +222,7 @@
                         <span class="elem-price">{{$total_price['Parterres'] ?? ''}}</span>
                         <span class="elem-currency">руб.</span>
                     </p>
-
+                    @if(!empty($parterre['first']))
                     <p class="header--info__params">
                         высота
                         <span class="parterres--height">{{$parterre['first']['height']}}, </span>
@@ -227,11 +231,12 @@
                         толщина
                         <span class="parterres--thickness">{{$parterre['first']['thickness_size']}}</span>
                     </p>
+                    @endif
                     <!-- здесь хранится цена объекта-->
                     <input type="hidden" name="parterres_price" value="{{$total_price['Parterres']  ?? ''}}">
                     <!-- объект на сцене-->
                     <input type="hidden" name="parterres_is_remove" value="false">
-                    <input type="hidden" class="parterres_id" value="{{$parterre['first']['id']}}">
+                    <input type="hidden" class="parterres_id" value="{{$parterre['first']['id'] ?? 'EMPTY'}}">
                 </div>
 
                 <p class="header--info__material">
@@ -317,8 +322,8 @@
                     <div class="product--row__params d-flex ai-center stele__size">
 
                         @foreach($modifierMaterials as $item)
-                        <div class="product--row__label--material material-popover">
-                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch"  data-model="parterres" for="">
+                        <div class="product--row__label--material">
+                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch material-popover"  data-model="parterres" for="">
                                 <div class="stele__size-link stele__size-link--img aviable" id="material-{{$item['id']}}" data-type="material" data-element="parterres">
                                     <input class="hide-input par--js" type="radio" name="material" value="{{$item['id']}}">
                                     <img class="stele__size-img"  src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
@@ -358,7 +363,7 @@
         <div class="tombstones__params ajax__params">
             <div id="accordion-tombstone" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-tombstones.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
@@ -367,7 +372,7 @@
                         <span class="elem-price">{{$total_price['Tombstones'] ?? ''}}</span>
                         <span class="elem-currency">руб.</span>
                     </p>
-
+                    @if(!empty($tombstone['first']))
                     <p class="header--info__params">
                         высота
                         <span class="tombstones--height">{{$tombstone['first']['height']}}, </span>
@@ -376,9 +381,10 @@
                         толщина
                         <span class="tombstones--thickness">{{$tombstone['first']['thickness']}}</span>
                     </p>
+                    @endif
                     <input type="hidden" name="tombstones_price" value="{{$total_price['Tombstones']  ?? ''}}">
                     <input type="hidden" name="tombstones_is_remove" value="false">
-                    <input type="hidden" class="tombstones_id" value="{{$tombstone['first']['id']}}">
+                    <input type="hidden" class="tombstones_id" value="{{$tombstone['first']['id'] ?? 'EMPTY'}}">
                 </div>
 
                 <p class="header--info__material">
@@ -463,8 +469,8 @@
                     <div class="product--row__params d-flex ai-center stele__size">
 
                         @foreach($modifierMaterials as $item)
-                        <div class="product--row__label--material material-popover">
-                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch"  data-model="tombstones" for=""><!--plate т.к. в моем скрипте он так называется-->
+                        <div class="product--row__label--material">
+                            <label class="product--row__label stele__size-item d-flex ai-center justify-center tray__swatch material-popover"  data-model="tombstones" for=""><!--plate т.к. в моем скрипте он так называется-->
                                 <div class="stele__size-link stele__size-link--img aviable" id="material-{{$item['id']}}" data-type="material" data-element="tombstones">
                                     <input class="hide-input par--js" type="radio" name="material" value="{{$item['id']}}">
                                     <img class="stele__size-img"  src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
@@ -505,7 +511,7 @@
         <div class="beautification__params">
             <div id="accordion-tombstone" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-beautification.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">
@@ -546,8 +552,9 @@
                             <label class="product--row__label product--row__label--material product--row__50 product--row__label--h200 modal__size-item d-flex ai-center justify-center px-5 beautification-select-item beautification-select-foundation" for="">
                                 <div class="stele__size-link stele__size-link--img stele__size-link--img-big stele__size-link--big-circle aviable" id="beautification-{{$item['id']}}" data-type="beautification" data-element="beautification">
                                     <input class="hide-input par--js" type="radio" name="beautification_id" value="{{$item['id']}}" data-price="{{$item['price']}}" data-description="{{$item['description']}}">
-                                    <img data-fancybox="images" class="stele__size-img stele__size-img--contain accordion__title-img" src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
+                                    <img class="stele__size-img stele__size-img--contain accordion__title-img" src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}">
                                 </div>
+                                <a href="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/modifierMaterials/Rectangle_334.png')}}" data-fancybox="images" class="img-popup"></a>
                             </label>
                             {{--ожидаю ключ "beautification_id" --}}
                             @endif

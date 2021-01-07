@@ -56,10 +56,10 @@
                 <ul class="catalog--sidebar__lists">
                     @foreach($types as $type)
                         @if($loop->iteration <5)
-                    <li class="catalog--sidebar__list {{$loop->iteration > 2 ? 'empty' : ''}}">
+                    <li class="catalog--sidebar__list {{$type->subtype()->exists() ? '' : 'empty'}} ">
 
-                        <div class="accordion--catalog-box {{$products->first()->type_id == $type->id ? 'active-acc-catalog' : ''}} {{$products->first()->type_id == $type->id ? 'selected' : ''}}">
-                            <a class="accordion--catalog{{$loop->iteration > 2 ? '--empty' : ''}} " href="{{route('products.type',[$type->id])}}">
+                        <div class="accordion--catalog-box {{$prod_type->id == $type->id ? 'active-acc-catalog' : ''}} {{$prod_type->id == $type->id ? 'selected' : ''}}">
+                            <a class="accordion--catalog{{$type->subtype()->exists() ? '' : '--empty'}} " href="{{route('products.type',[$type->id])}}">
                                 <h4 class="accordion--catalog__header">
                                     {{$type->name}}
                                 </h4>
@@ -67,7 +67,7 @@
                             <a class="accordion--catalog-toggle" href="#" data-panel="panel-{{$type->id}}"></a>
                         </div>
 
-                        <div id="panel-{{$type->id}}" class="panel {{$products->first()->type_id == $type->id ? 'open' : ''}}">
+                        <div id="panel-{{$type->id}}" class="panel {{$prod_type->id == $type->id ? 'open' : ''}}">
                             <ul class="catalog--sidebar__options">
                                 @foreach($type->subtype as $subtypes)
                                 <li class="catalog--sidebar__option {{$subtypes->id == $subtypeId ? 'active' : ''}}">
@@ -92,9 +92,9 @@
                     @foreach($types as $type)
                         @if($loop->iteration >4)
                             @if($type->subtype()->exists())
-                        <li class="catalog--sidebar__list {{$loop->iteration != 6  ? 'empty' : ''}}">
-                            <div class="accordion--catalog-box {{$products->first()->type_id == $type->id ? 'active-acc-catalog' : ''}} {{$products->first()->type_id == $type->id ? 'selected' : ''}}">
-                                <a class="accordion--catalog{{$loop->iteration != 6  ? '--empty' : ''}} " href="{{route('products.type',[$type->id])}}">
+                        <li class="catalog--sidebar__list {{$type->subtype()->exists() ? '' : 'empty'}} ">
+                            <div class="accordion--catalog-box {{$prod_type->id == $type->id ? 'active-acc-catalog' : ''}} {{$prod_type->id == $type->id ? 'selected' : ''}}">
+                                <a class="accordion--catalog{{$type->subtype()->exists() ? '' : '--empty'}} " href="{{route('products.type',[$type->id])}}">
                                     <h4 class="accordion--catalog__header">
                                         {{$type->name}}
                                     </h4>
@@ -102,7 +102,7 @@
                                 <a class="accordion--catalog-toggle" href="#" data-panel="panel-{{$type->id}}"></a>
                             </div>
 
-                            <div id="panel-{{$type->id}}" class="panel {{$products->first()->type_id == $type->id ? 'open' : ''}}">
+                            <div id="panel-{{$type->id}}" class="panel {{$prod_type->id == $type->id ? 'open' : ''}}">
                                 <ul class="catalog--sidebar__options">
                                     @foreach($type->subtype as $subtypes)
                                         <li class="catalog--sidebar__option {{$subtypes->id == $subtypeId ? 'active' : ''}}">
@@ -122,7 +122,7 @@
                                 @if(!$type->subtype()->exists())
                                     <li class="catalog--sidebar__list {{$loop->iteration != 6  ? 'empty' : ''}}">
 
-                                        <div class="accordion--catalog-box {{$products->first()->type_id == $type->id ? 'active-acc-catalog' : ''}} {{$products->first()->type_id == $type->id ? 'selected' : ''}}">
+                                        <div class="accordion--catalog-box {{$prod_type->id == $type->id ? 'active-acc-catalog' : ''}} {{$prod_type->id == $type->id ? 'selected' : ''}}">
                                             <a class="accordion--catalog{{$loop->iteration > 2 ? '--empty' : ''}} " href="{{route('products.type',[$type->id])}}">
                                                 <h4 class="accordion--catalog__header">
                                                     {{$type->name}}
@@ -131,7 +131,7 @@
                                             <a class="accordion--catalog-toggle" href="#" data-panel="panel-{{$type->id}}"></a>
                                         </div>
 
-                                        <div id="panel-{{$type->id}}" class="panel {{$products->first()->type_id == $type->id ? 'open' : ''}}">
+                                        <div id="panel-{{$type->id}}" class="panel {{$prod_type->id == $type->id ? 'open' : ''}}">
                                             <ul class="catalog--sidebar__options">
                                                 @foreach($type->subtype as $subtypes)
                                                     <li class="catalog--sidebar__option {{$subtypes->id == $subtypeId ? 'active' : ''}}">
@@ -149,10 +149,9 @@
                 </ul>
             </div>
         </div>
-
-    @if($products)
+    @if(!$products->isEmpty())
             <input type="hidden" name="subtype_id" value="{{$subtypeId}}">
-            <input type="hidden" name="type_id" value="{{$products->first()->type_id}}">
+            <input type="hidden" name="type_id" value="{{$prod_type->id}}">
         @csrf
             <!------------------------------ sidebar end ------------------------------>
             <div class="catalog--items d-flex col w-100">
@@ -162,6 +161,7 @@
 
                 <div class="catalog--side-bar-toggle">
                     <!-- Фильтры и сортировка -->
+                    Фильтр
                 </div>
 
                     <form id="form_sort" class="form_sort  form_sort-d d-flex ai-center justify-end w-100" action="{{route('products.sort')}}" method="get">
@@ -195,7 +195,7 @@
                     <div class="catalog--elems d-flex flex-wrap">
                         @foreach($products as $product)
                         <a href="{{route('products.id',$product->id)}}" class="product--item d-flex col ai-center">
-                            <div class="product--item__img-wrap">
+                            <div class="product--item__img-wrap {{$product->type_id == 1 || $product->type_id == 2 ? 'monument-3d' : ''}}">
                                 <img class="product--item__img"
                                      src="{{$product->image ? Storage::url($product->image) : Url::asset('assets/img/stella.jpg')}}"
                                      alt="...">
@@ -242,6 +242,12 @@
                         </ul>
                     </div>
                 </div>
+            @else
+                    <div class="box basket-empty">
+                        <h2 class="title--black">
+                <span>В данной категории пока нет товара</span>
+                        </h2>
+                    </div>
             @endif
     <div class="catalog--sidebar-overlay"></div>
 @endsection

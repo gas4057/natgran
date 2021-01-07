@@ -2,6 +2,7 @@
 
 @section('footer')
     <script src="{{URL::asset('assets/js/page.contact.js')}}"></script>
+    <script src="{{URL::asset('assets/js/front/toastr.min.js')}}"></script>
 @endsection
 
 @section('content')
@@ -87,21 +88,21 @@
             <span class="contacts--section__title">Задать вопрос</span>
             @csrf
             <div class="form--fied">
-                <input class="form--input col-100" type="text" placeholder="Ваша фамилия" required name="last_name">
+                <input class="input-js form--input col-100" type="text" placeholder="Ваша фамилия" required name="last_name">
             </div>
             <div class="form--fied">
-                <input class="form--input col-100" type="text" placeholder="Ваше имя" required name="first_name">
+                <input class="input-js form--input col-100" type="text" placeholder="Ваше имя" required name="first_name">
             </div>
             <div class="form--fied">
                 <input class="form--input col-100" type="email" placeholder="E-mail" name="contact_email">
             </div>
             <div class="form--fied">
-                <input id="contactsForm-tel" class="form--input col-100" type="text" placeholder="Телефон для связи" required name="contact_phone">
+                <input id="contactsForm-tel" class="input-js form--input col-100" type="text" placeholder="Телефон для связи" required name="contact_phone">
             </div>
             <div class="form--fied">
-                <textarea class="form--textarea col-100" name="contact_message" required placeholder="Сообщение"></textarea>
+                <textarea class="input-js form--textarea col-100" name="contact_message" required placeholder="Сообщение"></textarea>
             </div>
-            <button class="btn orange btn-success d-flex ai-center justify-center" type="submit">Задать вопрос</button>
+            <button id="contactsFormBtn" class="btn orange btn-success d-flex ai-center justify-center" type="submit">Задать вопрос</button>
         </form>
     </div>
 
@@ -116,16 +117,16 @@
 {{--            </div>--}}
 {{--        @endforeach--}}
 {{--    </div>--}}
-    <div class="modal" id="questionModal" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-message" id="questionModal" tabindex="-1" role="dialog" style="display: none;">
         <div class="modal-content d-flex col ai-center justify-center">
             <h5 class="modal-title">Успешно</h5>
             <p>Мы получили обращение. Наш менеджер свяжется с вами в ближайшее время.</p>
             <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
         </div>
     </div>
-    <div class="modal" id="decorSuccess" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-message" id="decorSuccess" tabindex="-1" role="dialog" style="display: none;">
         <div class="modal-content d-flex col ai-center justify-center">
-            <h5 class="modal-title">Успешно</h5>
+            <h5 class="modal-title">Успешно!</h5>
             <p>Товар успешно добавлен в корзину</p>
             <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
         </div>

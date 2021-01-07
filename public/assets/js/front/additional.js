@@ -219,6 +219,9 @@ $(document).ready(function () {
   if ($("#popup-qiuck-order-phone").length) {
       $("#popup-qiuck-order-phone").mask("+375 (00) 000-00-00");
   }
+  if ($("#fast-order--phone").length) {
+    $("#fast-order--phone").mask("+375 (00) 000-00-00");
+}
 });
 
 // Фильтр рисунков на стелу  с лева
@@ -359,16 +362,18 @@ $(document).ready(function () {
 
 // 3д демострация товара
 $(document).ready(function () {
-
+        
   if ($("#demonstration-3d").length) {
     $("#demonstration-3d").brazzersCarousel();
-    $("#update-part-3d-reel-new").on("mousedown", () => {
+    $("#update-part-3d-reel-new").on("mousedown touchmove", () => {
       $(parent).addClass('hide-overlay');
     })
     $(window).on("mouseup", () => {
       $(parent).removeClass('hide-overlay');
     })
-
+    $('#update-part-3d-reel-new').on("mouseleave", function() {
+      $(parent).removeClass('hide-overlay');
+    })
 
     let parent = $(".sarcophagus-view");
     let divWrapImg = $('.tmb-wrap-table div');
@@ -377,7 +382,6 @@ $(document).ready(function () {
     let count = divWrapImg.length;
     let rotate = false;
 
-    
     toggle.on("change", function(e) {
       e.preventDefault();
 

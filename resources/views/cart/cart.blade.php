@@ -60,10 +60,10 @@
                                                 @else
                                                     <span class="what--we__choose">({{$product['item']['atrModifiers'] ?? 'empty'}})</span>
                                                 @endif
-                                                <p class="cart--item__timing">
+                                                <!-- <p class="cart--item__timing">
                                                     <span class="timing--title">Срок изготовления: </span>
                                                     <span class="timig--text">1 месяц?? уточнить!</span>
-                                                </p>
+                                                </p> -->
                                             </div>
                                             </div>
 
@@ -166,10 +166,7 @@
                                     </div>
                                     <div class="order--form__field d-flex ai-center">
                                         <span class="required">Телефон</span>
-                                        <div class="input-wrap">
-                                            <input type="text" name="phone" value="" id="phone-basket" required>
-                                            <label for="phone">Укажите номер телефона <span class="red">без цифры 8</span></label>
-                                        </div>
+                                        <input type="text" name="phone" value="" id="phone-basket" required>
                                     </div>
                                     <div class="order--form__field d-flex ai-center">
                                         <span>Эл.адрес</span>
@@ -203,7 +200,7 @@
                                 <label class="order--form__label d-flex col">
                                     <input class='standart__delivery' type="radio" value="Доставка местной почтовой службой Стандарт" data-coast="paid" data-price="0" name="delivery--inp"/>
                                     <span class="label--custom__radio"></span>
-                                    <span class="label--title"> Доставка местной почтовой службой Стандарт</span>
+                                    <span class="label--title">Доставка до точки назначения клиента</span>
                                     <span class="label--info">Предпологаемая дата доставки: <br> 20 июня - 30 июня</span>
                                     <p class="label--price">
                                         Стоимость от:

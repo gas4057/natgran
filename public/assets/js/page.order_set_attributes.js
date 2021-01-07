@@ -736,23 +736,12 @@ $(function () {
 
             event.preventDefault();
 
-            let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
             formData.name = $('#popup-qiuck-order-name').val();
-            formData.email = $('#popup-qiuck-order-email').val();
             formData.phone = $('#popup-qiuck-order-phone').val();
 
             if (formData.name === "") {
                 toastr.error("Заполните Ваше имя",'Следующий шаг не доступен!');
                 return false;
-            }
-            if (formData.email === "") {
-                toastr.error("Заполните Ваш E-mail, для обратной связи",'Следующий шаг не доступен!');
-                return false;
-            }
-            if (reg.test(formData.email) == false) {
-                toastr.error("Введите корректный E-mail формата user@example.com",'Следующий шаг не доступен!');
-                return false
             }
             if (formData.phone === "") {
                 toastr.error("Заполните Ваш телефон, для обратной связи",'Следующий шаг не доступен!');
@@ -774,7 +763,7 @@ $(function () {
                     <div class="modal-message" id="decorSuccess" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-content d-flex col ai-center justify-center">
                             <h5 class="modal-title">Успешно!</h5>
-                            <p>Ваш заказ № 65536 от ${date.ddmmyyyy()} ${date.hhmmss()} успешно создан.</p>
+                            <p>Ваш заказ № ${response} от ${date.ddmmyyyy()} ${date.hhmmss()} успешно создан.</p>
                             <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
                         </div>
                     </div>

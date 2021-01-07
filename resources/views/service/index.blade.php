@@ -10,7 +10,7 @@
       <h2 class="title--orange">{{$type}}</h2>
       <div class="news--section d-flex flex-wrap">
 
-          @include('layouts.banner')
+      <div class="decor-baner">@include('layouts.banner')</div>
 
         <div class="decor">
 

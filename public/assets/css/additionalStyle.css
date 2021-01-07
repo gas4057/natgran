@@ -767,9 +767,9 @@ body {
         flex-direction: column;
     }
 
-    .main--reviews .reviews--container .reviews--list .reviews--item {
+    /* .main--reviews .reviews--container .reviews--list .reviews--item {
         max-width: 290px;
-    }
+    } */
 
     .our-instagram {
         margin-top: 20px;

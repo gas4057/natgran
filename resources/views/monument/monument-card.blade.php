@@ -90,6 +90,10 @@
                                         <span>{{$product->product_code}}</span>
                                     </div>
 
+                                    <div class="tab__product-title">
+                                        <button class="btn orange d-flex ai-center justify-center js-fast-order--modal">Заказать по телефону</button>
+                                    </div>
+
                                     @if($product->is_promotional == 1)
                                         <div class="tab__price tab__price--old product--details__price">
                                             <span>Цена комплектации без скидки:</span>
@@ -137,7 +141,7 @@
 
                                         <li class="tab__description-item tab__description-item--green tab__description-item--customer-service">
                                             Если испытываете затруднения при оформлении заказа онлайн, воспользуйтесь помощью консультанта
-                                            <a class="tab__link" href="#"  data-fancybox="" data-src="#callback--modal">Заказать звонок</a>
+                                            <a class="tab__link js-callback--modal" href="#">Заказать звонок</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -203,7 +207,7 @@
 
                                         <li class="tab__description-item tab__description-item--green tab__description-item--customer-service">
                                             Если испытываете затруднения при оформлении заказа онлайн, воспользуйтесь помощью консультанта
-                                            <a class="tab__link" href="#">Заказать звонок</a>
+                                            <a class="tab__link js-callback--modal" href="#">Заказать звонок</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -266,14 +270,15 @@
                                     </div>
 
                                     <ul class="tab__description">
-                                        <li class="tab__description-item tab__description-item--green tab__description-item--customer-service">
-                                            Если испытываете затруднения при оформлении заказа онлайн, воспользуйтесь помощью консультанта
-                                            <a class="tab__link" href="#">Заказать звонок</a>
+                                        <li class="tab__description-item tab__description-item--green tab__description-item--customer-service no-before px-20">
+                                            Срок изготовления памятника до 1 месяца.
                                         </li>
 
-                                        <li class="tab__description-item tab__description-item--green tab__description-item--customer-service">
-                                            Срок изготовления памятника до 1 месяца.  Срок изготовления саркофага
-                                            <a class="tab__link" href="#">Заказать звонок</a>
+                                        <li class="tab__description-item tab__description-item--green tab__description-item--customer-service no-before px-20">
+                                            Срок изготовления комплекса до 2 месяцев.
+                                        </li>
+                                        <li class="tab__description-item tab__description-item--green tab__description-item--customer-service no-before px-20">
+                                            Срок изготовления саркофага до 3 месяцев.
                                         </li>
                                     </ul>
                                 </div>

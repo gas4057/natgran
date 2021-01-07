@@ -25,17 +25,13 @@ class ProductsControllerServices
 
     public function showByType($request, int $typeId, $subtypeId = '')
     {
-        $productType = ProductType::findOrFail($typeId);
-        if (isset($subtypeId)) {
-            $this->checkSubtype($typeId, $subtypeId);
-        }
-        $prodTypeName = ProductType::findOrFail($typeId)
-            ->only('name');
+        $this->checkSubtype($typeId, $subtypeId);
+        $prod_type = ProductType::findOrFail($typeId);
         $prodSubtypeName = $subtypeId != null ? ProductSubtype::findOrFail($subtypeId)->only('subtype_name')['subtype_name'] : '';
-        $activeTab = Str::slug($prodTypeName['name'] . '-' . $prodSubtypeName);
-        $data_paginate = ['6', '9', '12', '15'];
+        $activeTab = Str::slug($prod_type->name . '-' . $prodSubtypeName);
+        $data_paginate = ['9', '12', '15', '18'];
         $data_orderBy = [
-            'is_promotional' => 'акционные',
+            'is_promotional' => 'сначала акционные',
             'popularity_asc' => 'по популярности по возрастанию',
             'popularity_desc' => 'по популярности по убыванию',
             'cheap' => 'по цене по убыванию',
@@ -45,8 +41,7 @@ class ProductsControllerServices
         $paginate = \Session::has('paginate') ? \Session::get('paginate') : $data_paginate[0];
         $orderBy = array_key_exists($sort, $data_orderBy) ? $sort : 'actual_price';
 
-        $types = ProductType::with('subtype')
-            ->get();
+        $types = ProductType::with('subtype')->get();
         if (empty($subtypeId) and $types->find($typeId)->subtype()->first()){
             $subtypeId = $types->find($typeId)->subtype()->first()->id;
         }
@@ -55,7 +50,7 @@ class ProductsControllerServices
             ->where('is_active', true)
             ->orderBy('is_promotional', 'desc')
             ->paginate($paginate);
-        if (empty($products->items())) {
+        if (empty($products->items()) and !isset($subtypeId)) {
             $products = $this->getAllItemsType($typeId, $paginate);
         }
         $sortBy = \Session::has('sortBy') ? \Session::get('sortBy') : 'is_promotional';
@@ -63,8 +58,8 @@ class ProductsControllerServices
             ->get();
         $banner = Banner::where('key', 'monument')->first();
         $breadcrumbs = 'product';
-        return view('products.type', compact('products', 'about', 'data_paginate',
-            'data_orderBy', 'paginate', 'sortBy', 'banner', 'types', 'prodTypeName', 'activeTab', 'breadcrumbs', 'subtypeId'));
+        return view('products.type', compact('products','prod_type', 'about', 'data_paginate',
+            'data_orderBy', 'paginate', 'sortBy', 'banner', 'types', 'activeTab', 'breadcrumbs', 'subtypeId'));
     }
 
     public function sort($request)
@@ -156,13 +151,13 @@ class ProductsControllerServices
         return view('products.decor', compact('products', 'banner', 'breadcrumbs'));
     }
 
-    public function checkSubtype($type, $subtype)
+    public function checkSubtype($typeId, $subtypeId)
     {
-        $product = Product::whereTypeId($type)
-            ->where('subtype_id', $subtype)
-            ->get();
-        if (($product->isEmpty())) {
-            return abort(404);
+        $productType = ProductType::findOrFail($typeId);
+        if (isset($subtypeId)) {
+            if (!$productType->subtype->find($subtypeId)) {
+                return abort(404);
+            }
         }
     }
 

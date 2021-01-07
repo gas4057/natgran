@@ -6,7 +6,7 @@ $(document).ready(function () {
     //     }, 2500);
     //     $('.loader-outer').delay(4000).fadeOut();
     // });
-    $('.loader-outer').delay(4000).fadeOut();
+    $('.loader-outer').delay(2000).fadeOut();
 
     wow = new WOW({
         mobile: false
@@ -16,7 +16,7 @@ $(document).ready(function () {
     $(function () {
         $(".main-slider-container").slick({
             infinite: true,
-            speed: 2000,
+            speed: 300,
             slidesToShow: 1,
             slidesToScroll: 1,
             fade: true,
@@ -52,7 +52,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                     }
                 },
             ]
@@ -85,7 +85,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         nextArrow: $('#work_gallery--next'),
                         prevArrow: $('#work_gallery--prev'),
                     }
@@ -95,7 +95,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#work_gallery--next'),
                         prevArrow: $('#work_gallery--prev'),
@@ -105,7 +105,7 @@ $(document).ready(function () {
         });
         $("#reviews-slider").slick({
             infinite: true,
-            speed: 1000,
+            speed: 300,
             slidesToShow: 3,
             slidesToScroll: 1,
             arrows: false,
@@ -120,7 +120,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#reviews--next'),
                         prevArrow: $('#reviews--prev'),
@@ -131,7 +131,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#reviews--next'),
                         prevArrow: $('#reviews--prev'),
@@ -139,9 +139,59 @@ $(document).ready(function () {
                 }
             ]
         });
+        $(".why_choose__reasons").slick({
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 9999,
+                    settings: "unslick",
+                },
+                {
+                    breakpoint: 776,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        speed: 300,
+                        arrows: true,
+                        nextArrow: $('#choose--next'),
+                        prevArrow: $('#choose--prev'),
+                    }
+                },
+            ]
+        });
+        $(".faq--list__content").slick({
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 9999,
+                    settings: "unslick",
+                },
+                {
+                    breakpoint: 776,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        speed: 300,
+                        arrows: true,
+                        nextArrow: $('#faq--next'),
+                        prevArrow: $('#faq--prev'),
+                    }
+                },
+            ]
+        });
         $(".hidden-slider-sheme").slick({
             infinite: true,
-            speed: 1000,
+            speed: 300,
             slidesToShow: 4,
             slidesToScroll: 1,
             arrows: false,
@@ -156,7 +206,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 3,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#sheme--next'),
                         prevArrow: $('#sheme--prev'),
@@ -167,7 +217,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#sheme--next'),
                         prevArrow: $('#sheme--prev'),
@@ -178,7 +228,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        speed: 2000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $('#sheme--next'),
                         prevArrow: $('#sheme--prev'),
@@ -204,7 +254,7 @@ $(document).ready(function () {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        speed: 1000,
+                        speed: 300,
                         arrows: true,
                         nextArrow: $(".familar-arrow-right"),
                         prevArrow: $(".familar-arrow-left"),
@@ -291,10 +341,16 @@ $(document).ready(function () {
 
             });
             $(document).on("click", ".custom--carousel__link", function () {
-                $(".custom--carousel__link").removeClass("active");
-                $(this).addClass("active");
-                var currSlide = $(".custom--carousel__link.active").attr("rel");
-                sliderJS(currSlide);
+                console.log(333, this, $(this));
+                if ($(this).hasClass('active')) {
+                    $(".custom--carousel__link").removeClass("active");
+                    sliderJS(null);
+                } else {
+                    $(".custom--carousel__link").removeClass("active");
+                    $(this).addClass("active");
+                    var currSlide = $(".custom--carousel__link.active").attr("rel");
+                    sliderJS(currSlide);
+                }
                 return false;
             });
             $("#next--slide").on("click", function () {
@@ -333,7 +389,6 @@ $(document).ready(function () {
             $('#' + dataId).css({'opacity': 1, 'width': '100%', 'height': 'auto', 'overflow': 'hidden'});
             $('.prod--carousel__item').removeClass('active');
             $('#' + dataId).addClass('active');
-            // mobileSlider($('.prod--carousel__item.active'));
             $('.prod--carousel__item .content').slick("reinit")
         });
 
@@ -353,41 +408,6 @@ $(document).ready(function () {
         $('.prod--carousel__item').each(function (index, item) {
             $(item).children('.content').children().eq(0).addClass('active');
         });
-        mobileSlider($('.why_choose__reasons'));
-        // mobileSlider($('.reviews--list'));
-        mobileSlider($('.faq--list__content'));
-        // mobileSlider($('.sheme-bottom'));
-        // mobileSlider($('.prod--carousel__item.active'));
-        $('#choose--next').on('click', function () {
-            nextSlide($('.why_choose__reasons'));
-        });
-        $('#choose--prev').on('click', function () {
-            prevSlide($('.why_choose__reasons'));
-        });
-        // $('#reviews--next').on('click', function () {
-        //     nextSlide($('.reviews--list'));
-        // });
-        // $('#reviews--prev').on('click', function () {
-        //     prevSlide($('.reviews--list'));
-        // });
-        $('#faq--next').on('click', function () {
-            nextSlide($('.faq--list__content'));
-        });
-        $('#faq--prev').on('click', function () {
-            prevSlide($('.faq--list__content'));
-        });
-        // $('#sheme--next').on('click', function () {
-        //     nextSlide($('.sheme-bottom'));
-        // });
-        // $('#sheme--prev').on('click', function () {
-        //     prevSlide($('.sheme-bottom'));
-        // });
-        // $('#prod--next').on('click', function () {
-        //     nextSlide($('.prod--carousel__item.active'));
-        // });
-        // $('#prod--prev').on('click', function () {
-        //     prevSlide($('.prod--carousel__item.active'));
-        // });
 
         // Footer toogle
         if ($( window ).width() < 768) {
@@ -462,126 +482,12 @@ $(document).ready(function () {
         bl.slideDown();
     }
 
-    function mobileSlider(parent) {
-        let elems;
-        if (parent.hasClass('prod--carousel__item')) {
-            elems = parent.children('.content').children('.product--item');
-        } else {
-            elems = parent.children();
-        }
-        elems.each(function (index, item) {
-            $(item).addClass('elem-' + (index + 1));
-            $(item).attr('data-index', (index + 1));
-        });
-    }
-
-    function nextSlide(parent) {
-        let obj = parent.find('.active').data("index");
-        let length;
-        if (parent.hasClass('prod--carousel__item')) {
-            length = parent.children('.content').children('.product--item').length;
-        } else {
-            length = parent.children().length;
-        }
-        obj++;
-        if (obj === length || obj > length) {
-            obj = 1;
-        }
-        if (parent.hasClass('prod--carousel__item')) {
-            parent.children('.content').children('.product--item').removeClass('active');
-            parent.children('.content').children('.product--item').css({
-                'height': '0',
-                'width': '0',
-                'overflow': 'hidden',
-                'opacity': '0',
-                'transition': 'opacity .2s linear'
-            });
-            parent.children('.content').find('.elem-' + obj).addClass('active');
-            parent.children('.content').find('.elem-' + obj).css({
-                'height': 'auto',
-                'width': '100%',
-                'overflow': 'initial',
-                'opacity': '1',
-                'transition': 'opacity .2s linear'
-            });
-        } else {
-            parent.children().removeClass('active');
-            parent.children().css({
-                'height': '0',
-                'width': '0',
-                'overflow': 'hidden',
-                'opacity': '0',
-                'transition': 'opacity .2s linear'
-            });
-            parent.find('.elem-' + obj).addClass('active');
-            parent.find('.elem-' + obj).css({
-                'height': 'auto',
-                'width': '100%',
-                'overflow': 'initial',
-                'opacity': '1',
-                'transition': 'opacity .2s linear'
-            });
-        }
-    }
-
-    function prevSlide(parent) {
-        var obj = parent.find('.active').data("index");
-        let length;
-        if (parent.hasClass('prod--carousel__item')) {
-            length = parent.children('.content').children('.product--item').length;
-        } else {
-            length = parent.children().length;
-        }
-        obj--;
-        if (obj === 0) {
-            obj = length;
-        }
-        if (parent.hasClass('prod--carousel__item')) {
-            parent.children('.content').children('.product--item').removeClass('active');
-            parent.children('.content').children('.product--item').css({
-                'height': '0',
-                'width': '0',
-                'overflow': 'hidden',
-                'opacity': '0',
-                'transition': 'opacity .2s linear'
-            });
-            parent.children('.content').find('.elem-' + obj).addClass('active');
-            parent.children('.content').find('.elem-' + obj).css({
-                'height': 'auto',
-                'width': '100%',
-                'overflow': 'initial',
-                'opacity': '1',
-                'transition': 'opacity .2s linear'
-            });
-        } else {
-            parent.children().removeClass('active');
-            parent.children().css({
-                'height': '0',
-                'width': '0',
-                'overflow': 'hidden',
-                'opacity': '0',
-                'transition': 'opacity .2s linear'
-            });
-            parent.find('.elem-' + obj).addClass('active');
-            parent.find('.elem-' + obj).css({
-                'height': 'auto',
-                'width': '100%',
-                'overflow': 'initial',
-                'opacity': '1',
-                'transition': 'opacity .2s linear'
-            });
-        }
-    }
-
-
-
 function initModal(button, modal){
     $(button).on('click', function(e){
         e.preventDefault();
         $.fancybox.open($(modal) );
     });
 }
-
 
 // табы в декоре
 $(document).ready(function () {
@@ -672,11 +578,47 @@ $(document).ready(function () {
     if ($("#phone-basket").length) {
         $("#phone-basket").mask("+375 (00) 000-00-00");
     }
+    if ($("#fast-order--phone").length) {
+        $("#fast-order--phone").mask("+375 (00) 000-00-00");
+    }
 });
+
+// форма заказть обратный звонок
+$(document).ready(function () {
+    $('.js-callback--modal').on('click', function (e) {
+        e.preventDefault()
+
+        $.fancybox.open({
+            src  : '#callback--modal',
+            type : 'inline',
+            opts : {
+                afterShow : function( instance, current ) {
+                    console.info( 'done!' );
+                }
+            }
+        });
+    })
+})
+// форма быстрого заказа
+$(document).ready(function () {
+    $('.js-fast-order--modal').on('click', function (e) {
+        e.preventDefault()
+
+        $.fancybox.open({
+            src  : '#fast-order',
+            type : 'inline',
+            opts : {
+                afterShow : function( instance, current ) {
+                    console.info( 'done!' );
+                }
+            }
+        });
+    })
+})
 
 // форма обратной связи в модальном окне
 $(document).ready(function () {
-    $('form#callback--form').on('submit', function (e) {
+    $('form.callback--form').on('submit', function (e) {
         e.preventDefault()
 
         let data_ajax = {};
@@ -703,7 +645,7 @@ $(document).ready(function () {
             },
             success: function (response) {
 
-                $.fancybox.close();
+                $.fancybox.close(true);
 
                 $.fancybox.open({
                     src  : '#questionModal',
@@ -716,8 +658,8 @@ $(document).ready(function () {
                 });
                 $form[0].reset();
                 setTimeout(function () {
-                    $.fancybox.close();
-                }, 500000);
+                    $.fancybox.close(true);
+                }, 50000);
             },
             error:
                 function () {
@@ -1064,24 +1006,6 @@ $(document).ready(function() {
         }
     }
 });
-// Попап для детального просмотра картинок в карточке товара
-$(document).ready(function() {
-    
-    $(".stele__size-img").on("click", function (event) {
-        event.stopPropagation()
-        let src = $(event.target).attr('src')
-
-        $.fancybox.open({
-            src  : src,
-            type : 'image',
-            opts : {
-                afterShow : function( instance, current ) {
-                    console.info( 'done!' );
-                }
-            }
-        });
-    })
-});
 
 // Загрузка всех картинок для 3д саркофага
 // $(window).on("load", function() {
@@ -1097,12 +1021,10 @@ $(document).ready(function () {
         progress     = 0, // точка отсчета
         imgSum       = imagesCount, // количество картинок
         loadedImg    = 0; // счетчик загрузки картинок
-        console.log(imagesCount, percent);
 
     if (imagesCount >= imgSum && imagesCount > 0) {
         preloader.css('background', '#000');
         dBody.css('overflow', 'hidden');
-        console.log(percent);
 
         $(".dws-progress-bar").circularProgress({
             color: "#000000",
@@ -1139,6 +1061,22 @@ $(document).ready(function () {
         console.log("complite");
         $(".sarcophagus-view").removeClass('load-overlay')
     }
-
-
 });
+
+// проверка формы перед отправкой и скролл к незаполненому полю на странице контактов
+$(document).ready(function () {
+    let requaredInputs = $("#contactsForm .input-js")
+    const offsetWindowTop = 100
+    $( "#contactsFormBtn" ).on("click", function(event) {
+        for (let input of requaredInputs) {
+            if (input.value === ""){
+                event.preventDefault()
+                let nameInput = $(input).attr('placeholder')
+                let scrollTop = $(input).offset().top - offsetWindowTop
+                $( window ).scrollTop( scrollTop );
+                toastr.error(`Заполните поле ${nameInput}`,'Форма не отправлена!');
+                return
+            }
+        }
+    });
+})

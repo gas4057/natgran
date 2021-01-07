@@ -36,5 +36,14 @@ class CoefficientModifier extends Model
         'coefficient',
     ];
 
+    public function material()
+    {
+        return $this->belongsTo(ProductMaterials::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(ModifierType::class);
+    }
 }
 

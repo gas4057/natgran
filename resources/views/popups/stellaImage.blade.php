@@ -15,6 +15,7 @@
                     <input class="hide-input par--js" type="radio" name="left_stella_image_id" value="{{$stellaImage->id}}">
                     <img class="stele__size-img" src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                 </div>
+                <a href="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
             </label>
                     @endforeach
                 @endforeach

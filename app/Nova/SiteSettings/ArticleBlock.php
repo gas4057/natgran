@@ -64,14 +64,14 @@ class ArticleBlock extends Resource
         return [
             ID::make()->sortable()
                 ->onlyOnIndex(),
-            BelongsTo::make('Заголовок', 'article', 'App\Nova\SiteSettings\Articles'),
-            Textarea::make('text_block')
+            BelongsTo::make('Новость', 'article', 'App\Nova\SiteSettings\Articles')
+                ->hideWhenUpdating(),
+            Text::make('Заголовок блока', 'title')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Блок','text_block')
-                ->rules('required')
+            Tiptap::make('Заголовок блока', 'title')
                 ->onlyOnForms()
                 ->buttons([
                     'heading',
@@ -87,12 +87,33 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Text::make('Описание к блоку','title')
+            Textarea::make('Текстовый блок', 'text_block')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Описание к блоку','title')
+            Tiptap::make('Текстовый блок', 'text_block')
+                ->onlyOnForms()
+                ->buttons([
+                    'heading',
+                    'italic',
+                    'bold',
+                    'code',
+                    'link',
+                    'strike',
+                    'underline',
+                    'bullet_list',
+                    'ordered_list',
+                    'code_block',
+                    'blockquote',
+                ])
+                ->headingLevels([2, 3, 4, 5, 6]),
+            Text::make('Заголовок_1', 'caption_1')
+                ->sortable()
+                ->showOnDetail()
+                ->hideWhenUpdating()
+                ->hideWhenCreating(),
+            Tiptap::make('Заголовок_1', 'caption_1')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -109,12 +130,15 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Text::make('Заголовок_1','caption_1')
+            Image::make('Изображение_1', 'image_1')
+                ->disk('public')
+                ->path('ArticleBlocks'),
+            Text::make('Заголовок_2', 'caption_2')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Заголовок_1','caption_1')
+            Tiptap::make('Заголовок_2', 'caption_2')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -131,15 +155,15 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Image::make('Изображение_1','image_1')
+            Image::make('Изображение_2', 'image_2')
                 ->disk('public')
                 ->path('ArticleBlocks'),
-            Text::make('Заголовок_2','caption_2')
+            Text::make('Заголовок_3', 'caption_3')
                 ->sortable()
                 ->showOnDetail()
                 ->hideWhenUpdating()
                 ->hideWhenCreating(),
-            Tiptap::make('Заголовок_2','caption_2')
+            Tiptap::make('Заголовок_3', 'caption_3')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -156,15 +180,16 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Image::make('Изображение_2','image_2')
+            Image::make('Изображение_3', 'image_3')
                 ->disk('public')
                 ->path('ArticleBlocks'),
-            Text::make('Заголовок_3','caption_3')
+            Text::make('Заголовок для текста в конце блока', 'footer_title')
                 ->sortable()
-                ->showOnDetail()
-                ->hideWhenUpdating()
-                ->hideWhenCreating(),
-            Tiptap::make('Заголовок_3','caption_3')
+                ->onlyOnDetail(),
+            Text::make('Текст в конце блока', 'caption_text')
+                ->sortable()
+                ->onlyOnDetail(),
+            Tiptap::make('Заголовок для текста в конце блока', 'footer_title')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -181,15 +206,7 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Image::make('Изображение_3','image_3')
-                ->disk('public')
-                ->path('ArticleBlocks'),
-            Text::make('Текст в конце блока','caption_text')
-                ->sortable()
-                ->showOnDetail()
-                ->hideWhenUpdating()
-                ->hideWhenCreating(),
-            Tiptap::make('Текст в конце блока','caption_text')
+            Tiptap::make('Текст в конце блока', 'caption_text')
 //                ->rules('required')
                 ->onlyOnForms()
                 ->buttons([
@@ -206,15 +223,18 @@ class ArticleBlock extends Resource
                     'blockquote',
                 ])
                 ->headingLevels([2, 3, 4, 5, 6]),
-            Image::make('Блок Изображений_1','block_image_1')
+            Image::make('Блок Изображений_1', 'block_image_1')
                 ->disk('public')
-                ->path('ArticleBlocks'),
-            Image::make('Блок Изображений_2','block_image_2')
+                ->path('ArticleBlocks')
+                ->hideFromIndex(),
+            Image::make('Блок Изображений_2', 'block_image_2')
                 ->disk('public')
-                ->path('ArticleBlocks'),
-            Image::make('Блок Изображений_3','block_image_3')
+                ->path('ArticleBlocks')
+                ->hideFromIndex(),
+            Image::make('Блок Изображений_3', 'block_image_3')
                 ->disk('public')
-                ->path('ArticleBlocks'),
+                ->path('ArticleBlocks')
+                ->hideFromIndex(),
 
         ];
     }

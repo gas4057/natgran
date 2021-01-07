@@ -1,9 +1,8 @@
-## How to start:
-
-- git clone.
-- copy novaAdmin folder and rename to nova.
-- composer install
-- create and edit you're .env
-- make DB. 
-- php artisan key:generate
-- DONE!
+## Installation
++ Clone this project.
++ composer install
++ create database
++ make .env and set
++ php artisan migrate --seed
++ php artisan key:generate
++ php artisan storage:link

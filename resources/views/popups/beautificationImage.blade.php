@@ -18,6 +18,7 @@
                             <img class="stele__size-img accordion__title-img"
                                  src="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/test-1.jpg')}}">
                         </div>
+                        <a href="{{$item->image ?  Storage::url($item->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                     </label>
                 @endforeach
             @endif

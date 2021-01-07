@@ -8,9 +8,7 @@
 @include('layouts.breadcrumb_layouts')
     <div class="product product--decor">
 
-    <div class="box product--decor-baner">
-        @include('layouts.banner')
-    </div>
+    <div class="box product--decor-baner">@include('layouts.banner')</div>
 
         @if($product)
                 <div class="container decor__page" id="decor">
@@ -82,7 +80,7 @@
 
                                 <div class="decor__service tab__description-item tab__description-item--green tab__description-item--customer-service">
                                     Если испытываете затруднения при оформлении заказа онлайн, воспользуйтесь помощью консультанта
-                                    <a class="tab__link tab__link--decor" href="#" data-fancybox="" data-src="#callback--modal">Заказать звонок</a>
+                                    <a class="tab__link tab__link--decor js-callback--modal" href="#">Заказать звонок</a>
                                 </div>
                             </div>
 

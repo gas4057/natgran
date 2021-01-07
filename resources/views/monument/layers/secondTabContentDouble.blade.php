@@ -533,6 +533,7 @@
                                 <input class="hide-input par--js" type="radio" name="left_stella_image_id" value="{{$stellaImage->id}}">
                                 <img class="stele__size-img  stele__size-img--contain" class="accordion__title-img" src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                             </div>
+                            <a href="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                         </label>
                         @endif
                     @endforeach
@@ -598,6 +599,7 @@
                         <input class="hide-input par--js" type="radio" name="right_stella_image_id" value="{{$stellaImage->id}}">
                         <img class="stele__size-img stele__size-img--contain" class="accordion__title-img" src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                     </div>
+                    <a href="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                 </label>
                         @endif
                     @endforeach
@@ -696,6 +698,7 @@
                                     <input class="hide-input par--js" type="radio" name="left_tombstone_image_id" value="{{$tombstoneImage->id}}">
                                     <img class="stele__size-img stele__size-img--contain" src="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                                 </div>
+                                <a href="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                             </label>
                             @endif
                         @endforeach
@@ -756,6 +759,7 @@
                                 <input class="hide-input par--js" type="radio" name="right_tombstone_image_id" value="{{$tombstoneImage->id}}">
                                 <img class="stele__size-img stele__size-img--contain" src="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                             </div>
+                            <a href="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                         </label>
                         @endif
                     @endforeach

@@ -1,6 +1,7 @@
 $(function() {
 	// Валидация форм
 	$("#phone").mask("+375 (00) 000-00-00");
+	$("#fast-order--phone").mask("+375 (00) 000-00-00");
 	$("#callback--form").validate({
 		errorClass: "invalid",
 		validClass: "success",

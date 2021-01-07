@@ -13,7 +13,7 @@
                 <p class="header--info__name">
                     Стелла:
                 </p>
-
+                @if(!empty($stella['first']))
                 <p class="header--info__params">
                     высота
                     <span class="stella--height">{{$stella['first']['height']}}, </span>
@@ -22,6 +22,7 @@
                     толщина
                     <span class="stella--thickness">{{$stella['first']['thickness']}}</span>
                 </p>
+                @endif
             </div>
 
             <p class="header--info__material">
@@ -36,7 +37,7 @@
                 <p class="header--info__name">
                     Тумба:
                 </p>
-
+                @if(!empty($pedestal['first']))
                 <p class="header--info__params">
                     высота
                     <span class="pedestals--height">{{$pedestal['first']['height']}}, </span>
@@ -45,6 +46,7 @@
                     толщина
                     <span class="pedestals--thickness">{{$pedestal['first']['thickness']}}</span>
                 </p>
+                @endif
             </div>
 
             <p class="header--info__material">
@@ -59,7 +61,7 @@
                 <p class="header--info__name">
                     Цветник:
                 </p>
-
+                @if(!empty($parterre['first']))
                 <p class="header--info__params">
                     высота
                     <span class="parterres--height">{{$parterre['first']['height']}}, </span>
@@ -68,6 +70,7 @@
                     толщина
                     <span class="parterres--thickness">{{$parterre['first']['thickness_size']}}</span>
                 </p>
+                @endif
             </div>
 
             <p class="header--info__material">
@@ -82,7 +85,7 @@
                 <p class="header--info__name">
                     Надгробная плита:
                 </p>
-
+                @if(!empty($tombstone['first']))
                 <p class="header--info__params">
                     высота
                     <span class="tombstones--height">{{$tombstone['first']['height']}}, </span>
@@ -91,6 +94,7 @@
                     толщина
                     <span class="tombstones--thickness">{{$tombstone['first']['thickness']}}</span>
                 </p>
+                @endif
             </div>
 
             <p class="header--info__material">

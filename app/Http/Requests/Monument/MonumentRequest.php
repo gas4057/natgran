@@ -81,7 +81,7 @@ class MonumentRequest extends FormRequest
         return [
             'name' => 'string|required',
             'phone' => 'string|required',
-            'email' => 'email|required',
+            'email' => 'email',
         ];
     }
 

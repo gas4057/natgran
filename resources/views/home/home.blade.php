@@ -85,13 +85,13 @@
                     @endforeach
                 </select>
                 <div class="product--carousel__items d-flex w-100">
-                    @foreach($products as $values)
+                    @foreach($products as $product)
                         <div class="prod--carousel__item w-100 d-flex col {{$loop->first ? 'active' : ''}}"
                              id="{{$loop->iteration}}">
                              <div class="content w-100 d-flex ">
-                                @foreach($values->getrelations() as $value)
+                                @foreach($product->getrelations() as $value)
                                     <a href="{{route('products.id',$value->id)}}" class="product--item d-flex col ai-center">
-                                        <div class="product--item__img-wrap  wow animate__fadeInUp">
+                                        <div class="product--item__img-wrap  wow animate__fadeInUp {{$value->type_id == 1 || $value->type_id == 2 ? 'monument-3d' : ''}}">
                                             <img class="product--item__img"
                                                 src="{{$value->image ? Storage::url($value->image) : url('/images/demo/pamyatnik_dvoinoy.jpg')}}"
                                                 alt="...">
@@ -136,8 +136,8 @@
                                     </a>
                                 @endforeach
                             </div>
-                            <a class="more--products-slider" href="{{route('products.type',[$value->type_id,$value->subtype_id])}}">
-                                <span> {{$values->text_more}}</span>
+                            <a class="all--reviews" href="{{route('products.type',[$value->type_id,$value->subtype_id])}}">
+                                {{$product->text_more}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                                     <path d="M0.621094 1.51562L5.09913 5.75492L0.621094 10.104" stroke="#F09939" stroke-width="1.5"/>
                                 </svg>
@@ -171,7 +171,7 @@
         <div class="box d-flex">
             <div class="why_choose__quote">
                 <p class="choose-quote__text">{!! $articles[1]->title !!}</p>
-                <img  class="quote--img wow animate__fadeIn" data-wow-delay="1s" data-wow-duration="2s"
+                <img  class="quote--img wow animate__fadeIn" data-wow-duration="2s"
                          src="{{$articles[1]->image ? Storage::url($articles[1]->image) : URL::asset('assets/img/quote-image.png')}}" alt="">
             </div>
             <div class="why_choose__reasons d-flex flex-wrap">
@@ -180,8 +180,8 @@
                             <div class="why_choose__reason {{$loop->first ? 'active' : ''}}">
                             <div class="reason--icon d-flex ai-center justify-center wow animate__fadeInUp" data-wow-duration=".66s"><img
                                     src="{{$item->image ? Storage::url($item->image) : URL::asset('assets/img/money.svg')}}" alt=""></div>
-                            <div class="reason--name wow animate__fadeInUp" data-wow-delay=".31s" data-wow-duration=".66s">{!!$item->title!!}</div>
-                            <div class="reason--text wow animate__fadeInUp" data-wow-delay=".66s" data-wow-duration=".66s">{!!$item->text_block!!}</div>
+                            <div class="reason--name wow animate__fadeInUp" data-wow-duration=".66s">{!!$item->title!!}</div>
+                            <div class="reason--text wow animate__fadeInUp" data-wow-duration=".66s">{!!$item->text_block!!}</div>
                         </div>
                         @endforeach
                 </div>
@@ -372,7 +372,7 @@
                         </div>
                         <div class="quality--item">
                             <div class="quality--item__outer left-2">
-                                <div class="quality--item__img d-flex ai-center justify-center  wow animate__fadeInLeft" data-wow-delay=".3s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center  wow animate__fadeInLeft" data-wow-duration=".66s"><img
                                     src="{{$article[1]->image ? Storage::url($article[1]->image) : URL::asset('assets/img/quality-safe.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[1]->text_block !!}</div>
                             </div>
@@ -380,7 +380,7 @@
                         </div>
                         <div class="quality--item">
                             <div class="quality--item__outer left-3">
-                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInLeft" data-wow-delay=".6s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInLeft" data-wow-duration=".66s"><img
                                         src="{{$article[2]->image ? Storage::url($article[2]->image) : URL::asset('assets/img/quality-def.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[2]->text_block !!}</div>
                             </div>
@@ -388,7 +388,7 @@
                         </div>
                         <div class="quality--item ">
                             <div class="quality--item__outer left-4">
-                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInLeft" data-wow-delay=".9s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInLeft" data-wow-duration=".66s"><img
                                         src="{{$article[3]->image ? Storage::url($article[3]->image) : URL::asset('assets/img/quality-time.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[3]->text_block !!}</div>
                             </div>
@@ -415,7 +415,7 @@
                         </div>
                         <div class="quality--item ">
                             <div class="quality--item__outer right-2">
-                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-delay=".3s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-duration=".66s"><img
                                         src="{{$article[5]->image ? Storage::url($article[5]->image) : URL::asset('assets/img/quality-rain.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[5]->text_block !!}</div>
                             </div>
@@ -423,7 +423,7 @@
                         </div>
                         <div class="quality--item ">
                             <div class="quality--item__outer right-3">
-                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-delay=".6s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-duration=".66s"><img
                                         src="{{$article[6]->image ? Storage::url($article[6]->image) : URL::asset('assets/img/quality-water.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[6]->text_block !!}</div>
                             </div>
@@ -431,7 +431,7 @@
                         </div>
                         <div class="quality--item ">
                             <div class="quality--item__outer right-4">
-                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-delay=".9s"><img
+                                <div class="quality--item__img d-flex ai-center justify-center wow animate__fadeInRight" data-wow-duration=".66s"><img
                                         src="{{$article[7]->image ? Storage::url($article[7]->image) : URL::asset('assets/img/quality-colors.svg')}}" alt=""></div>
                                 <div class="quality--item__text">{!! $article[7]->text_block !!}</div>
                             </div>
@@ -527,7 +527,7 @@
     </div>
     <div class="main--reviews">
         <div class="box flex-row">
-            <div class="section--title d-flex ai-center"><span class="section--title__num">6</span><span
+            <div class="section--title d-flex ai-center"><span class="section--title__num">6</span><span 
                     class="section--title__line"></span><span class="section--title__name">Отзывы РЕАЛЬНЫХ КЛИЕНТОВ</span>
         </div>
             <div class="mobile--nav d-flex">
@@ -546,28 +546,32 @@
             </div>
         </div>
         <div class="box col w-100">
-            <div class="reviews--container"><span class="reviews--subtitle d-flex">Почему в Белорусии предпочитают заказать памятник именно у нас ?</span>
+            <div class="reviews--container"><span class="reviews--subtitle d-flex">Отзывы из Google</span>
                 <div id="reviews-slider" class="reviews--list d-flex flex-wrap">
                     @if(!$reviews->isEmpty())
                         @foreach($reviews as $review)
                             <div class="reviews--item d-flex ai-center justify-center">
-                                <div class="reviews--item__outer">
-                                    <a {{$loop->first ? 'active' : ''}}"
+                                <!-- <div> -->
+                                    <a class="reviews--item__outer" {{$loop->first ? 'active' : ''}}"
                                        href="{{$review->image ? Storage::url($review->image) : URL::asset('assets/img/review.png')}}"
-                                       data-fancybox="images"><img
+                                       data-fancybox="images">
+                                       <img
                                             src="{{$review->image ? Storage::url($review->image) : URL::asset('assets/img/review.png')}}"
-                                            alt=""></a>
-                                </div>
+                                            alt="">
+                                    </a>
+                                <!-- </div> -->
                             </div>
                         @endforeach
                     @else
                         @for($i = 0; $i<8;$i++)
                         <div class="reviews--item d-flex ai-center justify-center">
-                            <div class="reviews--item__outer">
-                                <a {{$i == 0 ? 'active' : ''}}"
-                                    href="{{URL::asset('assets/img/review.png')}}"
-                                    data-fancybox="images"><img src="{{URL::asset('assets/img/review.png')}}" alt=""></a>
-                            </div>
+                            <!-- <div> -->
+                                <a class="reviews--item__outer" {{$i == 0 ? 'active' : ''}}"
+                                    href="{{URL::asset('assets/img/review2.png')}}"
+                                    data-fancybox="images">
+                                    <img src="{{URL::asset('assets/img/review2.png')}}" alt="">
+                                </a>
+                            <!-- </div> -->
                         </div>
                         @endfor
                     @endif
@@ -579,6 +583,16 @@
                     <path d="M0.621094 1.51562L5.09913 5.75492L0.621094 10.104" stroke="#F09939" stroke-width="1.5"/>
                 </svg>
             </a>
+            <!-- TODO зарезервировано для вставки ссылки из админки -->
+            <!-- <a class="our-instagram d-flex ai-center justify-center" href="{{$site_contacts['instagram']->first()->url}}"> -->
+            <a class="our-instagram d-flex ai-center justify-center" href="https://www.google.com.ua/maps/place/%D0%9C%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD+%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2+Natgran/@53.8844128,25.2844959,15z/data=!4m10!1m2!2m1!1z0JzQsNCz0LDQt9C40L0g0L_QsNC80Y_RgtC90LjQutC-0LIgTmF0Z3Jhbiwg0KDRi9C90L7QuiAi0J_RgNC40LLQvtC60LfQsNC70YzQvdGL0LksINGD0LsuINCi0YDRg9GF0LDQvdC-0LJhLCDQm9C40LTQsCAyMzEzMDAsINCR0LXQu9Cw0YDRg9GB0Yw!3m6!1s0x46de8bfa727cf615:0xb89a9264e22fe6e!8m2!3d53.8844128!4d25.2932506!9m1!1b1" target="_blanck">
+                <svg width="27" height="27" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 6.00035C0 2.68643 2.74119 0.00070579 6.12355 0.00070579C6.14444 -5.11313e-08 6.16894 0 6.19343 0C7.75602 0 9.17596 0.597142 10.2285 1.5712L10.2256 1.56838L8.55929 3.13676C7.94405 2.56432 7.1098 2.2114 6.19127 2.2114C6.1675 2.2114 6.143 2.21211 6.11923 2.21211H6.12283C4.01705 2.25022 2.32479 3.93153 2.32479 6.00035C2.32479 8.06917 4.01705 9.75049 6.11995 9.7886H6.12355C6.19199 9.79354 6.27196 9.79637 6.35264 9.79637C7.94693 9.79637 9.27682 8.69102 9.5902 7.22075L9.5938 7.19958H6.12355V5.14346H11.9027C11.9633 5.44133 11.9986 5.78507 12 6.13658V6.13799C12 9.56626 9.65504 12 6.12139 12C6.11923 12 6.11707 12 6.11491 12C2.73759 12 0 9.31781 0 6.00882C0 6.006 0 6.00318 0 6.00035Z" fill="#757575"/>
+                </svg>
+
+                Отзывы из Google
+            </a>
+
         </div>
     </div>
     <div class="main--faq">

@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
             ObjectProductSeeder::class,
             BannerTableSeeder::class,
             SiteServicesTableSeeder::class,
+            PopupsModalsTableSeeder::class,
         ]);
     }
 }

@@ -1,8 +1,10 @@
 <div class="catalog--elems d-flex flex-wrap">
     @foreach($products as $product)
-        <div class="product--item d-flex col ai-center">
-            <div class="product--item__img-wrap">
-                <img class="product--item__img" src="{{$product->image ? Storage::url($product->image) : URL::asset('/images/demo/vase.jpg')}}" alt="...">
+        <a href="{{route('products.id',$product->id)}}" class="product--item d-flex col ai-center">
+            <div class="product--item__img-wrap {{$product->type_id == 1 || $product->type_id == 2 ? 'monument-3d' : ''}}">
+                <img class="product--item__img"
+                     src="{{$product->image ? Storage::url($product->image) : URL::asset('assets/img/stella.jpg')}}"
+                     alt="...">
             </div>
 
             <div class="product--item__description">
@@ -25,9 +27,9 @@
             </div>
 
             <div class="product--item__link-wrap">
-                <a href="{{route('products.id',$product->id)}}" class="product--item__link btn orange d-flex ai-center justify-center mb-0" tabindex="0">
+                <div class="product--item__link btn orange d-flex ai-center justify-center mb-0" tabindex="0">
                     Подробнее
-                </a>
+                </div>
             </div>
             @if($product->is_promotional == 1)
                 <div class="product--item__sell">
@@ -35,7 +37,7 @@
                     <div class=""><span class="fw-700">{{$product->saving}}</span> руб.</div>
                 </div>
             @endif
-        </div>
+        </a>
     @endforeach
 
 </div>

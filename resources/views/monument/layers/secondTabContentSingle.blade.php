@@ -455,6 +455,7 @@
                                 src="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}"
                                 alt="...">
                             </div>
+                            <a href="{{$stellaImage->image ?  Storage::url($stellaImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                         </label>
                         @endif
                     @endforeach
@@ -555,6 +556,7 @@
                                    name="left_tombstone_image_id" value="{{$tombstoneImage->id}}">
                             <img class="stele__size-img stele__size-img--contain" src="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" alt="...">
                         </div>
+                        <a href="{{$tombstoneImage->image ?  Storage::url($tombstoneImage->image)  : URL::asset('assets/img/test-1.jpg')}}" data-fancybox="images" class="img-popup"></a>
                     </label>
                         @endif
                     @endforeach

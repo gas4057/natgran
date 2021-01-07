@@ -47,7 +47,7 @@ class ProductSettingsServices
             $obSizeChart = $this->getModifiersSizeChart($product, $modifierTypes);
 
             /** получить минимальные размеры по модификаторам */
-            $data = $this->getMinModifiersSize($obSizeChart,$modifierTypes);
+            $data = $this->getMinModifiersSize($product, $obSizeChart, $modifierTypes);
 
             /** получить цену за минимальный модификатор */
             foreach ($data as $key => $modifierAttr) {
@@ -165,8 +165,9 @@ class ProductSettingsServices
             $modifier = $this->switchAttrOrder($modifierData, $modifierByType, $height, $width, $thickness, $thicknessSize);
         }
         $modifier->first()['material'] = $material_id;
-        //Если стелла то подбираем размеры и получаем цены по всем модификаторам
-        if ($modifierName == 'Stella') {
+
+        /** Если клик был по стелле и памятник одиночный - подбираем размеры и получаем цены по всем модификаторам */
+        if ($modifierName == 'Stella' and $product->type_id == 1) {
             $arModifiers = $product->type->modifier()->get();
             /**
              * @var $obModifiersSizes 'получаем модификаторы соотв. стелле'
@@ -193,6 +194,7 @@ class ProductSettingsServices
             return json_encode([
                 'modifier_size' => $obModifiersSizes,
                 'old_price' => $oldPrice,
+                'product_type' => $product->type_id,
             ]);
         } else {
             $getModifierPrice = $this->getPriceForModifier($modifier->first(), $product, $idTypeModifier, $material_id);
@@ -206,6 +208,7 @@ class ProductSettingsServices
                 'price_for_1st_size' => $modifierPrice,
                 'material_id' => $material_id,
                 'old_price' => $oldPrice,
+                'product_type' => $product->type_id,
             ]);
         }
     }
@@ -219,11 +222,18 @@ class ProductSettingsServices
                     $modifier[$item->type] = $modifierStella;
                     break;
                 case $item->type == "Pedestals":
-                    $width = $modifierStella->width;
-                    $width = $productTypeId == 1 ? $width : $width - 40;
-                    $modifier[$item->type] = $modifiers->where('type_id', $item->id)
-                        ->where('height', $width)
-                        ->first();
+                    $height = $productTypeId == 1 ? $modifierStella->width : $modifierStella->height - 40;
+                    $modifier[$item->type] = collect(
+                        $modifiers->where('type_id', $item->id)->where('height', $height))
+                        ->sortBy(['width', 'thickness'])->first();
+
+                    /** если модификатор не найден берем по мин.высоте */
+                    if (empty($modifier[$item->type])) {
+                        $minHeight = $modifiers->where('type_id', $item->id)->min('height');
+                        $modifier[$item->type] = collect(
+                            $modifiers->where('type_id', $item->id)->where('height', $minHeight)
+                        )->sortBy(['width', 'thickness'])->first();
+                    }
                     break;
                 case $item->type == "Parterres" || $item->type == "Tombstones":
                     $modifier[$item->type] = $modifiers->where('type_id', $item->id)
@@ -295,7 +305,7 @@ class ProductSettingsServices
         }
         $width = $modifierSize['width'] / 100;
         $height = $modifierSize['height'] / 100;
-        $thickness = $modifierSize['thickness'] ?? null;
+        $thickness = intval($modifierSize['thickness']) ? intval($modifierSize['thickness']) / 100 : null;
 
         //коэф за резку
         $cutting = ModifierCutting::where('product_id', $product->id)
@@ -303,9 +313,6 @@ class ProductSettingsServices
             ->get()
             ->pluck('coefficient')
             ->first();
-
-        //change cutting coefficient for formula
-        $thickness = $thickness != null ? $thickness / 100 : null;
 
         $coefficient = 0;
         $modifierName = ModifierType::find($modifierTypeId)->type;
@@ -608,25 +615,28 @@ class ProductSettingsServices
         return $data;
     }
 
-    public function getMinModifiersSize($obSizeChart,$modifierTypes)
+    public function getMinModifiersSize(Product $product,$obSizeChart,$modifierTypes)
     {
         /** @var $minHeightModifier 'приоритет в мин.размере за высотой' */
 
         foreach ($modifierTypes as $key => $modifierType) {
-            $minHeightModifier = Modifier::whereTypeId($modifierType->id)->get()->min('height');
-            $minModifier = Modifier::whereTypeId($modifierType->id)
-                ->where('height', $minHeightModifier)
-                ->first();
+            $minModifier = $product->type->modifier()
+                ->where('type_id', $modifierType->id)
+                ->get()
+                ->min();
             $thickness = $modifierType->id == 3 ? 'thickness_size' : 'thickness';
-
-            $obSizeChart[$modifierType->type]['first'] = [
-                'id' => $minModifier->id,
-                'type_id' => $modifierType->id,
-                'height' => $minModifier->height,
-                'width' => $minModifier->width,
-                'thickness' => $minModifier->thickness,
-                'thickness_size' => $minModifier->$thickness
-            ];
+            if ($minModifier) {
+                $obSizeChart[$modifierType->type]['first'] = [
+                    'id' => $minModifier->id,
+                    'type_id' => $modifierType->id,
+                    'height' => $minModifier->height,
+                    'width' => $minModifier->width,
+                    'thickness' => $minModifier->thickness,
+                    'thickness_size' => $minModifier->$thickness
+                ];
+            } else {
+                dump('минимальные размеры по модификатору '.$modifierType->type.' не найдены');
+            }
         }
         return $obSizeChart;
     }

@@ -45,6 +45,7 @@ let promiseRequest = new Promise((resolve, reject) => {
     };
 }).then(async function (data) {
     // Загрузка первай текстуры
+    console.log(data);
     firstTexture = await loadTexture(data.texture);
     firstTexture.shininess = 1000
     INITIAL_MAP = [

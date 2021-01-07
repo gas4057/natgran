@@ -27,7 +27,7 @@
     <link type="text/css" href="{{URL::asset('assets/css/additionalStyle.css')}}" rel="stylesheet">
     <title>NATGRAN</title>
     @yield('head')
-    <!-- <script src="//code.jivosite.com/widget/cYuDEoetxh" async></script> -->
+    <script src="//code.jivosite.com/widget/cYuDEoetxh" async></script>
     <script src="{{asset('assets/js/front/libs.min.js')}}"></script>
     <script src="{{asset('assets/js/front/common.js')}}"></script>
 
@@ -65,7 +65,7 @@
                                 </a>
                                 <a class="ai-center header--phone__mob"
                                     href="tel:{{$site_contacts['phone']->first()->contact ?? '+375 (11) 398-56-88'}}">
-                                    <span>{{$site_contacts['phone']->first()->contact ?? '+375 (11) 398-56-88'}}</span>
+                                    <span>+ {{$site_contacts['phone']->first()->contact ?? '375 (11) 398-56-88'}}</span>
                                     <img src="{{URL::asset('assets/img/phone-rounded.svg')}}" alt="">
                                 </a>
                             </div>
@@ -110,8 +110,8 @@
                             @endfor
                             @endif
                         </div>
-                        <button class="btn orange d-flex ai-center justify-center" data-fancybox
-                            data-src="#callback--modal">Заказать звонок</button>
+                        <!-- <button class="btn orange d-flex ai-center justify-center js-callback--modal" data-fancybox data-src="#callback--modal">Заказать звонок</button> -->
+                        <button class="btn orange d-flex ai-center justify-center js-callback--modal">Заказать звонок</button>
                     </div>
                 </div>
                 <h3 id="mobile--slogan">Памятники из гранита от производителя</h3>
@@ -208,7 +208,7 @@
                 </ul>
             </nav>
             <div class="main--nav__mobile w-100">
-                <div class="box ai-center space-between">
+                <div class="main--nav__mobile-row box ai-center space-between">
                     <button class="hamburger hamburger--slider" type="button"><span class="hamburger-box"><span
                                 class="hamburger-inner"></span></span><span class="hamburger-label">Меню</span>
                     </button>
@@ -224,10 +224,12 @@
                         <li class="mobile--menu__link"><a href="{{route('gallery')}}">Галерея</a></li>
                         <li class="mobile--menu__link"><a href="/">Каталог</a></li>
                     </ul>
-                    <img class="scrolled-logo" src="{{URL::asset('assets/img/scrolled-logo.svg')}}" alt="">
-                    <a class="scrolled-phone" href="tel:375113985688">
-                        <img src="{{URL::asset('assets/img/phone.svg')}}" alt="">
-                    </a>
+                    <div class="main--nav__mobile-center">
+                        <img class="scrolled-logo" src="{{URL::asset('assets/img/scrolled-logo.svg')}}" alt="">
+                        <a class="scrolled-phone" href="tel:375113985688">
+                            <img src="{{URL::asset('assets/img/phone.svg')}}" alt="">
+                        </a>
+                    </div>
                     <a class="mobile--link d-flex ai-center justify-center" href="{{route('cart.show')}}">
                         <img src="{{URL::asset('assets/img/cart-ico.svg')}}" alt="Cart">
                         <span class="counter d-flex ai-center justify-center">
@@ -248,26 +250,26 @@
                     <div class="footer__menu--section col-50 p-RL20"><span class="footer__title">Гранитные
                             изделия</span>
                         <ul class="footer__menu--propose d-flex flex-wrap wow animate__fadeInUp">
-                            <li class="footer--propose__item"><a href="/">Памятники в виде креста</a></li>
-                            <li class="footer--propose__item"><a href="/">Памятники в виде креста</a></li>
-                            <li class="footer--propose__item"><a href="/">Ограды</a></li>
-                            <li class="footer--propose__item"><a href="/">Ограды</a></li>
-                            <li class="footer--propose__item"><a href="/">Памятники в виде креста</a></li>
-                            <li class="footer--propose__item"><a href="/">Ограды</a></li>
-                            <li class="footer--propose__item"><a href="/">Памятники в виде креста</a></li>
-                            <li class="footer--propose__item"><a href="/">Ограды</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[1,1])}}">Одиночные Простые</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[1,2])}}">Одиночные Комплексы</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[1,3])}}">Одиночные Саркофаги</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[4])}}">Ограды</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[2,4])}}">Двойные Простые</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[2,5])}}">Двойные Комплексы</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[2,6])}}">Двойные саркофаги</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[3])}}">Уголки</a></li>
                         </ul>
                     </div>
                     <div class="footer__menu--section col-50 p-RL20"><span class="footer__title">Элементы декора</span>
                         <ul class="footer__menu--propose d-flex flex-wrap wow animate__fadeInUp">
-                            <li class="footer--propose__item"><a href="/">Медальоны</a></li>
-                            <li class="footer--propose__item"><a href="/">Веточки и розочки</a></li>
-                            <li class="footer--propose__item"><a href="/">Рамки</a></li>
-                            <li class="footer--propose__item"><a href="/">Статуи</a></li>
-                            <li class="footer--propose__item"><a href="/">Буквы гаджати</a></li>
-                            <li class="footer--propose__item"><a href="/">Вазы</a></li>
-                            <li class="footer--propose__item"><a href="/">Крестики</a></li>
-                            <li class="footer--propose__item"><a href="/">Лампады</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[6])}}">Украшения</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[7])}}">Вазы</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[8])}}">Лампады</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[5])}}">Плитка</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[6,7])}}">Крестики</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[6,8])}}">Розочки</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[6,9])}}">Статуи</a></li>
+                            <li class="footer--propose__item"><a href="{{route('products.type',[6,10])}}">Рамки для медальонов</a></li>
                         </ul>
                     </div>
                     <div class="footer__row d-flex w-100">
@@ -379,7 +381,7 @@
     <div style="display: none;" id="callback--modal">
         <div class="callback--content d-flex col">
             <h3 class="callback--content__title">Задать вопрос</h3>
-            <form class="d-flex col" id="callback--form" method="POST" action="{{route('home.send.question')}}">
+            <form class="d-flex col callback--form" id="callback--form" method="POST" action="{{route('home.send.question')}}">
                 <div class="callback--field">
                     <input class="requared" type="text" name="phone" placeholder="Телефон для связи" id="phone" required />
                 </div>
@@ -388,6 +390,22 @@
                 </div>
                 <button type="submit" class="btn orange d-flex ai-center justify-center">Задать вопрос</button>
                 <p class="callback--warning">Нажатие кнопки «Задать вопрос» означает согласие с настоящей <a
+                        href="{{route('offer.agreement')}}">Политикой конфеденциальности</a></p>
+            </form>
+        </div>
+    </div>
+    <div style="display: none;" id="fast-order">
+        <div class="callback--content d-flex col">
+            <h3 class="callback--content__title">Заказать по телефону</h3>
+            <form class="d-flex col callback--form" id="fast-order--form" method="POST" action="{{route('home.send.question')}}">
+                <div class="callback--field">
+                    <input class="requared" type="text" name="phone" placeholder="Телефон для связи" id="fast-order--phone" required />
+                </div>
+                <div class="callback--field">
+                    <textarea placeholder="Сообщение" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn orange d-flex ai-center justify-center">Заказать по телефону</button>
+                <p class="callback--warning">Нажатие кнопки «Заказать по телефону» означает согласие с настоящей <a
                         href="{{route('offer.agreement')}}">Политикой конфеденциальности</a></p>
             </form>
         </div>
@@ -414,17 +432,10 @@
             <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
         </div>
     </div>
-    <div class="modal-message modal-message--large" id="siteOut" tabindex="-1" role="dialog" style="display: none;">
-        <div class="modal-content d-flex col ai-center justify-center">
-            <h5 class="modal-title">Уходите со страницы?</h5>
-            <p>Возможно Вас заинтересует наш раздел с <a class="modal-link" href="{{route('special.offers')}}">акциями</a></p>
-            <button type="button" class="btn orange" onclick="$.fancybox.close()">Закрыть</button>
-        </div>
-    </div>
-    
+
+    @include('popups/leave')
     @include('popups/thanks')
     @include('popups/map')
-    @include('popups/success')
     <!-- <script src="{{asset('assets/js/front/libs.min.js')}}"></script> -->
     <script src="{{asset('assets/js/front/jquery-ui.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>

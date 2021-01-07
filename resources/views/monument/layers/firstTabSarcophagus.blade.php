@@ -42,7 +42,7 @@
         <div class="beautification__params">
             <div id="accordion-tombstone" class="accordion product--tab__header">
                 <div class="accordion__title-img-wrap">
-                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-img.png')}}" alt="...">
+                    <img class="accordion__title-img" src="{{URL::asset('assets/img/accordion-title-beautification.svg')}}" alt="...">
                 </div>
 
                 <div class="accordion__title">

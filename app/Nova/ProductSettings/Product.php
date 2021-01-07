@@ -68,26 +68,33 @@ class Product extends Resource
         return [
             ID::make()->sortable()
                 ->onlyOnIndex(),
-            Text::make('Название', 'name')
-                ->hideFromIndex()
-                ->rules('required'),
             BelongsTo::make('Тип', 'type', 'App\Nova\ProductSettings\ProductType')
                 ->help('Лучше выбирать тип сразу правильно без дальнейшего изминения, так как возможны ошибки из-за зависимостей'),
             BelongsToDependency::make('Подтип', 'Subtype', 'App\Nova\ProductSettings\Subtype')
                 ->dependsOn('type', 'type_id')
                 ->nullable()
                 ->help('Лучше выбирать подтип сразу правильно без дальнейшего изминения, так как возможны ошибки из-за зависимостей'),
-            BelongsTo::make('Материал', 'material', 'App\Nova\ProductSettings\ProductMaterials')
-                ->nullable(),
+            Text::make('Название', 'name')
+                ->hideFromIndex()
+                ->rules('required'),
+            Text::make('Код продукта', 'product_code')
+                ->rules('required')
+                ->sortable(),
+            Boolean::make('Активен', 'is_active')
+                ->sortable(),
+            Boolean::make('Акционный', 'is_promotional')
+                ->sortable(),
             HasMany::make('Модель стеллы (простые памятники)', 'modelObjectStella', 'App\Nova\ProductSettings\ProductObjectModelStella')
                 ->nullable(),
             HasMany::make('Изображения для рендера модели (комплексы,саркофаги)',
                 'sarcophagusImages', 'App\Nova\ProductSettings\ProductImageForModel'),
-            HasMany::make('Резка','cutting','App\Nova\ProductSettings\ModifierCutting'),
+            HasMany::make('Резка', 'cutting', 'App\Nova\ProductSettings\ModifierCutting'),
             Text::make('Актуальня цена', 'actual_price')
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
             Text::make('Старая цена', 'old_price')
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
             Text::make('Экономия', 'saving')
                 ->rules('required')
                 ->hideFromIndex(),
@@ -109,18 +116,14 @@ class Product extends Resource
             Text::make('Хранение', 'storage')
                 ->rules('required')
                 ->hideFromIndex(),
-            Text::make('Код продукта', 'product_code')
-                ->rules('required')
-                ->hideFromIndex(),
             Text::make('Описание', 'description')
                 ->rules('required')
                 ->hideFromIndex(),
             Number::make('Популярность', 'popularity')
                 ->sortable(),
-            Boolean::make('Акционный', 'is_promotional')
-                ->sortable(),
-            Boolean::make('Активен', 'is_active')
-                ->sortable(),
+            BelongsTo::make('Материал', 'material', 'App\Nova\ProductSettings\ProductMaterials')
+                ->nullable()
+                ->hideFromIndex(),
             Image::make('Изображение', 'image')
                 ->disk('public')
                 ->help('разрешение изображения 320*388')

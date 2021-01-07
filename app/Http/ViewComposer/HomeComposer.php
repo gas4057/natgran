@@ -42,6 +42,7 @@ class HomeComposer
         }
         $this->cart = $cart;
         $this->catalogProducts = ProductType::with('subtype')->get();
+        $this->modal_leave = Articles::where('key', 'leave_site')->first();
     }
 
     public function compose(View $view)
@@ -57,6 +58,7 @@ class HomeComposer
             'requisites' => $this->requisites,
             'cart' => $this->cart,
             'catalogProducts' => $this->catalogProducts,
+            'modal_leave' => $this->modal_leave,
         ]);
     }
 }
